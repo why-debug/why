@@ -11,15 +11,16 @@ export default new VueRouter({
       path: '/',
       name: 'Main',
       component: Main,
-      children:[
+      children: [
         //商品页面
-        {path:'/Main/Goods', component: () => import('../views/Goods.vue')},
+        { path: '/Main/Goods', component: () => import('../views/Goods.vue') },
         //评价页面
-        {path:'/Main/Merchant', component: () => import('../views/Merchant.vue')},
+        { path: '/Main/Merchant', component: () => import('../views/Merchant.vue') },
         //商家页面
-        {path:'/Main/Evaluate', component: () => import('../views/Evaluate.vue')},
-    
-    ]
+        { path: '/Main/Evaluate', component: () => import('../views/Evaluate.vue') },
+        //购物车页面
+        { path: '/Main/Shopcar', component: () => import('../views/Shopcar.vue') },
+      ]
     },
 
   ]

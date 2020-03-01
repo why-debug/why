@@ -32,7 +32,30 @@
       </div>
     </div>
     <div class="center"></div>
-    <div class="bottom"></div>
+    <div class="bottom">
+      <div class="btn">
+        <button>全部57</button>
+        <button>满意47</button>
+        <button>不满意10</button>
+      </div>
+      <p class="screen"><Icon type="md-checkmark-circle" size='18' color='#ccc' />只看有内容的评价</p>
+      <div class="text">
+        <div class="txt" v-for="(item,index) in msg" :key="index">
+          <img :src="item.avatar" alt />
+          <div class="txt_right">
+            <p>
+              <span>{{ item.username }}</span>
+              <Time :time="times" type="datetime" />
+              <!-- <span>{{item.rateTime}}</span> -->
+            </p>
+            <Rate class="grade" disabled v-model="valueDisabled" />
+            <span class="times">{{item.deliveryTime!==''?item.deliveryTime+'分钟送达':''}}</span>
+            <p>{{item.text}}</p>
+            <p>{{item.recommend.join("、")}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -42,14 +65,18 @@ import { getcomment } from "../api/apis.js";
 export default {
   data() {
     return {
-      msg: {}
+      msg: [],
+      valueDisabled: 0,
+      times: 0
     };
   },
   created() {
     getcomment().then(res => {
-      console.log(res);
-
-      this.msg = res.data;
+      this.msg = res.data.data;
+      res.data.data.forEach(v => {
+        this.valueDisabled = v.score;
+        this.times = v.rateTime;
+      });
     });
   }
 };
@@ -71,12 +98,12 @@ export default {
       color: #fb9406;
       font-size: 20px;
     }
-    p:nth-child(2){
-        color: #000;
-        font-size: 14px;
+    p:nth-child(2) {
+      color: #000;
+      font-size: 14px;
     }
-    p:last-child{
-        font-size: 12px;
+    p:last-child {
+      font-size: 12px;
     }
   }
 
@@ -101,5 +128,71 @@ export default {
 }
 .bottom {
   width: 100%;
+  .btn {
+    height: 80px;
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    button {
+      font-size: 14px;
+      margin-left: 10px;
+      padding: 10px;
+      border: 0;
+    }
+    button:first-child {
+      background: #00a1dc;
+      color: #fff;
+    }
+    button:nth-child(2) {
+      background: #cceef7;
+      color: #000;
+    }
+  }
+  .screen {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 20px;
+    border-bottom: 1px solid #ccc;
+  }
+  .text {
+    width: 100%;
+    padding: 0px 20px;
+  }
+  .txt {
+    width: 100%;
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #ccc;
+    .txt_right {
+      width: 100%;
+      margin-left: 20px;
+      p {
+        span:last-child {
+          font-size: 12px;
+        }
+      }
+      p:first-child {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+      .ivu-rate {
+        font-size: 12px;
+      }
+      p:last-child {
+        margin-top: 10px;
+      }
+      .times {
+        font-size: 12px;
+      }
+    }
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+  }
 }
 </style>
