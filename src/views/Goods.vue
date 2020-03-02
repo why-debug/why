@@ -6,11 +6,15 @@
           <div
             @click="leftTitle(index)"
             :class="{left_goods:true,selected:index==selected}"
-            v-for="(item,index) in list"
+            v-for="(item,index) in goodslist"
             :key="item.name"
           >
             <span>
-            <img style="width: 16px" v-show="item.type == 2" src="../assets/images/special_4@2x.png" />              
+              <img
+                style="width: 16px"
+                v-show="item.type == 2"
+                src="../assets/images/special_4@2x.png"
+              />
               {{ item.name }}
             </span>
           </div>
@@ -18,12 +22,12 @@
       </div>
       <div class="right-div">
         <ul class="content">
-          <div :id="i" v-for="(item,i) in list" :key="item.name">
+          <div :id="i" v-for="(item,i) in goodslist" :key="item.name">
             <div class="title">
               <p>{{item.name}}</p>
             </div>
             <div class="good">
-              <div ref="element" class="good-list" v-for="obj in item.foods" :key="obj.name">
+              <div ref="element" class="good-list" v-for="(obj,N) in item.foods" :key="N">
                 <div class="img">
                   <img :src="obj.icon" alt />
                 </div>
@@ -40,9 +44,9 @@
                   </p>
                 </div>
                 <div class="btn">
-                  <!-- <button>-</button> -->
-                  <!-- <span>  1  </span> -->
-                  <button>+</button>
+                  <button v-show="obj.num!==0" @click="obj.num > 0 ? obj.num-- : 0">-</button>
+                  <span v-show="obj.num!==0">{{obj.num}}</span>
+                  <button @click="obj.num++">+</button>
                 </div>
               </div>
             </div>
@@ -51,66 +55,42 @@
       </div>
     </div>
 
-    <div class="shopcar" v-show="shopcar">挡板</div>
-    <div class="goods_footer">
-      <div class="car" @click="(shopcar=!shopcar)">
-        <p>
-          <Icon type="md-cart" />
-        </p>
-      </div>
-      <div>
-        <div class="pics">
-          <span>￥0</span>
-          <span class="lin"></span>
-          另需配送费￥{{msg.deliveryPrice}}元
-        </div>
-        <button>￥{{msg.minPrice}} 起送</button>
-      </div>
-    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
 import { getgoods } from "../api/apis.js";
-import { getseller } from "../api/apis.js";
+
 //引入better-scroll
 import BScroll from "better-scroll";
 export default {
   data() {
     return {
       msg: {},
-      list: [],
       selected: 0,
       shopcar: false
     };
   },
   computed: {
     height() {
+      // 每个商品div的高度
       var arr = [];
       var sum = 0;
-      // for (let i = 0; i < this.list.length; i++) {
-
-      //   console.log(heights);
-      //   var why = i;
-      //   // sum += heights;
-      //   console.log(i);
-      // }
-      this.list.forEach((v, i) => {
+      this.goodslist.forEach((v, i) => {
         var heights = document.getElementById(i).offsetHeight;
         arr.push({ min: sum, max: sum + heights, index: i });
         sum += heights;
       });
-      // console.log(arr);
-
       return arr;
+    },
+    goodslist() {
+      return this.$store.state.goodslist;
     }
   },
   created() {
     getgoods().then(res => {
-      this.list = res.data.data;
-    });
-    getseller().then(res => {
-      this.msg = res.data.data;
+      this.$store.commit("initGoods", res.data.data);
     });
   },
   mounted() {
@@ -135,7 +115,15 @@ export default {
     leftTitle(index) {
       this.selected = index;
       this.rightDiv.scrollToElement(document.getElementById(index), 600);
-    }
+    },
+    // clickDec(N) {
+    //   console.log(N);
+      
+    // },
+    // clickAdd(N) {
+    //   console.log(N);
+
+    // }
   }
 };
 </script>
@@ -230,82 +218,13 @@ export default {
               height: 20px;
               border-radius: 50%;
               border: 0;
-              background: cornflowerblue;
+              background: #00a0dc;
               color: #fff;
               font-weight: bold;
             }
           }
         }
       }
-    }
-  }
-  .shopcar {
-    width: 100%;
-    height: 300px;
-    background: #ccc;
-    position: fixed;
-    bottom: 60px;
-  }
-  .goods_footer {
-    width: 100%;
-    height: 60px;
-    position: fixed;
-    bottom: 0;
-    background: #121e25;
-    padding-left: 85px;
-    .car {
-      width: 60px;
-      height: 60px;
-      line-height: 60px;
-      background: #121e25;
-      border-radius: 50%;
-      position: absolute;
-      left: 20px;
-      top: -15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      p {
-        background: #2a343c;
-        width: 80%;
-        height: 80%;
-        border-radius: 50%;
-
-        text-align: center;
-        i {
-          font-size: 25px;
-        }
-      }
-    }
-    .pics {
-      width: 70%;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      padding: 10px 0;
-      margin-top: 10px;
-      span:first-child {
-        font-size: 18px;
-        font-weight: 700;
-      }
-      .lin {
-        display: inline-block;
-        width: 1px;
-        height: 30px;
-        background: #2b3a3f;
-        margin-left: 10px;
-        margin-right: 10px;
-      }
-    }
-    div:last-of-type {
-      display: flex;
-    }
-    button {
-      height: 60px;
-      width: 30%;
-      background: #2a353a;
-      border: none;
-      color: #fff;
     }
   }
 }

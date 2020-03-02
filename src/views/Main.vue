@@ -26,9 +26,9 @@
       </Row>
     </div>
     <div class="nav">
-      <router-link to="/Main/Goods">商品</router-link>
-      <router-link to="/Main/Evaluate">评价</router-link>
-      <router-link to="/Main/Merchant">商家</router-link>
+      <a href="#/Main/Goods" :class="{red:show==0}" @click="show=0">商品</a>
+      <a href="#/Main/Evaluate" :class="{red:show==1}" @click="show=1">评价</a>
+      <a href="#/Main/Merchant" :class="{red:show==2}" @click="show=2">商家</a>
     </div>
     <!-- 二级路由出口 -->
     <router-view></router-view>
@@ -41,10 +41,16 @@ import { getseller } from "../api/apis.js";
 export default {
   data() {
     return {
-      msg1: {}
+      msg1: {},
+      show:0
     };
   },
-  methods: {},
+  methods: {
+    why(){
+      console.log(1111);
+      
+    }
+  },
   mounted() {
     getseller().then(res => {
       this.msg1 = res.data.data;
@@ -99,8 +105,6 @@ export default {
 
     .tit_right {
       color: #f8f8f8;
-      .sub {
-      }
       span {
         font-size: 40px/2em;
         color: #fff;
@@ -127,6 +131,9 @@ export default {
     border-bottom: 1px solid #ccc;
     a {
       color: #494d50;
+    }
+    .red{
+      color: #f00
     }
   }
 }
