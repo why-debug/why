@@ -1,0 +1,80 @@
+// 次样式仅重写 el-table 样式
+
+// border样式
+@borderColor: #d8e2e7;
+@borderSize: 0.01rem;
+@borderType: solid;
+@fontColor: #444444;
+@fontSize: 0.12rem;
+@tdBackgroundColor: #ebf0f5;
+@trHeight: 0.3rem;
+@tdHeight: 0.3rem;
+@paddingSize: 0.05rem; // 表格里面的内容 padding 的大小
+
+// 修改border样式
+/deep/ .el-table--border:after, .el-table--group:after, .el-table:before {
+  background-color: @borderColor;
+}
+
+/deep/ .el-table--border, .el-table--group {
+  border-color: @borderColor;
+}
+
+/deep/ .el-table td, .el-table th.is-leaf {
+  border-bottom: @borderSize @borderType @borderColor;
+}
+
+/deep/ .el-table--border th, .el-table--border th.gutter:last-of-type {
+  border-bottom: @borderSize @borderType @borderColor;
+}
+
+/deep/ .el-table--border td, .el-table--border th {
+  border-right: @borderSize @borderType @borderColor;
+}
+
+/deep/ .el-table--border th {
+  border-right: @borderSize @borderType @borderColor;
+}
+
+// 修改每一项样式
+/deep/ .el-table .cell {
+  color: @fontColor;
+  font-size: @fontSize;
+  flex-shrink: 0;
+  line-height: @trHeight;
+  padding: 0 @paddingSize;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+// 修改表格td行高
+/deep/ .el-table__header tr, .el-table__header th {
+  height: @tdHeight;
+  padding: 0;
+}
+
+// 修改表格tr行高
+/deep/ .el-table__body tr, .el-table__body td {
+  height: @trHeight;
+  padding: 0;
+}
+
+// 取消 padding 不然高度正确
+/deep/ .el-table--small td, .el-table--small th {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/deep/ .el-table--small th {
+  padding: 0;
+}
+
+/deep/ .el-table--border th:first-child .cell {
+  padding-left: @paddingSize;
+}
+
+/deep/ .el-table .cell, .el-table--border td:first-child .cell {
+  padding-left: @paddingSize !important;
+}
