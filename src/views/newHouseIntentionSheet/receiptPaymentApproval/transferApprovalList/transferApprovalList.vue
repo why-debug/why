@@ -1,0 +1,751 @@
+<template>
+  <div>
+    <div class="order">
+      <!-- 列表 -->
+      <div :class="isIntentionDetailList ? 'list_all_detail' : 'list_all'">
+        <div class="title_content_s">
+          <div class="title_content">
+            <div class="title_item status_s">审批状态</div>
+            <div class="title_item now_approval_person">当前审核人</div>
+            <div class="title_item project_name">付款日期</div>
+            <div class="title_item wuye">付款金额(元)</div>
+            <div class="title_item deal_report_no">成交报告编号</div>
+            <div class="title_item type">项目名称</div>
+            <div class="title_item total_money">物业名称</div>
+            <div class="title_item receipt_money">客户名称</div>
+            <div class="title_item cash_award">类型</div>
+            <div class="title_item settlement_details">结算明细</div>
+            <div class="title_item remark">备注</div>
+            <div class="title_item applicant">申请人</div>
+            <div class="title_item application_dept">申请组别</div>
+            <div class="title_item deal_dept">成交组别</div>
+            <div class="title_item deal_date">成交日期</div>
+          </div>
+        </div>
+        <div class="list_content">
+          <div class="g_lists">
+            <div
+              class="content"
+              @dblclick="f_intentionDetail(0)"
+              v-for="(item, index) in transferApprovalList"
+              :key="index"
+            >
+              <div class="title_item status_s">
+                {{ item.status_s || "--" }}
+              </div>
+              <div class="title_item now_approval_person">
+                {{ item.now_approval_person || "--" }}
+              </div>
+              <div class="title_item project_name"> 
+                <!-- <div
+                  class="status_pai"
+                  :class="{
+                    status_i:  0 ||  1,
+                    status_p: item.status || 5 
+                  }"
+                > -->
+                <div class="status_pai">
+                  {{ item.transfer_date || "--" }}
+                </div>
+                <div class="status_refuse" @click.stop="handleApproval(0)">
+                  <div class="refuse_icon"></div>
+                  <div>审批</div>
+                </div>
+                <div class="status_refuse">
+                  <div class="refuse_icon"></div>
+                  <div>打印</div>
+                </div>
+                <!-- <div class="status_refuse" >
+                <div class="refuse_icon"></div>
+                <div>爽约</div>
+              </div> -->
+              </div>
+              <div class="title_item wuye">
+                {{ item.transfer_money || "--" }}
+              </div>
+              <div class="title_item deal_report_no">
+                {{ item.deal_report_no || "--" }}
+              </div>
+              <div class="title_item type">
+                {{ item.project_name || "--" }}
+              </div>
+              <div class="title_item total_money">
+                {{ item.wuye || "--" }}
+              </div>
+              <div class="title_item receipt_money">
+                {{ item.custom || "--" }}
+              </div>
+              <div class="title_item cash_award">
+                {{ item.type || "--" }}
+              </div>
+              <div class="title_item settlement_details">
+                {{ item.settlement_details || "--" }}
+              </div>
+              <div class="title_item remark">{{ item.remark || "--" }}</div>
+              <div class="title_item applicant">
+                {{ item.applicant || "--" }}
+              </div>
+              <div class="title_item application_dept">
+                {{ item.application_class || "--" }}
+              </div>
+              <div class="title_item deal_dept">
+                {{ item.deal_class || "--" }}
+              </div>
+              <div class="title_item deal_date">
+                {{ item.deal_date || "--" }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="no_dataBox" v-if="!!NoData">
+          <div class="no-data">
+            <img src="../../../../assets/images/public/nodate.png" alt />
+            <div class="no_dataSpan">暂时没有相关数据哦!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import SearchInput from "../../../../components/form/searchInput";
+import {
+  GetTransferApprovalList,
+  RequestParameter,
+} from "../../../../net/newHouseIntentionSheet/receiptPaymentApproval/transferApprovalList.js";
+
+export default {
+  components: {
+    SearchInput,
+  },
+  props: {
+    pageParam: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    nowTabValue: {
+      type: [String, Number],
+      default() {
+        return "";
+      },
+    },
+  },
+  data() {
+    return {
+      searchEmpty: false, //是否清空搜素框文本
+      NoData: false,
+      isLoad: false,
+      isScroll: true,
+      transferApprovalList: [], //新房收付审批列表数据
+      isIntentionDetailSwitch: false, //新房意向单详情判断
+      isIntentionDetailList: false, //新房意向单详情列表判断
+      isShowReceiptDetail: false, //是否查看收款单详情
+    };
+  },
+  methods: {
+    //请求新房收付列表数据
+    initData() {
+      if (this.nowTabValue != 2) return;
+      console.log(this.pageParam, "----查询参数");
+      new GetTransferApprovalList(new RequestParameter(this.pageParam))
+        .send()
+        .then((res) => {
+          //暂时隐藏
+          console.log("e---------------------");
+          this.transferApprovalList = res.list;
+          // this.transferApprovalList = [1, 2, 3];
+          // 获取查询返回的参数
+          // let pageRetrunParam = {
+          //   total: res.total,
+          // };
+          // this.$emit("pageRetrunParam", pageRetrunParam);
+        })
+        .catch((err) => {
+          this.transferApprovalList = [1, 2, 3];
+          this.$erpCommon.toast(
+            err.errMsg || "服务器开小差了,请稍后再试",
+            "error"
+          );
+        });
+    },
+
+    //审批-新付转款界面
+    handleApproval(approvalIndex) {
+      //判断是跨物业还是同物业 0 跨物业 1 同物业 
+      this.$router.push({ path: "/transferApproval",query:{index:approvalIndex}});
+      console.log("审批-新付转款界面界面");
+    },
+    //关闭弹窗
+    f_closeView() {
+      if (this.isIntentionDetailSwitch) {
+        this.isIntentionDetailSwitch = false;
+        return;
+      }
+      if (this.isShowReceiptDetail) {
+        this.isShowReceiptDetail = false;
+        return;
+      }
+    },
+  },
+};
+</script>
+<style scoped>
+/*修改滚动条样式*/
+div::-webkit-scrollbar {
+  width: 0.08rem;
+  height: 0.08rem;
+}
+</style>
+<style lang="less" scoped>
+.build-top {
+  width: 100%;
+  height: 0.34rem;
+  background-image: linear-gradient(#f9f9f9, #dedede);
+  align-items: flex-end;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+
+  .left_box {
+    display: flex;
+    align-items: center;
+
+    .active {
+      width: 0.85rem;
+      height: 0.27rem;
+      line-height: 0.27rem;
+      text-align: center;
+      margin-left: 0.1rem;
+      // margin-top: 0.04rem;
+      color: #000000;
+      font-size: 0.12rem;
+      background-color: #ffffff;
+      box-shadow: 0 0 0.01rem 0.01rem rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .build-top-span {
+      width: 0.65rem;
+      height: 0.3rem;
+      padding-left: 0.15rem;
+      font-size: 0.12rem;
+      color: #7c8286;
+      text-align: center;
+      line-height: 0.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      img {
+        width: 0.13rem;
+      }
+    }
+  }
+
+  .right_box {
+    font-size: 0.1rem;
+    width: 3.5rem;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+    padding-right: 0.5rem;
+    padding-left: 0.42rem;
+    color: #999;
+
+    .topseach {
+      color: #259cf3;
+      margin-right: 0.1rem;
+      margin-left: 0.1rem;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      .addIcon {
+        // vertical-align: middle;
+        width: 0.12rem;
+        margin-right: 0.05rem;
+      }
+
+      & > .addSpan {
+        font-size: 0.12rem;
+      }
+    }
+
+    .all_data {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      // flex:0 0 0.7rem;
+      // width:0.7rem;
+      .spanTotal {
+        display: inline-block;
+        text-align: center;
+        padding: 0 0.02rem;
+      }
+    }
+  }
+}
+
+.order {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #edf3fb;
+}
+
+.list_all {
+  width: 100%;
+  height: calc(~"100% - 0.34rem");
+  overflow: auto;
+}
+.list_all_detail {
+  width: 100%;
+  height: calc(~"100% - 0.34rem - 0.21rem");
+  overflow: auto;
+}
+
+.list_content {
+  width: 21.1rem;
+  // height: calc(~"100% - 0.34rem");
+  height: calc(~"100% - 2.1rem");
+  padding-left: 0.1rem;
+  box-sizing: border-box;
+  padding-bottom: 0.45rem;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.title_content {
+  display: flex;
+  align-items: center;
+  width: 21.1rem;
+  height: 0.3rem;
+  background-color: #ffffff;
+  border: solid 0.01rem #ffffff;
+  overflow: hidden;
+  padding: 0 0.1rem;
+  & > div {
+    border: none !important;
+  }
+}
+
+.title_content_s {
+  width: 100%;
+  height: 0.32rem;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  width: 21.1rem;
+  height: 0.3rem;
+  min-height: 0.3rem;
+  margin-top: 0.05rem;
+  background-color: #ffffff;
+  align-items: center;
+  border: solid 0.01rem #ffffff;
+}
+
+.content:hover {
+  background-color: #d9f1fe;
+  border: solid 0.01rem #73baee;
+}
+
+.title_item {
+  height: 0.24rem;
+  font-family: MicrosoftYaHei;
+  font-size: 0.12rem;
+  line-height: 0.24rem;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 0rem;
+  color: #666666;
+  padding-left: 0.08rem;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.number {
+  width: 0.62rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+
+.status_s {
+  width: 1.4rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+
+.now_approval_person {
+  width: 1.05rem;
+  border-right: 0.01rem dotted #d5d5d5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.project_name {
+  width: 2.4rem;
+  border-right: 0.01rem dotted #d5d5d5;
+  display: flex;
+}
+
+.wuye {
+  width: 1.3rem;
+  display: flex;
+  align-items: center;
+  border-right: 0.01rem dotted #d5d5d5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.deal_report_no {
+  width: 1.21rem;
+  border-right: 0.01rem dotted #d5d5d5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.cust_custom {
+  width: 0.94rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+
+.type {
+  width: 1.68rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+
+.settlement_details {
+  width: 1.19rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+.receipt_date {
+  width: 1.07rem; 
+  border-right: 0.01rem dotted #d5d5d5;
+}
+.bill_no {
+  width: 1.11rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+
+.receipt_money {
+  width: 1.1rem;
+  border-right: 0.01rem dotted #d5d5d5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.remark {
+  width: 1.14rem;
+  border-right: 0.01rem dotted #d5d5d5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.applicant {
+  width: 1.01rem;
+  border-right: 0.01rem dotted #d5d5d5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.application_dept {
+  width: 1.45rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+.deal_dept {
+  width: 1.53rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+.deal_date {
+  width: 2.23rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+
+.total_money {
+  width: 1.13rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+
+.cash_award {
+  width: 1.2rem;
+  border-right: 0.01rem dotted #d5d5d5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.person_i {
+  width: 1.2rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+
+.area {
+  width: 0.77rem;
+  border-right: 0.01rem dotted #d5d5d5;
+}
+
+.ori {
+  width: 1.59rem;
+}
+
+.list_bottom {
+  display: flex;
+  align-items: center;
+  line-height: 0.35rem;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0.1rem;
+  height: 0.35rem;
+  background-color: #e7eef5;
+}
+
+.bottom_order {
+  font-family: MicrosoftYaHei;
+  font-size: 0.12rem;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 0rem;
+  color: #666666;
+  margin-left: 0.13rem;
+}
+
+.bottom_total {
+  font-family: MicrosoftYaHei-Bold;
+  font-size: 0.12rem;
+  font-weight: normal;
+  letter-spacing: 0rem;
+  color: #ff5a1e;
+}
+
+.bottom_heji {
+  font-family: MicrosoftYaHei-Bold;
+  font-size: 0.14rem;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 0rem;
+  color: #000000;
+  margin-left: 0.13rem;
+}
+
+.bottom_left {
+  width: 0.1rem;
+  height: 0.12rem;
+  margin-left: 0.03rem;
+  // background-color: #259cf3;
+}
+
+.status_pai {
+  line-height: 0.27rem;
+  width: 0.52rem;
+  font-family: MicrosoftYaHei;
+  font-size: 0.12rem;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 0rem;
+  color: #444444;
+}
+.status_refuse {
+  height: 0.24rem;
+  display: flex;
+  align-items: center;
+  font-family: MicrosoftYaHei;
+  font-size: 0.12rem;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 0rem;
+  color: #259cf3;
+  margin-left: 0.2rem;
+  cursor: pointer;
+}
+.status_accept {
+  display: flex;
+  align-items: center;
+  font-family: MicrosoftYaHei;
+  font-size: 0.12rem;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 0rem;
+  color: #259cf3;
+  margin-left: 0.2rem;
+  cursor: pointer;
+}
+.accept_icon {
+  width: 0.11rem;
+  height: 0.08rem;
+  margin-right: 0.04rem;
+  background-image: url("../../../../assets/images/projectAgentInfo/common/zuofei_200.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.refuse_icon {
+  width: 0.14rem;
+  height: 0.14rem;
+  margin-right: 0.04rem;
+  background-image: url("../../../../assets/images/projectAgentInfo/common/zuofei_200.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.status_i {
+  color: #ff5a1e;
+}
+
+.status_p {
+  color: #008000;
+}
+
+// .no_dataBox {
+//   position: fixed;
+//   width: 100%;
+//   height: calc(100% - 0.68rem);
+//   min-height: 2rem;
+//   min-width: 14.4rem;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background-color: #edf3fb;
+
+//   .no_dataSpan {
+//     font-size: 0.18rem;
+//     margin-top: 0.1rem;
+//     color: #999;
+//   }
+// }
+.no_dataBox {
+  position: fixed;
+  width: 100%;
+  height: calc(~"100% - 1.08rem");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #edf3fb;
+  .no-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    & > img {
+      transform: scale(0.9);
+    }
+
+    .no_dataSpan {
+      font-size: 0.18rem;
+      margin-top: 0.1rem;
+      color: #999999;
+    }
+  }
+}
+
+.isLoading {
+  position: absolute;
+  top: 0.97rem;
+  width: 100%;
+  height: calc(~"100% - 1.08rem");
+  min-height: 2rem;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.g_lists {
+  width: 21.1rem;
+  // height: 0.3rem;
+  height: auto;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: flex-start;
+  // align-items: flex-start;
+  // overflow-y: auto;
+  // padding: 0 0.1rem;
+  // box-sizing: border-box;
+  // overflow-y: auto;
+}
+
+.intentionDetailList {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2.1rem;
+  background-color: #fff;
+  box-shadow: 0rem -0.01rem 0.08rem 0rem rgba(144, 144, 144, 0.2);
+  border-radius: 0.04rem 0rem 0rem 0rem;
+  padding: 0.11rem 0.2rem 0;
+  box-sizing: border-box;
+
+  .title {
+    width: 100%;
+    height: 0.28rem;
+    margin-bottom: 0.14rem;
+    // background-color: purple;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .left_title {
+      width: 2rem;
+      font-size: 0.16rem;
+      color: #006797;
+      font-weight: bold;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      & > span {
+        color: #444444;
+      }
+    }
+    .right_btn {
+      width: 2.16rem;
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-sizing: border-box;
+      cursor: pointer;
+      & > div {
+        width: 0.66rem;
+        background-blend-mode: normal, normal;
+        box-shadow: 0rem 0.01rem 0.01rem 0rem rgba(0, 0, 0, 0.75),
+          inset 0rem -0.01rem 0rem 0rem rgba(255, 255, 255, 0.2);
+        border-radius: 0.02rem;
+        border: solid 0.01rem #45a802;
+        font-size: 0.13rem;
+        color: #ffffff;
+        height: 0.28rem;
+        line-height: 0.28rem;
+        text-align: center;
+        letter-spacing: 0.01rem;
+        box-sizing: border-box;
+      }
+      & > div:nth-of-type(1) {
+        background-image: linear-gradient(0deg, #64c12b 0%, #72cd3b 100%),
+          linear-gradient(#5fc41b, #5fc41b);
+      }
+      & > div:nth-of-type(2) {
+        background-image: linear-gradient(0deg, #449aff 0%, #50a7ff 100%),
+          linear-gradient(#5fc41b, #5fc41b);
+      }
+      & > div:nth-of-type(3) {
+        background-image: linear-gradient(0deg, #ff8a18 0%, #ff9421 100%),
+          linear-gradient(#ffffff, #ffffff);
+      }
+    }
+  }
+}
+</style>

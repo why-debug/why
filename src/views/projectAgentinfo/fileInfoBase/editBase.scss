@@ -1,0 +1,60 @@
+.m-r-10{
+  margin-right: 0.1rem;
+}
+.m-r-30{
+  margin-right: 0.3rem;
+}
+.m-l-30{
+  margin-left: 0.3rem;
+}
+.m-l-10{
+  margin-left: 0.1rem;
+}
+.m-r-0{
+  margin-right: 0;
+}
+
+ .mx-input {
+   width: 100%;
+   height: 100%;
+   border: none;
+ }
+
+.entrust-section {
+  padding-left: 0.25rem;
+  box-sizing: border-box;
+  .base-section-tt {
+    margin-left: -0.12rem;
+    font-size: 0.14rem;
+    line-height: 1;
+    padding-top: 0.18rem;
+    font-weight: bold;
+    color: #666666;
+    margin-bottom:  0.22rem;
+    display: flex;
+    align-items: center ;
+  }
+
+  .base-item {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.12rem;
+    color: #444;
+    margin-bottom: 0.1rem;
+  }
+
+  .base-item-half {
+    position: relative;
+    width: 3.85rem;
+    height: 0.3rem;
+    display: flex;
+    align-items: center;;
+  }
+
+  .base-text {
+    display: flex;
+    align-items: center
+  }
+
+}

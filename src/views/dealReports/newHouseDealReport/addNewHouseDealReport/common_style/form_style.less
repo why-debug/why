@@ -1,0 +1,149 @@
+@input_width: 2.1rem; 
+@title_width: 0.55rem; 
+
+/deep/ .el-form {
+  &>section {
+    padding-left: 0.26rem;
+    margin-bottom: 0.1rem;
+    &:nth-of-type(1) {
+      margin-top: 0.32rem;
+    }
+  }
+}
+/deep/ .el-form-item {
+  margin: 0 0 0 0.4rem;
+  &>.el-form-item__content {
+    display: flex; 
+    position: relative;
+    height: 0.3rem;
+    width: 100%;
+  }
+}
+
+/deep/ .input_title {
+  width: @title_width;
+  font-family: SimSun;
+  font-size: 0.12rem;
+  font-weight: bold;
+  color: #444; 
+  display: flex;
+  justify-content: space-between;
+  position: absolute; 
+  transform: translateY(-50%);
+  top: 50%; left: 0; 
+  &::after {
+    content:':' ; position: absolute; right: -0.04rem; top: 50%; transform: translateY(-50%); 
+  }
+  &.required::before {
+    content:'*' ; position: absolute; color: red; right:-0.16rem; top: 50%; transform: translateY(-50%);
+    font-size: 0.1rem;
+  }
+  span {
+    display: block;
+  }
+}
+
+/deep/.el-input, /deep/.el-select {
+  width: @input_width;
+  margin-left: 0.78rem; 
+  height: 0.3rem;
+  display: block;
+  input {
+    padding-left: 0.07rem;
+    padding-right: 0;
+    height: 100%;
+  }
+}
+
+
+/deep/ .el-select {
+  .el-input {
+    height: 100%;
+    margin-left: 0;
+    width: 100%;
+    input {
+      height: 100%;
+    }
+    span {
+      transform: translateY(-50%); top: 50%; 
+    }
+  }
+}
+
+/deep/ .el-textarea {
+  margin-left: 0.78rem; 
+  width: 8.67rem;
+  height: 1.1rem;
+  textarea {
+    padding-left: 0.07rem;
+    resize: none;
+    display: block;
+    height: 100%;
+  }
+}
+
+/deep/.el-input {
+  position: relative;
+  input {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    left:0; 
+    line-height: 0.3rem;
+    font-size: 0.12rem;
+  }
+}
+
+/deep/ .no_icon {
+  .el-input__suffix {
+    i {
+      display: none;
+    }
+  }
+}
+
+/deep/ .el-select-dropdown {
+  background-color
+  .el-select-dropdown__list {
+    .el-select-dropdown__item {
+      font-size: 0.12rem; 
+      height: 0.3rem;
+      line-height: 0.3rem;
+    }
+  } 
+}
+
+/deep/ .input_title>.long_title {
+  position: absolute; top: 50%; transform: translateY(-50%); right:0; width: 1rem; text-align: right;
+}
+
+/deep/ .el-radio-group {
+  width: 100%; height: 100%;
+  &>.el-radio {
+    height: 100%;padding:0; text-align: center; margin:0;  position: relative;
+    &>.el-radio__input {
+      &>.el-radio__inner {
+        display: none;
+      }
+    }
+    &>.el-radio__label {
+      padding:0; font-size: 0.12rem;
+    }
+  }
+}
+
+/deep/ .el-date-editor {
+  cursor: pointer;
+  .el-input__prefix {
+    left:auto; right :0.06rem
+  }
+}
+
+/deep/ .el-picker-panel {
+  .popper__arrow {
+    left: auto!important; right:30px!important; 
+  }
+}
+
+/deep/ input {
+  line-height: 1!important;
+}
