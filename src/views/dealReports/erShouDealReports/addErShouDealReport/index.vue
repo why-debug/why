@@ -842,7 +842,7 @@
               :style="{'width': inputWidth9, 'margin-left': '0.07rem'}"
             ></el-input>
           </el-form-item>
-          <!-- 户籍 -->                                                                                                                                                                                                                                                                                                                                                                                                             
+          <!-- 户籍 -->
           <el-form-item class="form-item" :prop="'erpMlDealSellers.' + index + 'registrationType'">
             <div class="label-title">户 籍</div>
             <el-select
@@ -1485,7 +1485,10 @@
     <!-- 关联合同 -->
     <associated-contract :isShow.sync="associatedContractObj.isShow"></associated-contract>
     <!-- 关联客户 -->
-    <associate-customer :isShow.sync="associateCustomerObj.isShow"></associate-customer>
+    <associate-customer
+      :dealType="ruleForm.erpMlDeal.dealType"
+      :isShow.sync="associateCustomerObj.isShow"
+    ></associate-customer>
     <!-- 选择物业 -->
     <choose-property :isShow.sync="choosePropertyObj.isShow"></choose-property>
     <!-- 选择片区 -->

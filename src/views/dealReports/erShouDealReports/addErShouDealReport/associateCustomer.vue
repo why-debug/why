@@ -60,9 +60,15 @@
 import { getClientList } from "../../../../net/dealReports/erShouDealReports";
 export default {
   props: {
+    // 显示与隐藏弹框
     isShow: {
       type: Boolean,
       default: false,
+    },
+    // 交易类型
+    dealType: {
+      type: String,
+      default: "1",
     },
   },
   data() {
@@ -92,6 +98,7 @@ export default {
       let data = new getClientList(this.paramsObj).send();
       console.log(data);
       this.tableData = data;
+      console.log(this.dealType);
     },
   },
 };
