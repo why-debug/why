@@ -1,6 +1,13 @@
-import { PostRequest } from "@/common/net/PostRequest";
-import { APIRequest, APIResponse } from "@/common/net/API";
-import { Const } from "@/utils/Const";
+import {
+  PostRequest
+} from "@/common/net/PostRequest";
+import {
+  APIRequest,
+  APIResponse
+} from "@/common/net/API";
+import {
+  Const
+} from "@/utils/Const";
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -11,7 +18,7 @@ class createMlDealReportRequest extends APIRequest {
   erpMlDealSellers = [];
   erpMlDealOuterCooperations = [];
   erpMlDealProfits = [];
-  constructor () {
+  constructor() {
     super();
   }
 }
@@ -20,7 +27,7 @@ class erpMlDeal {
   dealId = ""; // 主键ID
   dealNo = ""; // 成交编号
   dealDate = ""; // 成交时间
-  dealType = 1; // 成交类型 1=售、2=租、3=代办、4=返利
+  dealType = 2; // 成交类型 1=售、2=租、3=代办、4=返利
   category = 1; // 成交类别 1=一般成交、2=事后加佣、3=口头代理费、4=外区分佣
   mainDealNo = ""; // 事后加佣主单号
   mainDealId = ""; // 事后加佣ID
@@ -129,8 +136,8 @@ class erpMlDealBuyUsersItem {
   enterpriseName = ""; // 企业名称
   enterpriseNo = ""; // 	企业营业执照编号
   legalPerson = ""; // 法人姓名
-  principalName=""; //委托人姓名
-  principalTel=""; //委托人电话
+  principalName = ""; //委托人姓名
+  principalTel = ""; //委托人电话
 }
 // erpMlDealSellers = [] 业主item
 class erpMlDealSellersItem {
@@ -191,7 +198,7 @@ class erpMlDealProfitsitem {
   userName = "";
   compOrgName = ""; // 分配部门
 
-  getProfitLeaders () {
+  getProfitLeaders() {
     if (!this.profitLeaders) return ''
     return this.profitLeaders.split('|').join(',')
   }
@@ -199,22 +206,22 @@ class erpMlDealProfitsitem {
 
 // 新增二手房交易报告 - 接口地址
 class createMlDealReportApi extends PostRequest {
-  constructor (request = new createMlDealReportRequest()) {
+  constructor(request = new createMlDealReportRequest()) {
     super(request);
   }
-
-  getUrl () {
+  // /mlDeal/createMlDealReport
+  getUrl() {
     return "/erpWeb/mlDeal/createMlDealReport";
   }
 }
 // 新增二手房交易报告
 class createMlDealReport {
   request;
-  constructor (request = new createMlDealReportRequest()) {
+  constructor(request = new createMlDealReportRequest()) {
     this.request = request;
   }
 
-  send () {
+  send() {
     return new createMlDealReportApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
 
@@ -224,38 +231,33 @@ class createMlDealReport {
     })
   }
 }
-
 // 二手房成交报告信息 - 请求参数
 class getMlDealInfoByIdRequest extends APIRequest {
   id = "";
-  constructor (id = "") {
+  constructor(id = "") {
     super();
     this.id = id;
   }
 }
 // 二手房成交报告信息 - 接口地址
 class getMlDealInfoByIdApi extends PostRequest {
-  constructor (request = new getMlDealInfoByIdRequest()) {
+  constructor(request = new getMlDealInfoByIdRequest()) {
     super(request);
   }
-
-  getUrl () {
+  getUrl() {
     return "/mlDeal/getMlDealInfoById";
   }
 }
 // 二手房成交报告信息
 class getMlDealInfoById {
   request;
-  constructor (request = new getMlDealInfoByIdRequest()) {
+  constructor(request = new getMlDealInfoByIdRequest()) {
     this.request = request;
   }
-
-  send () {
+  send() {
     return new getMlDealInfoByIdApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
-
       let data = res.data || {};
-
       return data;
     })
   }
@@ -267,7 +269,7 @@ class getMlDealInfoById {
 class getEntrustListByConditionRequest extends APIRequest {
   entrustStatus = 1; // 1 有效 0 无效
   condition = ""; // 	合同编号、组织名称、组织编码、申请人
-  constructor (entrustStatus = 1, condition = "") {
+  constructor(entrustStatus = 1, condition = "") {
     super();
     this.entrustStatus = entrustStatus;
     this.condition = condition;
@@ -275,33 +277,31 @@ class getEntrustListByConditionRequest extends APIRequest {
 }
 // 获取合同列表 - 请求地址
 class getEntrustListByConditionApi extends PostRequest {
-  constructor (request = new getEntrustListByConditionRequest()) {
+  constructor(request = new getEntrustListByConditionRequest()) {
     super(request);
   }
 
-  getUrl () {
+  getUrl() {
     return "/erpWeb/mlDeal/getEntrustListByCondition";
   }
 }
 // 获取合同列表 - 返回值
 class getEntrustListByConditionResponse extends APIResponse {
-  constructor () {
+  constructor() {
     super();
   }
 }
 // 获取合同列表
 class getEntrustListByCondition {
   request;
-  constructor (request = new getEntrustListByConditionRequest()) {
+  constructor(request = new getEntrustListByConditionRequest()) {
     this.request = request;
   }
 
-  send () {
+  send() {
     return new getEntrustListByConditionApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
-
       let data = res.data || [];
-
       return data;
     })
   }
@@ -311,34 +311,33 @@ class getEntrustListByCondition {
 
 // 获取出售房源列表 - 请求参数
 class getHouseSaleListRequest extends APIRequest {
-  constructor () {
+  constructor() {
     super();
   }
 }
 // 获取出售房源列表 - 请求地址
 class getHouseSaleListApi extends PostRequest {
-  constructor (request = new getHouseSaleListRequest()) {
+  constructor(request = new getHouseSaleListRequest()) {
     super(request);
   }
-
-  getUrl () {
+  getUrl() {
     return "/houseWeb/funSale/getHouseSaleList";
   }
 }
 // 获取出售房源列表 - 返回值
 class getHouseSaleListResponse extends APIResponse {
-  constructor () {
+  constructor() {
     super();
   }
 }
 // 获取出售房源列表
 class getHouseSaleList {
   request;
-  constructor (request = new getHouseSaleListRequest()) {
+  constructor(request = new getHouseSaleListRequest()) {
     this.request = request;
   }
 
-  send () {
+  send() {
     return new getHouseSaleListApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
 
@@ -354,34 +353,34 @@ class getHouseSaleList {
 
 // 获取出租房源列表 - 请求参数
 class getHouseLeaseListRequest extends APIRequest {
-  constructor () {
+  constructor() {
     super();
   }
 }
 // 获取出租房源列表 - 请求地址
 class getHouseLeaseListApi extends PostRequest {
-  constructor (request = new getHouseLeaseListRequest()) {
+  constructor(request = new getHouseLeaseListRequest()) {
     super(request);
   }
 
-  getUrl () {
+  getUrl() {
     return "/houseWeb/funLease/getHouseLeaseList";
   }
 }
 // 获取出租房源列表 - 返回值
 class getHouseLeaseListResponse extends APIResponse {
-  constructor () {
+  constructor() {
     super();
   }
 }
 // 获取出租房源列表
 class getHouseLeaseList {
   request;
-  constructor (request = new getHouseLeaseListRequest()) {
+  constructor(request = new getHouseLeaseListRequest()) {
     this.request = request;
   }
 
-  send () {
+  send() {
     return new getHouseLeaseListApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
 
@@ -397,18 +396,18 @@ class getHouseLeaseList {
 // 获取主行列表 - 请求参数
 class getBankDicListRequest extends APIRequest {
   bankName = ""; // 银行模糊名字
-  constructor (bankName = "") {
+  constructor(bankName = "") {
     super();
     this.bankName = bankName;
   }
 }
 // 获取主行列表 - 请求地址
 class getBankDicListApi extends PostRequest {
-  constructor (request = new getBankDicListRequest()) {
+  constructor(request = new getBankDicListRequest()) {
     super(request);
   }
 
-  getUrl () {
+  getUrl() {
     return "/erpWeb/bankDic/getBankDicList";
   }
 }
@@ -424,11 +423,11 @@ class getBankDicListItem {
 // 获取主行列表
 class getBankDicList {
   request;
-  constructor (request = new getBankDicListRequest()) {
+  constructor(request = new getBankDicListRequest()) {
     this.request = request;
   }
 
-  send () {
+  send() {
     return new getBankDicListApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
 
@@ -456,9 +455,9 @@ class getBranchBankDicListRequest extends APIRequest {
   bankNameOrAddress = ""; // 分行名或地址模糊查询
   bankProvince = ""; // 省份
   parentBankId = ""; // 父行Id
-  constructor (bankCity = "", bankNameOrAddress = "", bankProvince = "", parentBankId = "") {
+  constructor(bankCity = "", bankNameOrAddress = "", bankProvince = "", parentBankId = "") {
     super();
-    this.bankName = bankName;
+    this.bankName = bankCity;
     this.bankNameOrAddress = bankNameOrAddress;
     this.bankProvince = bankProvince;
     this.parentBankId = parentBankId;
@@ -466,11 +465,11 @@ class getBranchBankDicListRequest extends APIRequest {
 }
 // 获取分行列表 - 请求地址
 class getBranchBankDicListApi extends PostRequest {
-  constructor (request = new getBranchBankDicListRequest()) {
+  constructor(request = new getBranchBankDicListRequest()) {
     super(request);
   }
 
-  getUrl () {
+  getUrl() {
     return "/erpWeb/bankDic/getBranchBankDicList";
   }
 }
@@ -498,11 +497,11 @@ class getBranchBankDicListItem {
 // 获取分行列表
 class getBranchBankDicList {
   request;
-  constructor (request = new getBranchBankDicListRequest()) {
+  constructor(request = new getBranchBankDicListRequest()) {
     this.request = request;
   }
 
-  send () {
+  send() {
     return new getBranchBankDicListApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
 
@@ -516,7 +515,6 @@ class getBranchBankDicList {
         }
         list.push(responseItem);
       }
-
       return list;
     })
   }
@@ -526,17 +524,17 @@ class getBranchBankDicList {
 
 // 获取业绩类别列表 - 请求参数
 class getFunPerformanceTypeListRequest extends APIRequest {
-  constructor () {
+  constructor() {
     super();
   }
 }
 // 获取业绩类别列表 - 请求地址
 class getFunPerformanceTypeListApi extends PostRequest {
-  constructor (request = new getFunPerformanceTypeListRequest()) {
+  constructor(request = new getFunPerformanceTypeListRequest()) {
     super(request);
   }
 
-  getUrl () {
+  getUrl() {
     return "/erpWeb/profit/getFunPerformanceTypeList";
   }
 }
@@ -550,11 +548,11 @@ class getFunPerformanceTypeListItem {
 // 获取业绩类别列表
 class getFunPerformanceTypeList {
   request;
-  constructor (request = new getFunPerformanceTypeListRequest()) {
+  constructor(request = new getFunPerformanceTypeListRequest()) {
     this.request = request;
   }
 
-  send () {
+  send() {
     return new getFunPerformanceTypeListApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
 
@@ -573,6 +571,143 @@ class getFunPerformanceTypeList {
     })
   }
 }
+/* ---------------------------------------------------------------------------------------------------- */
+// 获取房源列表 - 请求参数
+class getHouseListRequest extends APIRequest {
+  pageNum = "1";
+  pageSize = "1";
+  dealType = "1";
+  buildId = "";
+  floor = "";
+  roof = "";
+  unit = "";
+  num = "";
+  houseNo = "";
+  userId = "";
+  useage = "";
+  checkOrgId = ""
+
+  constructor() {
+    super();
+  }
+}
+// 获取房源列表 - 请求地址
+class getHouseListApi extends PostRequest {
+  constructor(request = new getHouseListRequest()) {
+    super(request);
+  }
+  getUrl() {
+    return "/erpWeb/mlDeal/getHouseInfoList";
+  }
+}
+// 获取房源列表 - 返回值
+class getHouseListResponse extends APIResponse {
+  houseList = {
+    "area": "(number)建筑面积",
+    "buildName": "(string)楼盘名称",
+    "competePrice": "(number)房源竞价价格",
+    "floor": "(int32)楼层",
+    "floors": "(int32)总楼层",
+    "hall": "(byte)几厅",
+    "houseNo": "(string)系统编码",
+    "houseStatus": "(byte)房屋状态，DD：HOUSE_STATUS",
+    "id": "(int32)房源ID，自增序列",
+    "innerarea": "(number)以下开始是填充交易成交报告框的字段   套内面积",
+    "mortgage": "(string)现状(按揭)，DD:HOUSE_STITUAT",
+    "nature": "(byte)产权性质：DD：HOUSE_NATURE",
+    "room": "(byte)几房/几室",
+    "sectionId": "(int32)片区ID，板块ID",
+    "sectionName": "(string)片区名称，板块名称",
+    "useage": "(byte)房屋用途，DD:HOUSE_USEAGE",
+    "userName": "(string)业务员",
+    "wei": "(byte)几卫"
+  }
+  constructor() {
+    super();
+  }
+}
+// 获取房源列表
+class getHouseList {
+  request;
+  constructor(request = new getHouseListRequest()) {
+    this.request = request;
+  }
+  send() {
+    return new getHouseListApi(this.request).send().then(res => {
+      if (res.errCode !== Const.successCode) return Promise.reject(res);
+
+      let data = res.data.list || [];
+      let list = [];
+
+      for (let item of data) {
+        let responseItem = new getHouseListResponse();
+        for (let key in responseItem) {
+          responseItem[key] = item[key] || responseItem[key];
+        }
+        list.push(responseItem);
+      }
+
+      return list;
+    })
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+// 获取客源列表 -请求参数
+class getClientListRequest extends APIRequest {
+  pageNum=1;
+  pageSize=1;
+  saleOrRentType="1";
+  organizationId=1;
+  userId=1;
+  buildId=1;
+  custId = 0;
+  select = "";
+  compId = 0;
+  constructor() {
+    super();
+  }
+}
+// 获取客源列表 -请求地址
+class getClientListApi extends PostRequest {
+  constructor(request = new getClientListRequest()) {
+    super(request);
+  }
+  getUrl() {
+    return "/mlDeal/getReportLinkCustList";
+  }
+}
+// 获取客源列表 -返回值
+
+class getClientListResponse extends APIResponse {
+  constructor() {
+    super();
+  }
+}
+// 获取客源列表
+class getClientList {
+  request;
+  constructor(request = new getClientListRequest()) {
+    this.request = request;
+  }
+  send() {
+    return new getClientListApi(this.request).send().then(res => {
+      if (res.errCode !== Const.successCode) return Promise.reject(res);
+      let data = res.data.list || [];
+      let list = [];
+      for (let item of data) {
+        let responseItem = new getClientListResponse();
+        for (let key in responseItem) {
+          responseItem[key] = item[key] || responseItem[key];
+        }
+        list.push(responseItem);
+      }
+
+      return list;
+    })
+  }
+}
+
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -600,5 +735,10 @@ export {
   getBranchBankDicListRequest,
   getBranchBankDicList,
 
-  getFunPerformanceTypeList
+  getFunPerformanceTypeList,
+
+  getHouseList,
+  getHouseListResponse,
+
+  getClientList,
 }

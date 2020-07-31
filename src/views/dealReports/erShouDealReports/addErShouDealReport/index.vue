@@ -842,7 +842,7 @@
               :style="{'width': inputWidth9, 'margin-left': '0.07rem'}"
             ></el-input>
           </el-form-item>
-          <!-- 户籍 -->
+          <!-- 户籍 -->                                                                                                                                                                                                                                                                                                                                                                                                             
           <el-form-item class="form-item" :prop="'erpMlDealSellers.' + index + 'registrationType'">
             <div class="label-title">户 籍</div>
             <el-select
@@ -1303,7 +1303,7 @@
           <el-form-item class="form-item">
             <div class="label-title">备 注</div>
             <el-input
-              v-model="desc"
+              v-model="itemClient.desc"
               type="textarea"
               :rows="textareaRow"
               resize="none"
@@ -1517,6 +1517,17 @@ import chooseProperty from "@/views/dealReports/erShouDealReports/addErShouDealR
 import selectArea from "@/views/dealReports/erShouDealReports/addErShouDealReport/selectArea.vue";
 
 export default {
+  components: {
+    topTitle,
+    checkBox,
+    checkBoxOnly,
+    radioGroup,
+    radioGroupOther,
+    associatedContract,
+    associateCustomer,
+    chooseProperty,
+    selectArea,
+  },
   data() {
     // 户型验证
     let checkHouseRoom = (rule, value, callback) => {
@@ -1790,19 +1801,9 @@ export default {
       jinebili: "1",
     };
   },
-  components: {
-    topTitle,
-    checkBox,
-    checkBoxOnly,
-    radioGroup,
-    radioGroupOther,
-    associatedContract,
-    associateCustomer,
-    chooseProperty,
-    selectArea,
-  },
+
   created() {
-    this.initAddress()
+    this.initAddress();
     this.getBankList();
     this.getErpMlDealProfitsProfitTypeList();
     this.ruleForm = {
@@ -2122,6 +2123,7 @@ export default {
     // 保存
     saveIt() {
       console.log("this.ruleForm", this.ruleForm.erpMlDeal.houseArea);
+      console.log(this.ruleForm.erpMlDealBuyUsers);
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
           console.log("this.ruleForm", this.ruleForm);

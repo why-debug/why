@@ -67,7 +67,6 @@ class getMlDealtrackLogList {
 // 二手房成交报告详情
  class SecondHandReportInfoDetailRequest extends APIRequest {  
   id = ""; //成交报告ID
-
   constructor(obj = {}) {
     super();
     this.id = obj.id || '';
@@ -258,11 +257,9 @@ class getMlDealtrackLogList {
   constructor(request = new SecondHandReportInfoDetailRequest()) {
       super(request)
   }
-
   getUrl() {
       return '/erpWeb//mlDeal/getMlDealInfoById'
   }
-
   getNeedToken() {
       return true;
   }

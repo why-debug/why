@@ -10,7 +10,7 @@
               <span>型</span>
             </div>
             <el-select class="no_icon" v-model="project_info.reportType">
-              <el-option label="直销  " value="1"></el-option>
+              <el-option label="直销" value="1"></el-option>
               <el-option label="分销" value="2"></el-option>
               <el-option label="租赁" value="3"></el-option>
             </el-select>

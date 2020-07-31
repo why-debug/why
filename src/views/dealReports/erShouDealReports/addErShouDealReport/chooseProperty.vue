@@ -2,14 +2,16 @@
   <div class="choose-property" v-if="isShow">
     <div class="content">
       <div class="close-icon" @click="hideIt()"></div>
-      <div class="tab-box">
+      <!-- 头部tab切换栏 -->
+      <!-- <div class="tab-box">
         <div
           v-for="(item, index) in tabList"
           :key="index"
           @click="changeTab(item.value)"
           :class="item.value === tabActive?'active': ''"
         >{{item.label}}</div>
-      </div>
+      </div>-->
+      <!-- 选择查询条件 -->
       <div class="nav">
         <div class="nav_topBox">
           <div class="title">成交房源</div>
@@ -65,12 +67,27 @@
               :value="item.value"
             ></el-option>
           </el-select>
-          <el-input v-model="form.Dong" placeholder="栋" class="search-btn-input" :style="{'width': inputWidth4}"></el-input>
+          <el-input
+            v-model="form.Dong"
+            placeholder="栋"
+            class="search-btn-input"
+            :style="{'width': inputWidth4}"
+          ></el-input>
           <span style="margin: 0 0.05rem;">-</span>
-          <el-input v-model="form.unit" placeholder="单元" class="search-btn-input" :style="{'width': inputWidth4}"></el-input>
+          <el-input
+            v-model="form.unit"
+            placeholder="单元"
+            class="search-btn-input"
+            :style="{'width': inputWidth4}"
+          ></el-input>
           <span style="margin: 0 0.05rem;">-</span>
-          <el-input v-model="form.room" placeholder="室" class="search-btn-input" :style="{'width': inputWidth4}"></el-input>
-          <div class="search-box">查询</div>
+          <el-input
+            v-model="form.room"
+            placeholder="室"
+            class="search-btn-input"
+            :style="{'width': inputWidth4}"
+          ></el-input>
+          <div class="search-box" @click="initData">查询</div>
         </div>
         <div class="nav_bottomBox">
           <el-input
@@ -107,6 +124,7 @@
 </template>
 
 <script>
+import { getHouseList } from "../../../../net/dealReports/erShouDealReports";
 export default {
   props: {
     isShow: {
@@ -116,12 +134,11 @@ export default {
   },
   data() {
     return {
-      form:{
-        Dong:'',
-        unit:'',
-        room:'',
-        number:'',
-
+      form: {
+        Dong: "",
+        unit: "",
+        room: "",
+        number: "",
       },
       tabActive: "sale",
       tabList: [
@@ -133,28 +150,17 @@ export default {
       inputWidth3: "0.8rem",
       inputWidth4: "0.45rem",
 
-      testSelect: "",
-      testSelectList: [],
+      testSelect: {},
       tableColumnList: [
-        { prop: "htbh", label: "楼盘名称" },
-        { prop: "htlx", label: "状态" },
-        { prop: "htzt", label: "楼层" },
+        { prop: "buildName", label: "楼盘名称" },
+        { prop: "houseStatus", label: "状态" },
+        { prop: "floor", label: "楼层" },
         { prop: "zzmc", label: "户型" },
-        { prop: "zzbm", label: "面积" },
-        { prop: "sqr", label: "价格" },
-        { prop: "ywy", label: "业务员" },
+        { prop: "area", label: "面积" },
+        { prop: "competePrice", label: "价格" },
+        { prop: "userName", label: "业务员" },
       ],
-      tableData: [
-        {
-          htbh: "45242344234",
-          htlx: "1231",
-          htzt: "3 1518 弄",
-          zzmc: "33 1518 弄",
-          zzbm: "11 1518 弄",
-          sqr: "王小虎",
-          ywy: "啊哈哈",
-        },
-      ],
+      tableData: [],
     };
   },
   methods: {
@@ -163,6 +169,11 @@ export default {
     },
     changeTab(value) {
       this.tabActive = value;
+    },
+    async initData() {
+      let data = new getHouseList(this.paramsObj).send();
+      console.log(data);
+      this.tableData = data;
     },
   },
 };
@@ -244,7 +255,7 @@ export default {
       & > .nav_topBox {
         width: 100%;
         height: 0.5rem;
-        margin-top: 0.5rem;
+        margin-top: 0.2rem;
         display: flex;
         align-items: center;
         // /deep/ .el-input__icon {

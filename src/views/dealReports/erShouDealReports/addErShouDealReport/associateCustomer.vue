@@ -42,7 +42,7 @@
             alt
           />
         </el-input>
-        <div class="search-box">查询</div>
+        <div class="search-box" @click="initData">查询</div>
       </div>
       <el-table class="table-box" :data="tableData" style="width: 100%">
         <el-table-column
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { getClientList } from "../../../../net/dealReports/erShouDealReports";
 export default {
   props: {
     isShow: {
@@ -79,21 +80,18 @@ export default {
         { prop: "zzbm", label: "客户手机号" },
         { prop: "sqr", label: "转介/合作单号" },
       ],
-      tableData: [
-        {
-          htbh: "45242344234",
-          htlx: "1231",
-          htzt: "3 1518 弄",
-          zzmc: "33 1518 弄",
-          zzbm: "11 1518 弄",
-          sqr: "王小虎",
-        },
-      ],
+      tableData: [],
     };
   },
   methods: {
     hideIt() {
       this.$emit("update:isShow", false);
+    },
+    // 查询
+    async initData() {
+      let data = new getClientList(this.paramsObj).send();
+      console.log(data);
+      this.tableData = data;
     },
   },
 };
