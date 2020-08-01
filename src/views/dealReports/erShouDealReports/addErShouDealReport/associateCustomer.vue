@@ -8,7 +8,7 @@
           v-model="testSelect"
           style="margin-right: 0.1rem"
           :style="{'width': inputWidth1}"
-          placeholder
+          placeholder="归属组织"
         >
           <el-option
             v-for="item in testSelectList"
@@ -21,7 +21,7 @@
           v-model="testSelect"
           style="margin-right: 0.1rem"
           :style="{'width': inputWidth1}"
-          placeholder
+          placeholder="客户持有人"
         >
           <el-option
             v-for="item in testSelectList"
@@ -31,6 +31,7 @@
           ></el-option>
         </el-select>
         <el-input
+          v-model="clientSelect.select"
           class="search-btn-input"
           placeholder="录入手机号/转介单号精准查询"
           :style="{'width': inputWidth2}"
@@ -57,7 +58,10 @@
 </template>
 
 <script>
-import { getClientList } from "../../../../net/dealReports/erShouDealReports";
+import {
+  getClientList,
+  clientList,
+} from "../../../../net/dealReports/erShouDealReports";
 export default {
   props: {
     // 显示与隐藏弹框
@@ -75,16 +79,15 @@ export default {
     return {
       inputWidth1: "1.3rem",
       inputWidth2: "2.3rem",
-
-      testSelect: "",
+      clientSelect: new clientList(),
       testSelectList: [],
       tableColumnList: [
-        { prop: "htbh", label: "归属组织" },
-        { prop: "htlx", label: "客户持有人" },
-        { prop: "htzt", label: "客户编码" },
-        { prop: "zzmc", label: "客户名称" },
+        { prop: "organizationName", label: "归属组织" },
+        { prop: "userName", label: "客户持有人" },
+        { prop: "buyCustNo", label: "客户编码" },
+        { prop: "buyCustName", label: "客户名称" },
         { prop: "zzbm", label: "客户手机号" },
-        { prop: "sqr", label: "转介/合作单号" },
+        { prop: "recommendType", label: "转介/合作单号" },
       ],
       tableData: [],
     };
@@ -95,7 +98,7 @@ export default {
     },
     // 查询
     async initData() {
-      let data = new getClientList(this.paramsObj).send();
+      let data = new getClientList(this.clientSelect).send();
       console.log(data);
       this.tableData = data;
       console.log(this.dealType);

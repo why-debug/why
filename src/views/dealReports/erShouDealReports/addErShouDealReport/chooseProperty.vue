@@ -4,12 +4,12 @@
       <div class="close-icon" @click="hideIt()"></div>
       <!-- 头部tab切换栏 -->
       <!-- <div class="tab-box">
-        <div
-          v-for="(item, index) in tabList"
-          :key="index"
-          @click="changeTab(item.value)"
-          :class="item.value === tabActive?'active': ''"
-        >{{item.label}}</div>
+          <div
+            v-for="(item, index) in tabList"
+            :key="index"
+            @click="changeTab(item.value)"
+            :class="item.value === tabActive?'active': ''"
+          >{{item.label}}</div>
       </div>-->
       <!-- 选择查询条件 -->
       <div class="nav">
@@ -19,7 +19,7 @@
             v-model="testSelect"
             style="margin-right: 0.1rem"
             :style="{'width': inputWidth1}"
-            placeholder
+            placeholder="美联物业"
           >
             <el-option
               v-for="item in testSelectList"
@@ -28,19 +28,21 @@
               :value="item.value"
             ></el-option>
           </el-select>
+          <!-- 选择楼盘 -->
           <el-select
-            v-model="testSelect"
+            v-model="testSelect.buildId"
             style="margin-right: 0.1rem"
             :style="{'width': inputWidth1}"
-            placeholder
+            placeholder="选择楼盘"
           >
             <el-option
-              v-for="item in testSelectList"
+              v-for="item in houses"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></el-option>
           </el-select>
+          <!-- 全部 -->
           <el-select
             v-model="testSelect"
             style="margin-right: 0.1rem"
@@ -54,8 +56,9 @@
               :value="item.value"
             ></el-option>
           </el-select>
+          <!-- 楼层 -->
           <el-select
-            v-model="testSelect"
+            v-model="testSelect.floor"
             style="margin-right: 0.1rem"
             :style="{'width': inputWidth3}"
             placeholder
@@ -67,22 +70,23 @@
               :value="item.value"
             ></el-option>
           </el-select>
+          <!-- 栋、单元、室 -->
           <el-input
-            v-model="form.Dong"
+            v-model="testSelect.roof"
             placeholder="栋"
             class="search-btn-input"
             :style="{'width': inputWidth4}"
           ></el-input>
           <span style="margin: 0 0.05rem;">-</span>
           <el-input
-            v-model="form.unit"
+            v-model="testSelect.unit"
             placeholder="单元"
             class="search-btn-input"
             :style="{'width': inputWidth4}"
           ></el-input>
           <span style="margin: 0 0.05rem;">-</span>
           <el-input
-            v-model="form.room"
+            v-model="testSelect.num"
             placeholder="室"
             class="search-btn-input"
             :style="{'width': inputWidth4}"
@@ -90,17 +94,19 @@
           <div class="search-box" @click="initData">查询</div>
         </div>
         <div class="nav_bottomBox">
+          <!-- 房源编号 -->
           <el-input
             class="search-btn-input"
             :style="{'width': inputWidth1,'margin-right':'0.1rem'}"
             placeholder="房源编号"
-            v-model="form.number"
+            v-model="testSelect.houseNo"
           ></el-input>
+          <!-- 业务员姓名 -->
           <el-select
             v-model="testSelect"
             style="margin-right: 0.1rem"
             :style="{'width': inputWidth1}"
-            placeholder
+            placeholder="业务员姓名"
           >
             <el-option
               v-for="item in testSelectList"
@@ -124,7 +130,11 @@
 </template>
 
 <script>
-import { getHouseList } from "../../../../net/dealReports/erShouDealReports";
+import {
+  getHouseList,
+  getHouseListRequest,
+  houseListData,
+} from "../../../../net/dealReports/erShouDealReports";
 export default {
   props: {
     isShow: {
@@ -140,6 +150,10 @@ export default {
         room: "",
         number: "",
       },
+      houses: [
+        { label: "w1", value: "1" },
+        { label: "w2", value: "2" },
+      ],
       tabActive: "sale",
       tabList: [
         { label: "出售", value: "sale" },
@@ -149,8 +163,8 @@ export default {
       inputWidth2: "1rem",
       inputWidth3: "0.8rem",
       inputWidth4: "0.45rem",
-
-      testSelect: {},
+      // 请求参数
+      testSelect: new houseListData(),
       tableColumnList: [
         { prop: "buildName", label: "楼盘名称" },
         { prop: "houseStatus", label: "状态" },
@@ -171,7 +185,7 @@ export default {
       this.tabActive = value;
     },
     async initData() {
-      let data = new getHouseList(this.paramsObj).send();
+      let data = new getHouseList(this.testSelect).send();
       console.log(data);
       this.tableData = data;
     },

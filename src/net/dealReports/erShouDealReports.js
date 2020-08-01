@@ -297,7 +297,6 @@ class getEntrustListByCondition {
   constructor(request = new getEntrustListByConditionRequest()) {
     this.request = request;
   }
-
   send() {
     return new getEntrustListByConditionApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
@@ -574,22 +573,24 @@ class getFunPerformanceTypeList {
 /* ---------------------------------------------------------------------------------------------------- */
 // 获取房源列表 - 请求参数
 class getHouseListRequest extends APIRequest {
-  pageNum = "1";
-  pageSize = "1";
-  dealType = "1";
-  buildId = "";
-  floor = "";
-  roof = "";
-  unit = "";
-  num = "";
-  houseNo = "";
-  userId = "";
-  useage = "";
-  checkOrgId = ""
 
   constructor() {
     super();
   }
+}
+class houseListData {
+  pageNum = "1";
+  pageSize = "1";
+  dealType = "1"; // 类型 ，1=售单，2=租单
+  buildId = ""; //楼盘ID
+  floor = ""; // 楼层
+  roof = ""; // 栋
+  unit = ""; // 栋座规则下：单元、号室规则下：号
+  num = ""; // 栋座规则下：号、号室规则下：室；商铺用途时为：号位
+  houseNo = ""; // 房源编号
+  userId = ""; // 业务员id
+  useage = ""; // 房屋用途，DD:HOUSE_USEAGE
+  checkOrgId = "" // 用户选择组织Id 只有文员能选择
 }
 // 获取房源列表 - 请求地址
 class getHouseListApi extends PostRequest {
@@ -655,18 +656,21 @@ class getHouseList {
 /* ---------------------------------------------------------------------------------------------------- */
 // 获取客源列表 -请求参数
 class getClientListRequest extends APIRequest {
-  pageNum=1;
-  pageSize=1;
-  saleOrRentType="1";
-  organizationId=1;
-  userId=1;
-  buildId=1;
-  custId = 0;
-  select = "";
-  compId = 0;
+
   constructor() {
     super();
   }
+}
+class clientList {
+  pageNum = 1;
+  pageSize = 1;
+  saleOrRentType = "1";
+  organizationId = 1;
+  userId = 1;
+  buildId = 1;
+  custId = 0;
+  select = "";
+  compId = 0;
 }
 // 获取客源列表 -请求地址
 class getClientListApi extends PostRequest {
@@ -725,6 +729,7 @@ export {
   getEntrustListByConditionRequest,
   getEntrustListByCondition,
 
+
   getHouseSaleListRequest,
   getHouseSaleList,
   getHouseLeaseListRequest,
@@ -737,8 +742,13 @@ export {
 
   getFunPerformanceTypeList,
 
+  // 获取房源列表
+  houseListData,
   getHouseList,
   getHouseListResponse,
-
+  getHouseListRequest,
+  
+  // 获取客源列表
   getClientList,
+  clientList,
 }
