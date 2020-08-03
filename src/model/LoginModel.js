@@ -2,7 +2,7 @@
 export class GetLoginModel {
     // clientKey
     static getClientKey() {
-        return window.clientKey || "3467c84bee4c1c4e4da3c4c0412a9340 ";
+        return window.clientKey || "7405c543f655b4e39bc59d7dd60d6d7a   ";
     }
 
 }

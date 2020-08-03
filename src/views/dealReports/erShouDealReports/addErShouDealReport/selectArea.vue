@@ -17,15 +17,28 @@
             :value="item.value"
           ></el-option>
         </el-select>-->
-        <searchInput :placeholder="`请输入名称`" @Kwd="inputName" width="2.5"></searchInput>
-        <div class="search-box">查询</div>
+        <el-input
+          v-model="areaSelect.sectionName"
+          class="search-btn-input"
+          placeholder="请输入名称"
+          :style="{'width': inputWidth}"
+        >
+          <img
+            slot="suffix"
+            class="search_icon"
+            src="http://cdn.haofang.net/static/newHouseStandardVersion/customer/sstiao_FD_200.png"
+            alt
+          />
+        </el-input>
+        <div class="search-box" @click="initData">查询</div>
       </div>
-      <el-table
+      <!-- <el-table
         class="table-box"
         :header-cell-class-name="cellClass"
         :data="tableData"
         style="width: 100%"
         ref="Table"
+        max-height="450"
         @selection-change="chooseInstance"
       >
         <el-table-column type="selection" ref="checked" width="55"></el-table-column>
@@ -35,14 +48,38 @@
           :prop="item.prop"
           :label="item.label"
         ></el-table-column>
-      </el-table>
-      <el-button type="primary" class="btn" @click="confirm">确定</el-button>
+      </el-table>-->
+      <main>
+        <div class="title">
+          <div class="col"></div>
+          <div class="col">所属区域</div>
+          <div class="col">名称</div>
+          <!-- <div class="col">描述</div> -->
+        </div>
+        <div class="content">
+          <div @click="rows(i)" class="row" v-for="(v, i) in tableData" :key="i">
+            <div class="col">
+              <div class="radio-group-item">
+                <img :src="activeRadio === i ? radioActiveIcon : radioIcon" alt />
+              </div>
+            </div>
+            <div class="col">{{ v.regName }}</div>
+            <div class="col">
+              <div class="sub_title">{{ v.sectionName }}</div>
+            </div>
+            <div class="col">{{ v.custMobile }}</div>
+          </div>
+        </div>
+        <!-- <div v-if="tableData==''">没有查到相关信息！</div> -->
+      </main>
+      <el-button type="primary" class="btn" @click="confirm()">确定</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import searchInput from "../../../../components/form/searchInput";
+import { getAreaList } from "../../../../net/dealReports/erShouDealReports";
 export default {
   components: {
     searchInput,
@@ -53,52 +90,49 @@ export default {
       default: false,
     },
   },
+
   data() {
     return {
-      inputWidth1: "1.3rem",
+      inputWidth: "2.3rem",
+      activeRadio: 0,
       paramsObj: "",
-      testSelect: "",
+      areaSelect: {
+        cityId: "001", //城市id
+        sectionName: "", //商圈名称
+      },
+      radioIcon: require("../../../../assets/images/public/radioBox_200.png"),
+      radioActiveIcon: require("../../../../assets/images/public/radioBox1_200.png"),
       testSelectList: [],
       tableColumnList: [
-        { prop: "htbh", label: "所属区域" },
-        { prop: "htlx", label: "名称" },
+        { prop: "regName", label: "所属区域" },
+        { prop: "sectionName", label: "名称" },
         { prop: "ms", label: "描述" },
       ],
-      tableData: [
-        {
-          htbh: "45242344234",
-          htlx: "1231",
-          ms: "呵呵呵呵呵",
-        },
-        {
-          htbh: "45242344234",
-          htlx: "1231",
-          ms: "呵呵呵呵呵",
-        },
-        {
-          htbh: "45242344234",
-          htlx: "1231",
-          ms: "呵呵呵呵呵",
-        },
-      ],
+      tableData: [],
     };
   },
   methods: {
     hideIt() {
       this.$emit("update:isShow", false);
     },
-    // 去掉表格全选按钮
-    cellClass(row) {
-      if (row.columnIndex === 0) {
-        return "disabledCheck";
-      }
+    // 查询
+    async initData() {
+      new getAreaList(this.areaSelect).send().then((res) => {
+        this.tableData = res;
+        console.log(res);
+      });
+      console.log(this.radio);
     },
-    chooseInstance(val) {
-      if (val.length > 1) {
-        this.$refs.Table.clearSelection();
-        this.$refs.Table.toggleRowSelection(val.pop());
-      } else {
-      }
+    // 点击单选
+    rows(i) {
+      this.activeRadio = i;
+      console.log(this.activeRadio);
+    },
+    // 确定
+    confirm() {
+      console.log(this.tableData[this.activeRadio].sectionName);
+      this.$emit("update:isShow", false);
+      this.$emit("sectionName", this.tableData[this.activeRadio].sectionName);
     },
   },
 };
@@ -129,17 +163,6 @@ export default {
       bottom: 0.1rem;
       right: 0.2rem;
     }
-    /deep/ .el-table {
-      /* 去掉全选按钮 */
-      .disabledCheck .el-checkbox__input {
-        display: none !important;
-      }
-      .disabledCheck .cell::before {
-        content: "";
-        text-align: center;
-        line-height: 37px;
-      }
-    }
     & > .close-icon {
       position: absolute;
       top: 0;
@@ -164,8 +187,8 @@ export default {
       align-items: center;
       /deep/ .el-input__inner {
         height: 0.24rem;
-        line-height: 0.24rem;
-        border-radius: 0.12rem;
+        line-height: 0.3rem;
+        border-radius: 0.3rem;
       }
       /deep/ .el-input__icon {
         height: 0.24rem;
@@ -179,6 +202,20 @@ export default {
         font-size: 0.14rem;
         font-weight: bold;
       }
+      & > .search-btn-input {
+        height: 0.3rem;
+        line-height: 0.3rem;
+        margin-right: 0.2rem;
+        /deep/.el-input__inner {
+          border-radius: 0.12rem;
+        }
+        .search_icon {
+          width: 0.14rem;
+          height: 0.14rem;
+          margin-top: 0.08rem;
+          margin-right: 0.08rem;
+        }
+      }
       & > .search-box {
         width: 0.58rem;
         height: 0.22rem;
@@ -190,6 +227,96 @@ export default {
         border-radius: 0.04rem;
         background-color: #fafafa;
         cursor: pointer;
+      }
+    }
+    main {
+      .title {
+        width: 100%;
+        height: 0.35rem;
+        background-color: #ebeef0;
+        display: flex;
+        .col {
+          height: 100%;
+          line-height: 0.35rem;
+          color: #888888;
+          font-size: 0.12rem;
+          font-family: MicrosoftYaHei;
+          font-weight: bold;
+          &:nth-of-type(1) {
+            width: 0.4rem;
+            padding-left: 0.16rem;
+          }
+          &:nth-of-type(2) {
+            width: 1.3rem;
+          }
+          &:nth-of-type(3) {
+            width: 1.6rem;
+          }
+          &:nth-of-type(4) {
+            width: 1.67rem;
+          }
+        }
+      }
+      .content {
+        height: 3.5rem;
+        overflow-y: scroll;
+        .radio-group-item {
+          img {
+            width: 0.15rem;
+          }
+        }
+        .row {
+          margin-bottom: 0.03rem;
+          background-color: #fff;
+          display: flex;
+          &:hover {
+            background-color: #eaeaea;
+            cursor: pointer;
+          }
+          .col {
+            height: 100%;
+            color: #888888;
+            font-size: 0.12rem;
+            font-family: MicrosoftYaHei;
+            font-weight: bold;
+            padding: 0.14rem 0;
+            &:nth-of-type(1) {
+              width: 0.4rem;
+              padding-left: 0.16rem;
+            }
+            &:nth-of-type(2) {
+              width: 1.3rem;
+            }
+            &:nth-of-type(3) {
+              width: 1.6rem;
+            }
+            &:nth-of-type(4) {
+              width: 1.67rem;
+            }
+            .item {
+              height: 0.15rem;
+              width: 100%;
+              display: flex;
+              line-height: 0.15rem;
+              .sub_title {
+                height: 100%;
+                position: relative;
+                &::after {
+                  content: ":";
+                  position: absolute;
+                  right: -0.06rem;
+                  top: 50%;
+                  transform: translateY(-50%);
+                }
+              }
+              .sub_content {
+                max-width: 1.77rem;
+                height: 100%;
+                margin-left: 0.15rem;
+              }
+            }
+          }
+        }
       }
     }
     & > .table-box {

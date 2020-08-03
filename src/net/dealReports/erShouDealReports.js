@@ -573,7 +573,7 @@ class getFunPerformanceTypeList {
 /* ---------------------------------------------------------------------------------------------------- */
 // 获取房源列表 - 请求参数
 class getHouseListRequest extends APIRequest {
-
+  houseListData = {}
   constructor() {
     super();
   }
@@ -603,26 +603,26 @@ class getHouseListApi extends PostRequest {
 }
 // 获取房源列表 - 返回值
 class getHouseListResponse extends APIResponse {
-  houseList = {
-    "area": "(number)建筑面积",
-    "buildName": "(string)楼盘名称",
-    "competePrice": "(number)房源竞价价格",
-    "floor": "(int32)楼层",
-    "floors": "(int32)总楼层",
-    "hall": "(byte)几厅",
-    "houseNo": "(string)系统编码",
-    "houseStatus": "(byte)房屋状态，DD：HOUSE_STATUS",
-    "id": "(int32)房源ID，自增序列",
-    "innerarea": "(number)以下开始是填充交易成交报告框的字段   套内面积",
-    "mortgage": "(string)现状(按揭)，DD:HOUSE_STITUAT",
-    "nature": "(byte)产权性质：DD：HOUSE_NATURE",
-    "room": "(byte)几房/几室",
-    "sectionId": "(int32)片区ID，板块ID",
-    "sectionName": "(string)片区名称，板块名称",
-    "useage": "(byte)房屋用途，DD:HOUSE_USEAGE",
-    "userName": "(string)业务员",
-    "wei": "(byte)几卫"
-  }
+  // houseList = {
+  //   "area": "(number)建筑面积",
+  //   "buildName": "(string)楼盘名称",
+  //   "competePrice": "(number)房源竞价价格",
+  //   "floor": "(int32)楼层",
+  //   "floors": "(int32)总楼层",
+  //   "hall": "(byte)几厅",
+  //   "houseNo": "(string)系统编码",
+  //   "houseStatus": "(byte)房屋状态，DD：HOUSE_STATUS",
+  //   "id": "(int32)房源ID，自增序列",
+  //   "innerarea": "(number)以下开始是填充交易成交报告框的字段   套内面积",
+  //   "mortgage": "(string)现状(按揭)，DD:HOUSE_STITUAT",
+  //   "nature": "(byte)产权性质：DD：HOUSE_NATURE",
+  //   "room": "(byte)几房/几室",
+  //   "sectionId": "(int32)片区ID，板块ID",
+  //   "sectionName": "(string)片区名称，板块名称",
+  //   "useage": "(byte)房屋用途，DD:HOUSE_USEAGE",
+  //   "userName": "(string)业务员",
+  //   "wei": "(byte)几卫"
+  // }
   constructor() {
     super();
   }
@@ -636,19 +636,19 @@ class getHouseList {
   send() {
     return new getHouseListApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
-
-      let data = res.data.list || [];
+      console.log(res.data);
+      let data = res.data || [];
       let list = [];
 
-      for (let item of data) {
-        let responseItem = new getHouseListResponse();
-        for (let key in responseItem) {
-          responseItem[key] = item[key] || responseItem[key];
-        }
-        list.push(responseItem);
-      }
+      // for (let item of data) {
+      //   let responseItem = new getHouseListResponse();
+      //   for (let key in responseItem) {
+      //     responseItem[key] = item[key] || responseItem[key];
+      //   }
+      //   list.push(responseItem);
+      // }
 
-      return list;
+      return data;
     })
   }
 }
@@ -656,21 +656,17 @@ class getHouseList {
 /* ---------------------------------------------------------------------------------------------------- */
 // 获取客源列表 -请求参数
 class getClientListRequest extends APIRequest {
-
+  pageNum = 1;
+  pageSize = 1;
+  saleOrRentType = "";
+  organizationId = "";
+  userId = "";
+  custId = "";
+  select = "";
+  compId = "";
   constructor() {
     super();
   }
-}
-class clientList {
-  pageNum = 1;
-  pageSize = 1;
-  saleOrRentType = "1";
-  organizationId = 1;
-  userId = 1;
-  buildId = 1;
-  custId = 0;
-  select = "";
-  compId = 0;
 }
 // 获取客源列表 -请求地址
 class getClientListApi extends PostRequest {
@@ -678,7 +674,7 @@ class getClientListApi extends PostRequest {
     super(request);
   }
   getUrl() {
-    return "/mlDeal/getReportLinkCustList";
+    return "/erpWeb/mlDeal/getReportLinkCustList";
   }
 }
 // 获取客源列表 -返回值
@@ -711,7 +707,52 @@ class getClientList {
     })
   }
 }
-
+/* ---------------------------------------------------------------------------------------------------- */
+// 获取片区列表 -请求参数
+class getAreaListRequest extends APIRequest {
+  cityId = ""; //城市id
+  sectionName = "" //商圈名称
+  constructor() {
+    super();
+  }
+}
+// 获取片区列表 -请求地址
+class getAreaListApi extends PostRequest {
+  constructor(request = new getAreaListRequest()) {
+    super(request);
+  }
+  getUrl() {
+    return "/erpWeb/mlDeal/getRegSectionList";
+  }
+}
+// 获取片区列表 -返回值
+class getAreaListResponse extends APIResponse {
+  constructor() {
+    super();
+  }
+}
+// 获取片区列表 
+class getAreaList {
+  request;
+  constructor(request = new getAreaListResponse()) {
+    this.request = request;
+  }
+  send() {
+    return new getAreaListApi(this.request).send().then(res => {
+      if (res.errCode !== Const.successCode) return Promise.reject(res);
+      let data = res.data || [];
+      let list = [];
+      // for (let item of data) {
+      //   let responseItem = new getAreaListResponse();
+      //   for (let key in responseItem) {
+      //     responseItem[key] = item[key] || responseItem[key];
+      //   }
+      //   list.push(responseItem);
+      // }
+      return data;
+    })
+  }
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -747,8 +788,10 @@ export {
   getHouseList,
   getHouseListResponse,
   getHouseListRequest,
-  
+
   // 获取客源列表
   getClientList,
-  clientList,
+
+  // 获取片区列表
+  getAreaList
 }

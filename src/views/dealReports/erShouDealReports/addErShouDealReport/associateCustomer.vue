@@ -45,23 +45,42 @@
         </el-input>
         <div class="search-box" @click="initData">查询</div>
       </div>
-      <el-table class="table-box" :data="tableData" style="width: 100%">
-        <el-table-column
-          v-for="(item, index) in tableColumnList"
-          :key="index"
-          :prop="item.prop"
-          :label="item.label"
-        ></el-table-column>
-      </el-table>
+      <main>
+        <div class="title">
+          <div class="col">归属组织</div>
+          <div class="col">客户持有人</div>
+          <div class="col">客户编码</div>
+          <div class="col">客户名称</div>
+          <div class="col">客户手机号</div>
+          <div class="col">转接/合作单号</div>
+        </div>
+        <div class="content">
+          <div class="row" v-for="(v, i) in tableData" :key="i">
+            <div class="col">
+              <div class="item">{{ v.custId }}</div>
+            </div>
+            <div class="col">
+              <div class="item">
+                <div class="sub_title">{{ v.custName }}</div>
+              </div>
+            </div>
+            <div class="col">{{ v.custMobile }}</div>
+            <div class="col">
+              <div class="item">
+                <div class="sub_title">{{ v.customerType }}</div>
+              </div>
+            </div>
+            <div class="col">{{ v.userName }}</div>
+            <div class="col">{{ v.organizationName }}</div>
+          </div>
+        </div>
+      </main>
     </div>
   </div>
 </template>
 
 <script>
-import {
-  getClientList,
-  clientList,
-} from "../../../../net/dealReports/erShouDealReports";
+import { getClientList } from "../../../../net/dealReports/erShouDealReports";
 export default {
   props: {
     // 显示与隐藏弹框
@@ -79,16 +98,17 @@ export default {
     return {
       inputWidth1: "1.3rem",
       inputWidth2: "2.3rem",
-      clientSelect: new clientList(),
-      testSelectList: [],
-      tableColumnList: [
-        { prop: "organizationName", label: "归属组织" },
-        { prop: "userName", label: "客户持有人" },
-        { prop: "buyCustNo", label: "客户编码" },
-        { prop: "buyCustName", label: "客户名称" },
-        { prop: "zzbm", label: "客户手机号" },
-        { prop: "recommendType", label: "转介/合作单号" },
-      ],
+      testSelectList: "",
+      clientSelect: {
+        pageNum: 1,
+        pageSize: 1,
+        saleOrRentType: 1,
+        organizationId: 1,
+        userId: 1,
+        custId: 0,
+        select: "",
+        compId: 123,
+      },
       tableData: [],
     };
   },
@@ -98,11 +118,19 @@ export default {
     },
     // 查询
     async initData() {
-      let data = new getClientList(this.clientSelect).send();
-      console.log(data);
-      this.tableData = data;
-      console.log(this.dealType);
+      new getClientList(this.clientSelect).send().then((res) => {
+        this.tableData = res;
+        console.log(res);
+      });
     },
+  },
+  created() {
+    // if (this.dealType === 2) {
+    //   this.clientSelect.saleOrRentType = 1;
+    // } else {
+    //   this.clientSelect.saleOrRentType = 0;
+    // }
+    console.log(this.clientSelect.select);
   },
 };
 </script>
@@ -191,11 +219,98 @@ export default {
         cursor: pointer;
       }
     }
-    & > .table-box {
-      /deep/ .has-gutter {
-        tr,
-        th {
-          background-color: #ebeef0;
+    main {
+      .title {
+        width: 100%;
+        height: 0.35rem;
+        background-color: #ebeef0;
+        display: flex;
+        .col {
+          height: 100%;
+          line-height: 0.35rem;
+          color: #888888;
+          font-size: 0.12rem;
+          font-family: MicrosoftYaHei;
+          font-weight: bold;
+          &:nth-of-type(1) {
+            width: 1.63rem;
+            padding-left: 0.16rem;
+          }
+          &:nth-of-type(2) {
+            width: 0.81rem;
+          }
+          &:nth-of-type(3) {
+            width: 1.67rem;
+          }
+          &:nth-of-type(4) {
+            width: 0.88rem;
+          }
+          &:nth-of-type(5) {
+            width: 1.32rem;
+          }
+          &:nth-of-type(6) {
+            width: 1.9rem;
+          }
+        }
+      }
+      .content {
+        .row {
+          margin-bottom: 0.03rem;
+          background-color: #fff;
+          display: flex;
+          &:hover {
+            background-color: #eaeaea;
+            cursor: pointer;
+          }
+          .col {
+            height: 100%;
+            color: #888888;
+            font-size: 0.12rem;
+            font-family: MicrosoftYaHei;
+            font-weight: bold;
+            padding: 0.14rem 0;
+            &:nth-of-type(1) {
+              width: 1.63rem;
+              padding-left: 0.16rem;
+            }
+            &:nth-of-type(2) {
+              width: 0.81rem;
+            }
+            &:nth-of-type(3) {
+              width: 1.32rem;
+            }
+            &:nth-of-type(4) {
+              width: 1.67rem;
+            }
+            &:nth-of-type(5) {
+              width: 0.88rem;
+            }
+            &:nth-of-type(6) {
+              width: 1.9rem;
+            }
+            .item {
+              height: 0.15rem;
+              width: 100%;
+              display: flex;
+              line-height: 0.15rem;
+              .sub_title {
+                height: 100%;
+                position: relative;
+                &::after {
+                  content: ":";
+                  position: absolute;
+                  right: -0.06rem;
+                  top: 50%;
+                  transform: translateY(-50%);
+                }
+              }
+              .sub_content {
+                max-width: 1.77rem;
+                height: 100%;
+                margin-left: 0.15rem;
+              }
+            }
+          }
         }
       }
     }

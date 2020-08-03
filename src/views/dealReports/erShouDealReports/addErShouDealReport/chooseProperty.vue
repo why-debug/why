@@ -117,12 +117,13 @@
           </el-select>
         </div>
       </div>
-      <el-table class="table-box" :data="tableData" style="width: 100%">
+      <el-table max-height="450" class="table-box" :data="tableData" style="width: 100%">
         <el-table-column
           v-for="(item, index) in tableColumnList"
           :key="index"
           :prop="item.prop"
           :label="item.label"
+          show-overflow-tooltip="true"
         ></el-table-column>
       </el-table>
     </div>
@@ -140,6 +141,11 @@ export default {
     isShow: {
       type: Boolean,
       default: false,
+    },
+    // 交易类型
+    dealType: {
+      type: String,
+      default: "1",
     },
   },
   data() {
@@ -181,15 +187,24 @@ export default {
     hideIt() {
       this.$emit("update:isShow", false);
     },
-    changeTab(value) {
-      this.tabActive = value;
-    },
+    // changeTab(value) {
+    //   this.tabActive = value;
+    // },
     async initData() {
-      let data = new getHouseList(this.testSelect).send();
-      console.log(data);
-      this.tableData = data;
+      let data = new getHouseList(this.testSelect).send().then((res) => {
+        this.tableData = res;
+        console.log(res);
+      });
+      console.log(this.dealType);
+      if (this.dealType == 2) {
+        this.testSelect.dealType = "1";
+      } else {
+        this.testSelect.dealType = "0";
+      }
+      console.log(this.testSelect.dealType);
     },
   },
+  created() {},
 };
 </script>
 
@@ -210,8 +225,9 @@ export default {
     width: 8.66rem;
     height: 4.88rem;
     background-color: #eff4f9;
-    padding: 0 0.2rem;
+    padding: 0.2rem 0.2rem;
     box-sizing: border-box;
+    overflow: hidden;
     & > .close-icon {
       position: absolute;
       top: 0;
@@ -234,7 +250,7 @@ export default {
       top: 0;
       left: 0;
       width: 100%;
-      height: 0.49rem;
+      // height: 0.49rem;
       border-bottom: 0.01rem solid #cad5df;
       display: flex;
       padding: 0 0.2rem;
@@ -269,7 +285,6 @@ export default {
       & > .nav_topBox {
         width: 100%;
         height: 0.5rem;
-        margin-top: 0.2rem;
         display: flex;
         align-items: center;
         // /deep/ .el-input__icon {

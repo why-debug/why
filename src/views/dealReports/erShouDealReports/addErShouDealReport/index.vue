@@ -284,7 +284,7 @@
         <el-form-item class="form-item" prop="erpMlDeal.houseReg">
           <div class="label-title">所属片区</div>
           <el-input
-            v-model="ruleForm.erpMlDeal.houseReg"
+            v-model="areaName"
             :style="{'width': inputWidth1}"
             :readonly="true"
             @click.native="showSelectArea()"
@@ -1490,9 +1490,12 @@
       :isShow.sync="associateCustomerObj.isShow"
     ></associate-customer>
     <!-- 选择物业 -->
-    <choose-property :isShow.sync="choosePropertyObj.isShow"></choose-property>
+    <choose-property
+      :dealType="ruleForm.erpMlDeal.dealType"
+      :isShow.sync="choosePropertyObj.isShow"
+    ></choose-property>
     <!-- 选择片区 -->
-    <select-area :isShow.sync="selectAreaObj.isShow"></select-area>
+    <select-area v-on:sectionName="sectionName" :isShow.sync="selectAreaObj.isShow"></select-area>
   </div>
 </template>
 
@@ -1677,6 +1680,7 @@ export default {
       houseUseageList: [],
       // 所属片区
       houseRegList: [],
+      areaName: "",
       // 产权性质
       propertyTypeList: [
         { label: "商品房", value: 1 },
@@ -1998,6 +2002,9 @@ export default {
     // 选择片区
     showSelectArea() {
       this.selectAreaObj.isShow = true;
+    },
+    sectionName(v) {
+      this.areaName = v;
     },
     // 合作费改变
     cooperationCostChange(index) {
