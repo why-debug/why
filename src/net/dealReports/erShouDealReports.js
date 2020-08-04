@@ -378,7 +378,6 @@ class getHouseLeaseList {
   constructor(request = new getHouseLeaseListRequest()) {
     this.request = request;
   }
-
   send() {
     return new getHouseLeaseListApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
@@ -639,7 +638,6 @@ class getHouseList {
       console.log(res.data);
       let data = res.data || [];
       let list = [];
-
       // for (let item of data) {
       //   let responseItem = new getHouseListResponse();
       //   for (let key in responseItem) {
@@ -647,12 +645,10 @@ class getHouseList {
       //   }
       //   list.push(responseItem);
       // }
-
       return data;
     })
   }
 }
-
 /* ---------------------------------------------------------------------------------------------------- */
 // 获取客源列表 -请求参数
 class getClientListRequest extends APIRequest {
@@ -678,7 +674,6 @@ class getClientListApi extends PostRequest {
   }
 }
 // 获取客源列表 -返回值
-
 class getClientListResponse extends APIResponse {
   constructor() {
     super();
@@ -693,7 +688,7 @@ class getClientList {
   send() {
     return new getClientListApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
-      let data = res.data.list || [];
+      let data = res.data || [];
       let list = [];
       for (let item of data) {
         let responseItem = new getClientListResponse();
@@ -702,8 +697,7 @@ class getClientList {
         }
         list.push(responseItem);
       }
-
-      return list;
+      return data;
     })
   }
 }
@@ -749,6 +743,46 @@ class getAreaList {
       //   }
       //   list.push(responseItem);
       // }
+      return data;
+    })
+  }
+}
+/* ---------------------------------------------------------------------------------------------------- */
+
+// 业绩类型 -请求参数
+class pieceTypeRequest extends APIRequest {
+  cityId = ""; //城市id
+  sectionName = "" //商圈名称
+  constructor() {
+    super();
+  }
+}
+// 业绩类型 -请求地址
+class pieceTypeApi extends PostRequest {
+  constructor(request = new getAreaListRequest()) {
+    super(request);
+  }
+  getUrl() {
+    return "/erpWeb/managerCenter/contract/getFunPerformanceTypeMllist";
+  }
+}
+// 业绩类型 -返回值
+class pieceTypeResponse extends APIResponse {
+  constructor() {
+    super();
+  }
+}
+// 业绩类型
+class pieceType {
+  request;
+  constructor(request = new getAreaListResponse()) {
+    this.request = request;
+  }
+  send() {
+    return new getAreaListApi(this.request).send().then(res => {
+      if (res.errCode !== Const.successCode) return Promise.reject(res);
+      let data = res.data || [];
+      let list = [];
       return data;
     })
   }

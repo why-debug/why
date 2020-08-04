@@ -47,7 +47,7 @@
             v-model="testSelect"
             style="margin-right: 0.1rem"
             :style="{'width': inputWidth2}"
-            placeholder
+            placeholder="全部"
           >
             <el-option
               v-for="item in testSelectList"
@@ -61,7 +61,7 @@
             v-model="testSelect.floor"
             style="margin-right: 0.1rem"
             :style="{'width': inputWidth3}"
-            placeholder
+            placeholder="楼层"
           >
             <el-option
               v-for="item in testSelectList"
@@ -117,15 +117,28 @@
           </el-select>
         </div>
       </div>
-      <el-table max-height="450" class="table-box" :data="tableData" style="width: 100%">
-        <el-table-column
-          v-for="(item, index) in tableColumnList"
-          :key="index"
-          :prop="item.prop"
-          :label="item.label"
-          show-overflow-tooltip="true"
-        ></el-table-column>
-      </el-table>
+      <main>
+        <div class="title">
+          <div class="col">盘源名称</div>
+          <div class="col">状态</div>
+          <div class="col">楼层</div>
+          <div class="col">户型</div>
+          <div class="col">面积</div>
+          <div class="col">价格</div>
+          <div class="col">业务员</div>
+        </div>
+        <div class="content">
+          <div class="row" @click="kew(v)" v-for="(v, i) in tableData" :key="i">
+            <div class="col">{{ v.buildName }}</div>
+            <div class="col">{{ v.houseStatus }}</div>
+            <div class="col">{{ v.floor }}</div>
+            <div class="col">{{ v.room }}-{{v.hall}}-{{v.wei}}</div>
+            <div class="col">{{ v.area }} ㎡</div>
+            <div class="col">{{ v.competePrice }} 万</div>
+            <div class="col">{{ v.userName }}</div>
+          </div>
+        </div>
+      </main>
     </div>
   </div>
 </template>
@@ -150,12 +163,6 @@ export default {
   },
   data() {
     return {
-      form: {
-        Dong: "",
-        unit: "",
-        room: "",
-        number: "",
-      },
       houses: [
         { label: "w1", value: "1" },
         { label: "w2", value: "2" },
@@ -171,15 +178,6 @@ export default {
       inputWidth4: "0.45rem",
       // 请求参数
       testSelect: new houseListData(),
-      tableColumnList: [
-        { prop: "buildName", label: "楼盘名称" },
-        { prop: "houseStatus", label: "状态" },
-        { prop: "floor", label: "楼层" },
-        { prop: "zzmc", label: "户型" },
-        { prop: "area", label: "面积" },
-        { prop: "competePrice", label: "价格" },
-        { prop: "userName", label: "业务员" },
-      ],
       tableData: [],
     };
   },
@@ -187,24 +185,25 @@ export default {
     hideIt() {
       this.$emit("update:isShow", false);
     },
-    // changeTab(value) {
-    //   this.tabActive = value;
-    // },
     async initData() {
       let data = new getHouseList(this.testSelect).send().then((res) => {
         this.tableData = res;
         console.log(res);
       });
       console.log(this.dealType);
-      if (this.dealType == 2) {
-        this.testSelect.dealType = "1";
-      } else {
-        this.testSelect.dealType = "0";
-      }
+      this.testSelect.dealType = this.dealType == 2 ? "2" : "1";
       console.log(this.testSelect.dealType);
     },
+    kew(v) {
+      this.$emit("update:isShow", false);
+      this.$emit("houseInfo", v);
+
+    },
   },
-  created() {},
+  created() {
+    console.log(this.dealType);
+    this.testSelect.dealType = this.dealType == 2 ? "2" : "1";
+  },
 };
 </script>
 
@@ -320,15 +319,118 @@ export default {
         padding-left: 0.7rem;
       }
     }
-    & > .table-box {
-      margin-top: 0.15rem;
-      /deep/ .has-gutter {
-        tr,
-        th {
-          background-color: #ebeef0;
+    main {
+      margin-top: 0.2rem;
+      .title {
+        width: 100%;
+        background-color: #ebeef0;
+        display: flex;
+        .col {
+          height: 100%;
+          color: #888888;
+          font-size: 0.12rem;
+          font-family: MicrosoftYaHei;
+          font-weight: bold;
+          padding: 0.1rem 0.2rem;
+          &:nth-of-type(1) {
+            width: 1.2rem;
+            padding-left: 0.16rem;
+          }
+          &:nth-of-type(2) {
+            width: 0.8rem;
+          }
+          &:nth-of-type(3) {
+            width: 0.8rem;
+          }
+          &:nth-of-type(4) {
+            width: 1.3rem;
+          }
+          &:nth-of-type(5) {
+            width: 0.88rem;
+          }
+          &:nth-of-type(6) {
+            width: 1.2rem;
+          }
+          &:nth-of-type(7) {
+            width: 1.2rem;
+          }
+        }
+      }
+      .content {
+        height: 3rem;
+        overflow-y: scroll;
+        .row {
+          margin-bottom: 0.03rem;
+          background-color: #fff;
+          display: flex;
+          &:hover {
+            background-color: #eaeaea;
+            cursor: pointer;
+          }
+          .col {
+            height: 100%;
+            color: #888888;
+            font-size: 0.12rem;
+            font-family: MicrosoftYaHei;
+            font-weight: bold;
+            padding: 0.1rem 0.2rem;
+            &:nth-of-type(1) {
+              width: 1.2rem;
+              padding-left: 0.16rem;
+            }
+            &:nth-of-type(2) {
+              width: 0.8rem;
+            }
+            &:nth-of-type(3) {
+              width: 0.8rem;
+            }
+            &:nth-of-type(4) {
+              width: 1.3rem;
+            }
+            &:nth-of-type(5) {
+              width: 0.88rem;
+            }
+            &:nth-of-type(6) {
+              width: 1.2rem;
+            }
+            &:nth-of-type(7) {
+              width: 1.2rem;
+            }
+            .item {
+              height: 0.15rem;
+              width: 100%;
+              display: flex;
+              line-height: 0.15rem;
+              .sub_title {
+                height: 100%;
+                position: relative;
+                &::after {
+                  content: ":";
+                  position: absolute;
+                  right: -0.06rem;
+                  top: 50%;
+                  transform: translateY(-50%);
+                }
+              }
+              .sub_content {
+                max-width: 1.77rem;
+                height: 100%;
+                margin-left: 0.15rem;
+              }
+            }
+          }
         }
       }
     }
+    // & > .table-box {
+    //   margin-top: 0.15rem;
+    //   /deep/ .has-gutter {
+    //     tr,
+    //     th {
+    //       background-color: #ebeef0;
+    //     }
+    //   }
+    // }
   }
 }
 </style>

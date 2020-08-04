@@ -56,22 +56,12 @@
         </div>
         <div class="content">
           <div class="row" v-for="(v, i) in tableData" :key="i">
-            <div class="col">
-              <div class="item">{{ v.custId }}</div>
-            </div>
-            <div class="col">
-              <div class="item">
-                <div class="sub_title">{{ v.custName }}</div>
-              </div>
-            </div>
-            <div class="col">{{ v.custMobile }}</div>
-            <div class="col">
-              <div class="item">
-                <div class="sub_title">{{ v.customerType }}</div>
-              </div>
-            </div>
-            <div class="col">{{ v.userName }}</div>
             <div class="col">{{ v.organizationName }}</div>
+            <div class="col">{{ v.userName}}</div>
+            <div class="col">{{ v.buyCustNo }}</div>
+            <div class="col">{{ v.buyCustName }}</div>
+            <div class="col">{{ v.phoneList[0].phoneNumber }}</div>
+            <div class="col">{{ v.recommendNum }} ({{v.recommendType==1?'转介':'合作'}})</div>
           </div>
         </div>
       </main>
@@ -100,14 +90,14 @@ export default {
       inputWidth2: "2.3rem",
       testSelectList: "",
       clientSelect: {
-        pageNum: 1,
-        pageSize: 1,
+        pageNum: "",
+        pageSize: "",
         saleOrRentType: 1,
-        organizationId: 1,
-        userId: 1,
-        custId: 0,
+        organizationId: "",
+        userId: "",
+        custId: "",
         select: "",
-        compId: 123,
+        compId: "",
       },
       tableData: [],
     };
@@ -125,11 +115,11 @@ export default {
     },
   },
   created() {
-    // if (this.dealType === 2) {
-    //   this.clientSelect.saleOrRentType = 1;
-    // } else {
-    //   this.clientSelect.saleOrRentType = 0;
-    // }
+    if (this.dealType === 2) {
+      this.clientSelect.saleOrRentType = 1;
+    } else {
+      this.clientSelect.saleOrRentType = 0;
+    }
     console.log(this.clientSelect.select);
   },
 };
@@ -233,14 +223,14 @@ export default {
           font-family: MicrosoftYaHei;
           font-weight: bold;
           &:nth-of-type(1) {
-            width: 1.63rem;
+            width: 1.6rem;
             padding-left: 0.16rem;
           }
           &:nth-of-type(2) {
-            width: 0.81rem;
+            width: 1rem;
           }
           &:nth-of-type(3) {
-            width: 1.67rem;
+            width: 1.6rem;
           }
           &:nth-of-type(4) {
             width: 0.88rem;
@@ -254,6 +244,8 @@ export default {
         }
       }
       .content {
+        height: 3.5rem;
+        overflow-y: scroll;
         .row {
           margin-bottom: 0.03rem;
           background-color: #fff;
@@ -270,20 +262,20 @@ export default {
             font-weight: bold;
             padding: 0.14rem 0;
             &:nth-of-type(1) {
-              width: 1.63rem;
+              width: 1.6rem;
               padding-left: 0.16rem;
             }
             &:nth-of-type(2) {
-              width: 0.81rem;
+              width: 1rem;
             }
             &:nth-of-type(3) {
-              width: 1.32rem;
+              width: 1.6rem;
             }
             &:nth-of-type(4) {
-              width: 1.67rem;
+              width: 0.88rem;
             }
             &:nth-of-type(5) {
-              width: 0.88rem;
+              width: 1.32rem;
             }
             &:nth-of-type(6) {
               width: 1.9rem;

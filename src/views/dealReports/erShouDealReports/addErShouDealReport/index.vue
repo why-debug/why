@@ -284,7 +284,7 @@
         <el-form-item class="form-item" prop="erpMlDeal.houseReg">
           <div class="label-title">所属片区</div>
           <el-input
-            v-model="areaName"
+            v-model="ruleForm.erpMlDeal.houseReg"
             :style="{'width': inputWidth1}"
             :readonly="true"
             @click.native="showSelectArea()"
@@ -1493,6 +1493,7 @@
     <choose-property
       :dealType="ruleForm.erpMlDeal.dealType"
       :isShow.sync="choosePropertyObj.isShow"
+      v-on:houseInfo="houseInfo"
     ></choose-property>
     <!-- 选择片区 -->
     <select-area v-on:sectionName="sectionName" :isShow.sync="selectAreaObj.isShow"></select-area>
@@ -1608,6 +1609,12 @@ export default {
           { required: true, message: "不能为空", trigger: "blur" },
         ],
         "erpMlDeal.houseRoom": [{ validator: checkHouseRoom, trigger: "blur" }],
+        "erpMlDeal.houseArea": [
+          { required: true, message: "不能为空", trigger: "blur" },
+        ],
+        "erpMlDeal.houseInnerArea": [
+          { required: true, message: "不能为空", trigger: "blur" },
+        ],
         "erpMlDeal.entrustNo": [
           { required: true, message: "请选择合同", trigger: "blur" },
         ],
@@ -1680,7 +1687,6 @@ export default {
       houseUseageList: [],
       // 所属片区
       houseRegList: [],
-      areaName: "",
       // 产权性质
       propertyTypeList: [
         { label: "商品房", value: 1 },
@@ -1999,12 +2005,30 @@ export default {
     showChooseProperty() {
       this.choosePropertyObj.isShow = true;
     },
+    // 选择物业回显信息
+    houseInfo(v) {
+      console.log(v);
+      // 套内面积
+      this.ruleForm.erpMlDeal.houseInnerArea = v.innerarea;
+      // 建筑面积
+      this.ruleForm.erpMlDeal.houseArea = v.area;
+      // 产权性质
+      this.ruleForm.erpMlDeal.propertyType = v.nature;
+      // 所属片区
+      this.ruleForm.erpMlDeal.houseReg = v.sectionName;
+      // 用途
+      this.ruleForm.erpMlDeal.houseUseage = v.useage;
+      // 户型
+      this.ruleForm.erpMlDeal.houseRoom = v.room;
+      this.ruleForm.erpMlDeal.houseHall = v.hall;
+      this.ruleForm.erpMlDeal.houseToilet = v.wei;
+    },
     // 选择片区
     showSelectArea() {
       this.selectAreaObj.isShow = true;
     },
     sectionName(v) {
-      this.areaName = v;
+      this.ruleForm.erpMlDeal.houseReg = v;
     },
     // 合作费改变
     cooperationCostChange(index) {
@@ -2629,7 +2653,7 @@ export default {
               background-color: #fdfdfd;
               box-shadow: inset 0 0.01rem 0.05rem 0 rgba(202, 213, 223, 0.5);
               border-radius: 0.03rem;
-              border: solid 0.01rem #bdc6cf;
+              border: solid 0.01rem #bdc6cf;      
               color: #444444;
             }
             &:nth-child(1) {
