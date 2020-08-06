@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svndata/siteProduct/!svn/ver/52986/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection
+END
+GetRangeUserList.js
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svndata/siteProduct/!svn/ver/52885/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetRangeUserList.js
+END
+GetLinkCustList.js
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svndata/siteProduct/!svn/ver/52885/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetLinkCustList.js
+END
+GetAllUseAndClassAndLevel.js
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svndata/siteProduct/!svn/ver/49956/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetAllUseAndClassAndLevel.js
+END
+GetReporDealBuildList.js
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svndata/siteProduct/!svn/ver/52885/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetReporDealBuildList.js
+END
+GetAgentList.js
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svndata/siteProduct/!svn/ver/52885/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetAgentList.js
+END
+AddReporInfo.js
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svndata/siteProduct/!svn/ver/52986/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/AddReporInfo.js
+END
+GetAllotOrgList.js
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svndata/siteProduct/!svn/ver/50030/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetAllotOrgList.js
+END
+GetInitInfo.js
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svndata/siteProduct/!svn/ver/50030/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetInitInfo.js
+END
+GetAllReportNo.js
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svndata/siteProduct/!svn/ver/49956/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetAllReportNo.js
+END
+GetDistributionCompanyList.js
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svndata/siteProduct/!svn/ver/50030/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetDistributionCompanyList.js
+END
+GetPerformanceType.js
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svndata/siteProduct/!svn/ver/50030/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetPerformanceType.js
+END
+GetReporBuildInfo.js
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svndata/siteProduct/!svn/ver/50030/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetReporBuildInfo.js
+END

@@ -1,0 +1,64 @@
+10
+
+dir
+54540
+http://172.16.140.92:9001/svndata/siteProduct/trunk/frontend_pure/meilian-erp-vue/src/net
+http://172.16.140.92:9001/svndata/siteProduct
+
+
+
+2020-07-21T09:45:21.137849Z
+54125
+xiongjuncheng
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5e672093-ee8b-a04a-a967-2d275209167d
+
+newHouseDealReport
+dir
+
+closingRecords
+dir
+
+bankInformation
+dir
+
+potentialPerformance
+dir
+
+projectAgentinfo
+dir
+
+dealReports
+dir
+
+commissionScheme
+dir
+
+contractNoManagement
+dir
+
+common
+dir
+
+KPIModule
+dir
+
+planningFees
+dir
+
+netDemo
+dir
+

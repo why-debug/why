@@ -1,0 +1,21 @@
+
+@tcBgColor: #d9f1fe;
+
+::-webkit-scrollbar{
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track{
+  background: @tcBgColor;
+  border-radius:2px;
+}
+::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,0.1);
+  border-radius:10px;
+}
+::-webkit-scrollbar-thumb:hover{
+  background: rgba(0,0,0,0.1);
+}
+::-webkit-scrollbar-corner{
+  background: @tcBgColor;
+}

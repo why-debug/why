@@ -1,0 +1,83 @@
+10
+
+dir
+54540
+http://172.16.140.92:9001/svndata/siteProduct/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/newHouseDealReport/addNewHouseDealReport
+http://172.16.140.92:9001/svndata/siteProduct
+
+
+
+2020-07-21T09:45:21.137849Z
+54125
+xiongjuncheng
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5e672093-ee8b-a04a-a967-2d275209167d
+
+subscription_info
+dir
+
+utils
+dir
+
+project_info
+dir
+
+components
+dir
+
+cus_info
+dir
+
+addNewHouseDealReport.vue
+file
+54541
+
+
+
+2020-07-30T06:10:15.859147Z
+52a02fad8328e1abbbf92a45f2f536b6
+2020-08-05T03:17:02.981437Z
+54541
+wanghaiyang
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5458
+
+common_style
+dir
+
+performance_info
+dir
+

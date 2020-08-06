@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svndata/siteProduct/!svn/ver/54125/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView
+END
+educationConfig.vue
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svndata/siteProduct/!svn/ver/51887/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView/educationConfig.vue
+END
+bonusRulesConfig.vue
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svndata/siteProduct/!svn/ver/54541/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView/bonusRulesConfig.vue
+END
+brokerIDConfig.vue
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svndata/siteProduct/!svn/ver/52891/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView/brokerIDConfig.vue
+END
+penaltiesConfig.vue
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svndata/siteProduct/!svn/ver/51887/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView/penaltiesConfig.vue
+END
+systemConfig.vue
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svndata/siteProduct/!svn/ver/51887/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView/systemConfig.vue
+END
+portStandardConfig.vue
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svndata/siteProduct/!svn/ver/50309/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView/portStandardConfig.vue
+END
+seniorityConfig.vue
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svndata/siteProduct/!svn/ver/51887/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView/seniorityConfig.vue
+END
+tuiJianRuZhiConfig.vue
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svndata/siteProduct/!svn/ver/51887/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView/tuiJianRuZhiConfig.vue
+END
+otherKaoHeConfig.vue
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svndata/siteProduct/!svn/ver/51887/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView/otherKaoHeConfig.vue
+END
+manageBonusRulesConfig.vue
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svndata/siteProduct/!svn/ver/54541/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView/manageBonusRulesConfig.vue
+END

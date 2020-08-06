@@ -1,0 +1,9 @@
+K 10
+svn:ignore
+V 39
+*.history
+.idea
+erpStatic
+node_modules
+
+END

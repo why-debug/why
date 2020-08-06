@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svndata/siteProduct/!svn/ver/54473/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components
+END
+branchManagerView.vue
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svndata/siteProduct/!svn/ver/51947/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/branchManagerView.vue
+END
+configTypeList.vue
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svndata/siteProduct/!svn/ver/51949/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/configTypeList.vue
+END
+searchInput.vue
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svndata/siteProduct/!svn/ver/50242/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/searchInput.vue
+END
+addBankPopup.vue
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svndata/siteProduct/!svn/ver/50242/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/addBankPopup.vue
+END
+chooseKPITypePopup.vue
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svndata/siteProduct/!svn/ver/51947/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/chooseKPITypePopup.vue
+END
+districtOwnerView.vue
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svndata/siteProduct/!svn/ver/51947/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/districtOwnerView.vue
+END
+districtMasterView.vue
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svndata/siteProduct/!svn/ver/51947/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/districtMasterView.vue
+END
+brokerView.vue
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svndata/siteProduct/!svn/ver/54541/trunk/frontend_pure/meilian-erp-vue/src/views/KPIModule/KPIConfig/components/brokerView.vue
+END

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svndata/siteProduct/!svn/ver/53164/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/components
+END
+archive.vue
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svndata/siteProduct/!svn/ver/52783/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/components/archive.vue
+END
+batch.vue
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svndata/siteProduct/!svn/ver/52614/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/components/batch.vue
+END
+void.vue
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svndata/siteProduct/!svn/ver/52614/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/components/void.vue
+END
+approval.vue
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svndata/siteProduct/!svn/ver/52783/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/components/approval.vue
+END
+searchInput.vue
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svndata/siteProduct/!svn/ver/49728/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/components/searchInput.vue
+END
+loan.vue
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svndata/siteProduct/!svn/ver/52614/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/components/loan.vue
+END
+termination.vue
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svndata/siteProduct/!svn/ver/53164/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/components/termination.vue
+END
+giveBack.vue
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svndata/siteProduct/!svn/ver/52614/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/components/giveBack.vue
+END

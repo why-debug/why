@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svndata/siteProduct/!svn/ver/52215/trunk/frontend_pure/meilian-erp-vue/src/net/common
+END
+GetUserOpers.js
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svndata/siteProduct/!svn/ver/51512/trunk/frontend_pure/meilian-erp-vue/src/net/common/GetUserOpers.js
+END
+GetPriceList.js
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svndata/siteProduct/!svn/ver/49704/trunk/frontend_pure/meilian-erp-vue/src/net/common/GetPriceList.js
+END
+GetProvinceCity.js
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svndata/siteProduct/!svn/ver/49704/trunk/frontend_pure/meilian-erp-vue/src/net/common/GetProvinceCity.js
+END
+GetInitInfo.js
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svndata/siteProduct/!svn/ver/49704/trunk/frontend_pure/meilian-erp-vue/src/net/common/GetInitInfo.js
+END
+GetProjectLeaderList.js
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svndata/siteProduct/!svn/ver/49704/trunk/frontend_pure/meilian-erp-vue/src/net/common/GetProjectLeaderList.js
+END
+GetOrgTreeApi.js
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svndata/siteProduct/!svn/ver/52215/trunk/frontend_pure/meilian-erp-vue/src/net/common/GetOrgTreeApi.js
+END
+GetSearchBuildList.js
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svndata/siteProduct/!svn/ver/49704/trunk/frontend_pure/meilian-erp-vue/src/net/common/GetSearchBuildList.js
+END
+GetRegSection.js
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svndata/siteProduct/!svn/ver/49704/trunk/frontend_pure/meilian-erp-vue/src/net/common/GetRegSection.js
+END
+GetCountry.js
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svndata/siteProduct/!svn/ver/49704/trunk/frontend_pure/meilian-erp-vue/src/net/common/GetCountry.js
+END
