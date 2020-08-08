@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 81
-/svndata/siteProduct/!svn/ver/54474/trunk/frontend_pure/meilian-erp-vue/src/model
+/svndata/siteProduct/!svn/ver/54613/trunk/frontend_pure/meilian-erp-vue/src/model
 END
 BaseInfoModel.js
 K 25
@@ -13,5 +13,5 @@ LoginModel.js
 K 25
 svn:wc:ra_dav:version-url
 V 95
-/svndata/siteProduct/!svn/ver/54541/trunk/frontend_pure/meilian-erp-vue/src/model/LoginModel.js
+/svndata/siteProduct/!svn/ver/54613/trunk/frontend_pure/meilian-erp-vue/src/model/LoginModel.js
 END

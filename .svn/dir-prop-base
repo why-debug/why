@@ -6,4 +6,8 @@ V 39
 erpStatic
 node_modules
 
+K 13
+svn:mergeinfo
+V 54
+/trunk/frontend_pure/meilian-erp-vue-2.4.1:53981-54178
 END

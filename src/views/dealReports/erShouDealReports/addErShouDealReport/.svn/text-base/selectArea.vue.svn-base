@@ -130,9 +130,13 @@ export default {
     },
     // 确定
     confirm() {
+      let list = {
+        label: this.tableData[this.activeRadio].sectionName,
+        value: this.tableData[this.activeRadio].sectionId,
+      };
       console.log(this.tableData[this.activeRadio].sectionName);
       this.$emit("update:isShow", false);
-      this.$emit("sectionName", this.tableData[this.activeRadio].sectionName);
+      this.$emit("sectionName", list);
     },
   },
 };
@@ -203,8 +207,8 @@ export default {
         font-weight: bold;
       }
       & > .search-btn-input {
-        height: 0.3rem;
-        line-height: 0.3rem;
+        height: 0.24rem;
+        line-height: 0.24rem;
         margin-right: 0.2rem;
         /deep/.el-input__inner {
           border-radius: 0.12rem;
@@ -212,7 +216,7 @@ export default {
         .search_icon {
           width: 0.14rem;
           height: 0.14rem;
-          margin-top: 0.08rem;
+          margin-top: 0.05rem;
           margin-right: 0.08rem;
         }
       }

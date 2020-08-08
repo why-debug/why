@@ -1,15 +1,15 @@
 10
 
 dir
-54540
+54614
 http://172.16.140.92:9001/svndata/siteProduct/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/erShouDealReports/addErShouDealReport
 http://172.16.140.92:9001/svndata/siteProduct
 
 
 
-2020-06-02T02:42:37.926648Z
-52902
-liuchilei
+2020-08-08T11:16:59.466742Z
+54614
+wanghaiyang
 
 
 
@@ -28,14 +28,14 @@ liuchilei
 
 chooseProperty.vue
 file
-54541
 
 
 
-2020-08-05T03:14:20.679023Z
-019cf2d65abf53e1dd3e4251f34feab5
-2020-08-05T03:17:02.981437Z
-54541
+
+2020-08-08T08:05:52.734192Z
+6e866bb8e7e87802f3c0af0dd6e5217a
+2020-08-08T11:16:59.466742Z
+54614
 wanghaiyang
 
 
@@ -58,18 +58,18 @@ wanghaiyang
 
 
 
-12195
+12283
 
 index.vue
 file
-54541
+54615
 
 
 
-2020-08-05T03:11:07.320963Z
-238aecdd6e7ebc3459682cd2e0139ecb
-2020-08-05T03:17:02.981437Z
-54541
+2020-08-08T11:31:45.585735Z
+086a0ebe85bfc4134d8309f731f7722d
+2020-08-08T11:36:47.614675Z
+54615
 wanghaiyang
 
 
@@ -92,18 +92,18 @@ wanghaiyang
 
 
 
-95920
+99768
 
 selectArea.vue
 file
-54541
 
 
 
-2020-08-03T12:56:41.747140Z
-c22e04a0e6ec7957b6c3fa1b3fcb0e2f
-2020-08-05T03:17:02.981437Z
-54541
+
+2020-08-05T13:38:03.946800Z
+8ab664b78dc01f851c21ac5380016b5c
+2020-08-08T11:16:59.466742Z
+54614
 wanghaiyang
 
 
@@ -126,18 +126,18 @@ wanghaiyang
 
 
 
-9024
+9138
 
 associateCustomer.vue
 file
-54541
 
 
 
-2020-08-04T08:16:31.659633Z
-7cb4c7e45ddbd0701a62407b170ebef9
-2020-08-05T03:17:02.981437Z
-54541
+
+2020-08-08T07:23:51.681996Z
+4a1136f3135b7bd6e1a80a1b15dcd7e9
+2020-08-08T11:16:59.466742Z
+54614
 wanghaiyang
 
 
@@ -160,11 +160,11 @@ wanghaiyang
 
 
 
-8343
+8448
 
 associatedContract.vue
 file
-54541
+
 
 
 

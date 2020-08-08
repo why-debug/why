@@ -25,34 +25,34 @@ class createMlDealReportRequest extends APIRequest {
 // erpMlDeal = {}
 class erpMlDeal {
   dealId = ""; // 主键ID
-  dealNo = "0003231"; // 成交编号
+  dealNo = ""; // 成交编号
   dealDate = ""; // 成交时间
-  dealType = 2; // 成交类型 1=售、2=租、3=代办、4=返利
+  dealType = "2"; // 成交类型 1=售、2=租、3=代办、4=返利
   category = 1; // 成交类别 1=一般成交、2=事后加佣、3=口头代理费、4=外区分佣
   mainDealNo = ""; // 事后加佣主单号
   mainDealId = ""; // 事后加佣ID
   estimatedCommissionTime = ""; // 预计收佣时间
   cooperationType = 1; // 合作方式：1=跨市合作、2=市内合作、3=区内合作
-  branchBankId = "1546"; // 分行ID
-  dealUserId = "1111"; // 成交人ID
-  otherDealCityId = 1; // 外区所在城市
-  otherDealBankId = 669; // 外区分行ID
+  branchBankId = ""; // 分行ID
+  dealUserId = ""; // 成交人ID
+  otherDealCityId = ""; // 外区所在城市
+  otherDealBankId = ""; // 外区分行ID
   supplementDate = ""; // 补录日期
   dealHouseStyle = 1; // 1=内部合作、2=外部合作
-  dealHouseId = 3340442; // 房源ID
-  dealHouseNo = "261645"; // 房源编号
-  dealHouseInfo = "wa"; // 物业信息
-  ownerName = "aad"; // 权属名称
+  dealHouseId = 3340690; // 房源ID
+  dealHouseNo = ""; // 房源编号
+  dealHouseInfo = ""; // 物业信息
+  ownerName = ""; // 权属名称
   ownerType = 1; // 1=房产证、2=不动产证
-  ownerNo = "16545"; // 权属编号
+  ownerNo = ""; // 权属编号
   houseUseage = ""; // 用途
   houseRoom = ""; // 室
   houseHall = ""; // 厅
   houseToilet = ""; // 卫
   houseBalcony = ""; // 阳台
-  houseReg = ""; // 所属片区
-  houseArea = 0; // 建筑面积
-  houseInnerArea = 0; // 套内面积
+  houseReg = ""; // 所属片区id
+  houseArea = ""; // 建筑面积
+  houseInnerArea = ""; // 套内面积
   propertyType = 1; // 产权性质 1=商品房、2=小产权房、3=军产房
   ownerStatus = 1; // 产权现状 1=红本、2=抵押
   fileStatus = 1; // 查档状态 1有效、2抵押、3查封、4其它
@@ -61,9 +61,9 @@ class erpMlDeal {
   handoverStatus = ""; // 1=空房、2=带家电
   entrustId = "";
   entrustType = 1;
-  entrustNo = "6164156465"; // 合同编号
+  entrustNo = ""; // 合同编号
   dealPrice = 0; // 成交价格
-  priceUnit = 1; // 1=元、2=万元
+  priceUnit = 2; // 1=元、2=万元
   signDate = ""; // 签约日期
   payType = 1; // 1=一次性、2=按揭
   firstEarnestMoney = ""; // 第一笔定金
@@ -104,6 +104,7 @@ class erpMlDeal {
   hasDispute = 0; // 是否有案件纠纷 0=否、1=是
   hasComplaint = 0; // 是否有投诉 0=否、1=是
   buildName = ''; // 楼盘名称
+  standardCommission = 5 //标准佣金    
 }
 // rpMlDealBuyUsers = [] 客户item
 class erpMlDealBuyUsersItem {
@@ -117,11 +118,11 @@ class erpMlDealBuyUsersItem {
   credentialsType = 1; // 证件类型 1=身份证 2=护照
   credentialsNo = ""; // 证件号码
   registrationType = 1; // 1=本市户籍
-  firstContractType = 1; // 联系方式1
+  firstContractType = "1"; // 联系方式1
   firstContractPhone = ""; // 联系电话1
-  secondContractType = 1; // 联系方式2
+  secondContractType = "1"; // 联系方式2
   secondContractPhone = ""; // 联系电话2
-  thirdContractType = 1; // 联系方式3
+  thirdContractType = "1"; // 联系方式3
   thirdContractPhone = ""; // 联系电话3
   country = ""; // 国家
   provinceId = ""; // 省份
@@ -151,7 +152,7 @@ class erpMlDealSellersItem {
   credentialsType = 1; // 证件类型 1=身份证 2=护照
   credentialsNo = ""; // 证件号码
   registrationType = 1; // 1=本市户籍
-  contractType = 1; // 联系方式
+  contractType = "1"; // 联系方式
   contractPhone = ""; // 联系电话
   country = ""; // 国籍
   provinceId = ""; // 省份
@@ -170,7 +171,7 @@ class erpMlDealOuterCooperationsItem {
   userName = ""; // 合作人
   idNo = ""; // 身份证
   contractPhone = ""; // 电话
-  type = "2"; // 类型
+  type = ""; // 类型
   cooperationCost = 0; // 合作费
   createUid = ""; // 创建人
   createTime = ""; // 创建时间
@@ -182,25 +183,26 @@ class erpMlDealProfitsitem {
   id = ""; // 主键ID
   dealId = ""; // 所属成交报告ID
   seqNo = ""; // 序号
-  profitType = "30"; // 业绩类型
+  profitType = ""; // 业绩类型
   compId = ""; // 公司ID
   orgId = ""; // 部门ID
   profitMonth = ""; // 业绩月份
   profitProportion = 0; // 业绩比例
   profitMoney = 0; // 业绩金额
   orderProportion = 0; // 单量
-  profitLeaders = ""; // 多个人员用|分割
   createUid = ""; // 创建人
   createTime = ""; // 创建时间
   isDel = ""; // 是否删除
   delTime = ""; // 删除时间
-  userId = "1111"; // 分配人Id
-  userName = "why"; // 分配人名字
-  compOrgName = "职能"; // 分配部门
+  userId = ""; // 分配人Id
+  userName = ""; // 分配人名字
+  compOrgName = ""; // 分配部门
+  profitLeaders = "" //(string)领导人分配业绩Id 多个人员用,分割, 
+  profitLeadersName = "" //(string)领导人分配业绩名字 多个人员用,分割,
 
   getProfitLeaders() {
-    if (!this.profitLeaders) return ''
-    return this.profitLeaders.split('|').join(',')
+    if (!this.profitLeadersName) return ''
+    return this.profitLeadersName.split('|').join(',')
   }
 }
 
@@ -522,6 +524,7 @@ class getBranchBankDicList {
 
 // 获取业绩类别列表 - 请求参数
 class getFunPerformanceTypeListRequest extends APIRequest {
+  houseType = 2
   constructor() {
     super();
   }
@@ -565,10 +568,48 @@ class getFunPerformanceTypeList {
         list.push(responseItem);
       }
 
-      return list;
+      return data;
     })
   }
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+// 领导人分配业绩 -请求参数
+class leaderAllotPerformanceRequest extends APIRequest {
+  userId = ""
+  constructor(userId = "") {
+    super();
+    this.userId = userId
+  }
+}
+// 领导人分配业绩 - 请求地址
+class leaderAllotPerformanceApi extends PostRequest {
+  constructor(request = new leaderAllotPerformanceRequest()) {
+    super(request);
+  }
+
+  getUrl() {
+    return "/erpWeb/mlDeal/GetRangeUserList";
+  }
+}
+// 领导人分配业绩
+class leaderAllotPerformance {
+  request;
+  constructor(request = new leaderAllotPerformanceRequest()) {
+    this.request = request;
+  }
+  send() {
+    return new leaderAllotPerformanceApi(this.request).send().then(res => {
+      if (res.errCode !== Const.successCode) return Promise.reject(res);
+
+      let data = res.data || [];
+
+      return data;
+    })
+  }
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 // 获取房源列表 - 请求参数
 class getHouseListRequest extends APIRequest {
@@ -632,14 +673,12 @@ class getHouseList {
 /* ---------------------------------------------------------------------------------------------------- */
 // 获取客源列表 -请求参数
 class getClientListRequest extends APIRequest {
-  pageNum = 1;
-  pageSize = 1;
-  saleOrRentType = "";
-  organizationId = "";
-  userId = "";
-  custId = "";
-  select = "";
-  compId = "";
+  pageOffset = 1; //(int32)页码",
+  pageRows = 1; //"(int32)每页显示数量",
+  saleOrRentType = ""; //"(byte,required)租售类型 0售 1租", 
+  organizationId = ""; //"(int32)组织ID", 
+  userId = ""; //"(int32)员工ID"
+  select = ""; //"(string)客户手机（精准查询）/转介单号（精准查询）", 
   constructor() {
     super();
   }
@@ -728,6 +767,52 @@ class getAreaList {
   }
 }
 /* ---------------------------------------------------------------------------------------------------- */
+// 获取数据字典列表 -请求参数
+class datazdRequest extends APIRequest {
+  dicType = ""
+  constructor() {
+    super();
+  }
+}
+// 获取数据字典列表 -请求地址
+class datazdApi extends PostRequest {
+  constructor(request = new datazdRequest()) {
+    super(request);
+  }
+  getUrl() {
+    return "erpWeb/dicDefifitions/getDicListByType";
+  }
+}
+// 获取数据字典列表 -返回值
+class datazdResponse extends APIResponse {
+  constructor() {
+    super();
+  }
+}
+// 获取数据字典列表 
+class datazd {
+  request;
+  constructor(request = new datazdRequest()) {
+    this.request = request;
+  }
+  send() {
+    return new datazdApi(this.request).send().then(res => {
+      if (res.errCode !== Const.successCode) return Promise.reject(res);
+      let data = res.data || [];
+      let list = [];
+      // for (let item of data) {
+      //   let responseItem = new getAreaListResponse();
+      //   for (let key in responseItem) {
+      //     responseItem[key] = item[key] || responseItem[key];
+      //   }
+      //   list.push(responseItem);
+      // }
+      return data;
+    })
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 export {
   erpMlDeal,
@@ -766,5 +851,10 @@ export {
   getClientList,
 
   // 获取片区列表
-  getAreaList
+  getAreaList,
+
+  // 领导人分配业绩
+  leaderAllotPerformance,
+
+  datazd
 }

@@ -55,7 +55,7 @@
           <div class="col">转接/合作单号</div>
         </div>
         <div class="content">
-          <div class="row" v-for="(v, i) in tableData" :key="i">
+          <div class="row" @click="kew(v)" v-for="(v, i) in tableData" :key="i">
             <div class="col">{{ v.organizationName }}</div>
             <div class="col">{{ v.userName}}</div>
             <div class="col">{{ v.buyCustNo }}</div>
@@ -90,14 +90,12 @@ export default {
       inputWidth2: "2.3rem",
       testSelectList: "",
       clientSelect: {
-        pageNum: "",
-        pageSize: "",
-        saleOrRentType: 1,
+        pageOffset: "",
+        pageRows: "",
+        saleOrRentType: "1",
         organizationId: "",
         userId: "",
-        custId: "",
         select: "",
-        compId: "",
       },
       tableData: [],
     };
@@ -105,13 +103,23 @@ export default {
   methods: {
     hideIt() {
       this.$emit("update:isShow", false);
+      this.tableData = [];
     },
     // 查询
     async initData() {
+      this.clientSelect.saleOrRentType = this.dealType == "2" ? "1" : "0";
       new getClientList(this.clientSelect).send().then((res) => {
         this.tableData = res;
         console.log(res);
+        // this.$emit("houseInfo", v);
+        console.log(this.dealType);
       });
+    },
+    //点击数据回显
+    kew(v) {
+      this.$emit("update:isShow", false);
+      this.$emit("userInfo", v);
+      this.tableData = [];
     },
   },
 };

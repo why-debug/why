@@ -1,15 +1,15 @@
 10
 
 dir
-54540
+54614
 http://172.16.140.92:9001/svndata/siteProduct/trunk/frontend_pure/meilian-erp-vue/src/net/dealReports
 http://172.16.140.92:9001/svndata/siteProduct
 
 
 
-2020-07-21T09:45:21.137849Z
-54125
-xiongjuncheng
+2020-08-08T11:16:59.466742Z
+54614
+wanghaiyang
 
 
 
@@ -32,11 +32,11 @@ file
 
 
 
-2020-02-20T10:09:02.150557Z
-2c48b09980e1391868aded6d3d825ece
-2020-02-20T10:09:02.150557Z
-49977
-liaohang
+2020-08-08T03:48:17.870224Z
+a5797aa49318d560ca68e148a1c9af03
+2020-08-08T11:16:59.466742Z
+54614
+wanghaiyang
 
 
 
@@ -58,11 +58,11 @@ liaohang
 
 
 
-1305
+1358
 
 erShouDealReportDetail.js
 file
-54541
+
 
 
 
@@ -96,14 +96,14 @@ wanghaiyang
 
 erShouDealReports.js
 file
-54541
+54615
 
 
 
-2020-08-05T02:23:53.540881Z
-c37026eb2acb87af022812d5ea2bdbb3
-2020-08-05T03:17:02.981437Z
-54541
+2020-08-08T11:30:41.337060Z
+345f30daa99c03b71f888fa05cde2951
+2020-08-08T11:36:47.614675Z
+54615
 wanghaiyang
 
 
@@ -126,7 +126,7 @@ wanghaiyang
 
 
 
-24972
+25775
 
 addFollowLog.js
 file
@@ -164,19 +164,15 @@ xiongjuncheng
 
 dealReportsList.js
 file
-54541
-
-
-
-2020-02-21T11:01:08.724336Z
-26f9f00c937b8e1f4ad8f90c62b1bf38
-2020-08-05T03:17:02.981437Z
-54541
-wanghaiyang
 
 
 
 
+2020-08-08T11:09:36.133694Z
+4cbc1ce20525f82fd05285c792b1d074
+2020-08-08T10:22:56.684931Z
+54613
+liuchilei
 
 
 
@@ -194,7 +190,11 @@ wanghaiyang
 
 
 
-3282
+
+
+
+
+13929
 
 newHouseOperationLog.js
 file

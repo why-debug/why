@@ -1,41 +1,48 @@
-import { PostRequest } from "@/common/net/PostRequest";
-import { APIRequest, APIResponse } from "@/common/net/API";
-import { Const } from "@/utils/Const";
+import {
+  PostRequest
+} from "@/common/net/PostRequest";
+import {
+  APIRequest
+} from "@/common/net/API";
+import {
+  Const
+} from "@/utils/Const";
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 // 获取省份、城市 - 请求参数
-class getProvinceAndCityListRequest extends APIRequest{
-  constructor () {
+class getProvinceAndCityListRequest extends APIRequest {
+  constructor() {
     super();
   }
 }
 // 获取省份、城市 - 接口地址
-class getProvinceAndCityListApi extends PostRequest{
-  constructor (request = new getProvinceAndCityListRequest()) {
+class getProvinceAndCityListApi extends PostRequest {
+  constructor(request = new getProvinceAndCityListRequest()) {
     super(request);
   }
-  
-  getUrl () {
-    // return "/newBuildWeb/broker/newBuildProject/getInitInfo";
-    return "/kdbWeb/openApi/sys/getProvinceAndCityList"
+
+  getUrl() {
+    return "/newBuildWeb/broker/newBuildProject/getInitInfo";
+    // return "/kdbWeb/openApi/sys/getProvinceAndCityList"
+    // return "/newBuildWeb/broker/commission/getReporDealBuildList"
   }
 
-  getNeedToken () {
+  getNeedToken() {
     return true;
   }
 }
 
 class getProvinceAndCityList {
   request;
-  constructor (request = new getProvinceAndCityListRequest()) {
+  constructor(request = new getProvinceAndCityListRequest()) {
     this.request = request;
   }
-  
-  send () {
+
+  send() {
     return new getProvinceAndCityListApi(this.request).send().then(res => {
       if (res.errCode !== Const.successCode) return Promise.reject(res);
-      
+
       return res.data;
     });
   }

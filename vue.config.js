@@ -30,8 +30,8 @@ module.exports = {
       '/proxy': {
         // target: 'http://mldev.51vfang.cn/'
         // target: 'http://appverify.51vfang.cn/',  
-        target: 'http://192.168.200.29:9007',
-        // target: 'http://gray.51vfang.cn/',
+        // target: 'http://192.168.200.29:9007',
+        target: 'http://gray.51vfang.cn/',
         changeOrigin: true,
         pathRewrite: {
           '^/proxy': '/'

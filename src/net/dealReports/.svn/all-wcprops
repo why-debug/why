@@ -1,13 +1,13 @@
 K 25
 svn:wc:ra_dav:version-url
 V 91
-/svndata/siteProduct/!svn/ver/54125/trunk/frontend_pure/meilian-erp-vue/src/net/dealReports
+/svndata/siteProduct/!svn/ver/54614/trunk/frontend_pure/meilian-erp-vue/src/net/dealReports
 END
 address.js
 K 25
 svn:wc:ra_dav:version-url
 V 102
-/svndata/siteProduct/!svn/ver/49977/trunk/frontend_pure/meilian-erp-vue/src/net/dealReports/address.js
+/svndata/siteProduct/!svn/ver/54614/trunk/frontend_pure/meilian-erp-vue/src/net/dealReports/address.js
 END
 erShouDealReportDetail.js
 K 25
@@ -19,7 +19,7 @@ erShouDealReports.js
 K 25
 svn:wc:ra_dav:version-url
 V 112
-/svndata/siteProduct/!svn/ver/54541/trunk/frontend_pure/meilian-erp-vue/src/net/dealReports/erShouDealReports.js
+/svndata/siteProduct/!svn/ver/54615/trunk/frontend_pure/meilian-erp-vue/src/net/dealReports/erShouDealReports.js
 END
 addFollowLog.js
 K 25
@@ -31,7 +31,7 @@ dealReportsList.js
 K 25
 svn:wc:ra_dav:version-url
 V 110
-/svndata/siteProduct/!svn/ver/54541/trunk/frontend_pure/meilian-erp-vue/src/net/dealReports/dealReportsList.js
+/svndata/siteProduct/!svn/ver/54613/trunk/frontend_pure/meilian-erp-vue/src/net/dealReports/dealReportsList.js
 END
 newHouseOperationLog.js
 K 25

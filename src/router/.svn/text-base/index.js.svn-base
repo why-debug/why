@@ -12,10 +12,6 @@ const closingRecords = (resolve) => require(['@/views/dealReports/closingRecords
 const contractNoManagement = (resolve) => require(['@/views/dealReports/contractNoManagement/index'], resolve);
 // 策划费
 const planningFees = (resolve) => require(['@/views/dealReports/planningFees/index'], resolve);
-// 交易资料
-const dealData = (resolve) => require(['@/views/dealReports/dealData/index'], resolve);
-// 资料类别
-const dataClass = (resolve) => require(['@/views/dealReports/dataClass/index'], resolve);
 // 新增二手房交易报告
 const addErShouDealReport = (resolve) => require(['@/views/dealReports/erShouDealReports/addErShouDealReport/index'], resolve);
 // 二手房 成交报告打印
@@ -103,11 +99,17 @@ Router.prototype.replace = function replace(location) {
 Vue.use(Router);
 
 var router = new Router({
-    routes: [{
+    routes: [
+        {
             path: "/",
             name: "index",
             component: index,
             redirect: "/dealReports/dealReportsList"
+        },
+        {
+            path: "/dealReports/dealReportsList",
+            name: "dealReportsList",
+            component: dealReportsList
         },
         {
             path: "/dealReports",
@@ -146,24 +148,6 @@ var router = new Router({
                     },
                     component: planningFees,
                 },
-                // 交易资料
-                {
-                    path: "dealData",
-                    name: "dealData",
-                    meta: {
-                        keepAlive: false
-                    },
-                    component: dealData,
-                },
-                // 资料类别
-                {
-                    path: "dataClass",
-                    name: "dataClass",
-                    meta: {
-                        keepAlive: false
-                    },
-                    component: dataClass,
-                }
             ]
         },
         // 添加二手房交易报告

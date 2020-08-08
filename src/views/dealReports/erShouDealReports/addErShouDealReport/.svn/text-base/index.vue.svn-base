@@ -103,12 +103,13 @@
             v-model="ruleForm.erpMlDeal.branchBankId"
             :style="{'width': inputWidth1}"
             placeholder
+            @click.native="selsecArea"
           >
             <el-option
               v-for="item in branchBankList"
               :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :label="item.organizationName"
+              :value="item.organizationId"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -121,6 +122,7 @@
             v-model="ruleForm.erpMlDeal.dealUserId"
             :style="{'width': inputWidth1}"
             placeholder
+            @click.native="selsecPerson"
           >
             <el-option
               v-for="item in dealUserList"
@@ -244,8 +246,8 @@
             <el-option
               v-for="item in houseUseageList"
               :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :label="item.dicCnMsg"
+              :value="item.dicValue"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -284,9 +286,9 @@
         <el-form-item class="form-item" prop="erpMlDeal.houseReg">
           <div class="label-title">所属片区</div>
           <el-input
-            v-model="ruleForm.erpMlDeal.houseReg"
+            v-model="houseRegName"
             :style="{'width': inputWidth1}"
-            :readonly="true"
+            placeholder
             @click.native="showSelectArea()"
           ></el-input>
         </el-form-item>
@@ -375,8 +377,8 @@
             <el-option
               v-for="item in financeBankList"
               :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :label="item.bankName"
+              :value="item.bankNumber"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -864,9 +866,9 @@
             >
               <el-option
                 v-for="item in provinceList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.provinceId"
+                :label="item.provinceName"
+                :value="item.provinceId"
               ></el-option>
             </el-select>
           </el-form-item>
@@ -886,9 +888,9 @@
             >
               <el-option
                 v-for="item in contractTypeList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.dicValue"
+                :label="item.dicCnMsg"
+                :value="item.dicValue"
               ></el-option>
             </el-select>
             <el-input
@@ -902,9 +904,9 @@
             <el-select v-model="itemParent.provinceId" :style="{'width': inputWidth6}" placeholder>
               <el-option
                 v-for="item in provinceList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.provinceId"
+                :label="item.provinceName"
+                :value="item.provinceId"
               ></el-option>
             </el-select>
             <el-select
@@ -914,9 +916,9 @@
             >
               <el-option
                 v-for="item in cityList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.cityId"
+                :label="item.cityName"
+                :value="item.cityId"
               ></el-option>
             </el-select>
             <el-input
@@ -1149,9 +1151,9 @@
             >
               <el-option
                 v-for="item in provinceList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.provinceId"
+                :label="item.provinceName"
+                :value="item.provinceId"
               ></el-option>
             </el-select>
           </el-form-item>
@@ -1173,9 +1175,9 @@
             >
               <el-option
                 v-for="item in contractTypeList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+               :key="item.dicValue"
+                :label="item.dicCnMsg"
+                :value="item.dicValue"
               ></el-option>
             </el-select>
             <el-input
@@ -1204,9 +1206,9 @@
             >
               <el-option
                 v-for="item in contractTypeList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.dicValue"
+                :label="item.dicCnMsg"
+                :value="item.dicValue"
               ></el-option>
             </el-select>
             <el-input
@@ -1235,9 +1237,9 @@
             >
               <el-option
                 v-for="item in contractTypeList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+               :key="item.dicValue"
+                :label="item.dicCnMsg"
+                :value="item.dicValue"
               ></el-option>
             </el-select>
             <el-input
@@ -1253,9 +1255,9 @@
             <el-select v-model="itemClient.provinceId" :style="{'width': inputWidth6}" placeholder>
               <el-option
                 v-for="item in provinceList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.provinceId"
+                :label="item.provinceName"
+                :value="item.provinceId"
               ></el-option>
             </el-select>
             <el-select
@@ -1265,9 +1267,9 @@
             >
               <el-option
                 v-for="item in cityList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.cityId"
+                :label="item.cityName"
+                :value="item.cityId"
               ></el-option>
             </el-select>
             <el-input
@@ -1424,20 +1426,35 @@
           >
             <div>{{index + 1}}</div>
             <div>
-              <el-select v-model="item.profitType" :style="{'width': '100%'}" placeholder>
+              <el-select
+                @click.native="why(index)"
+                v-model="item.profitType"
+                :style="{'width': '100%'}"
+                placeholder
+              >
                 <el-option
                   v-for="item in erpMlDealProfitsProfitTypeList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                  :key="item.performanceCode"
+                  :label="item.performanceName"
+                  :value="item.id"
                 ></el-option>
               </el-select>
             </div>
             <div>
-              <el-input v-model="item.compOrgName" :style="{'width': '100%'}" :readonly="true"></el-input>
+              <el-input
+                @click.native="selsecArea(item)"
+                v-model="item.compOrgName"
+                :style="{'width': '100%'}"
+                :readonly="true"
+              ></el-input>
             </div>
             <div>
-              <el-input v-model="item.userName" :style="{'width': '100%'}" :readonly="true"></el-input>
+              <el-input
+                @click.native="selsecPerson(item)"
+                v-model="item.userName"
+                :style="{'width': '100%'}"
+                :readonly="true"
+              ></el-input>
             </div>
             <div>
               <el-date-picker
@@ -1488,20 +1505,22 @@
     <associate-customer
       :dealType="ruleForm.erpMlDeal.dealType"
       :isShow.sync="associateCustomerObj.isShow"
+      @userInfo="userInfo"
     ></associate-customer>
     <!-- 选择物业 -->
     <choose-property
       :dealType="ruleForm.erpMlDeal.dealType"
       :isShow.sync="choosePropertyObj.isShow"
-      v-on:houseInfo="houseInfo"
+      @houseInfo="houseInfo"
     ></choose-property>
     <!-- 选择片区 -->
-    <select-area v-on:sectionName="sectionName" :isShow.sync="selectAreaObj.isShow"></select-area>
+    <select-area @sectionName="sectionName" :isShow.sync="selectAreaObj.isShow"></select-area>
   </div>
 </template>
 
 <script>
-import { GetInitInfoList } from "@/net/dealReports/address.js";
+import { getProvinceAndCityList } from "@/net/dealReports/address.js";
+import { ErpCommon } from "../../../../utils/ErpCommon";
 import {
   erpMlDeal,
   erpMlDealBuyUsersItem,
@@ -1511,6 +1530,8 @@ import {
   createMlDealReport,
   getBankDicList,
   getFunPerformanceTypeList,
+  leaderAllotPerformance,
+  datazd,
 } from "@/net/dealReports/erShouDealReports.js";
 
 import topTitle from "@/views/dealReports/erShouDealReports/components/topTitle.vue";
@@ -1615,9 +1636,9 @@ export default {
         "erpMlDeal.houseInnerArea": [
           { required: true, message: "不能为空", trigger: "blur" },
         ],
-        "erpMlDeal.entrustNo": [
-          { required: true, message: "请选择合同", trigger: "blur" },
-        ],
+        // "erpMlDeal.entrustNo": [
+        //   { required: true, message: "请选择合同", trigger: "blur" },
+        // ],
         "erpMlDeal.dealPrice": [
           { required: true, message: "不能为空", trigger: "blur" },
         ],
@@ -1645,10 +1666,10 @@ export default {
       },
       // 类型
       dealTypeList: [
-        { label: "售", value: 1 },
-        { label: "租", value: 2 },
-        { label: "代办", value: 3 },
-        { label: "返利", value: 4 },
+        { label: "售", value: "1" },
+        { label: "租", value: "2" },
+        { label: "代办", value: "3" },
+        { label: "返利", value: "4" },
       ],
       // 类别
       categoryList: [
@@ -1686,7 +1707,8 @@ export default {
       // 用途
       houseUseageList: [],
       // 所属片区
-      houseRegList: [],
+      // houseRegList: [],
+      houseRegName: "",
       // 产权性质
       propertyTypeList: [
         { label: "商品房", value: 1 },
@@ -1755,11 +1777,8 @@ export default {
         { label: "本市户籍", value: 1 },
         { label: "非本市户籍", value: 2 },
       ],
-      // 联系方式
-      contractTypeList: [
-        { label: "手机", value: 1 },
-        { label: "座机", value: 2 },
-      ],
+      // 联系方式类型
+      contractTypeList: [],
       // 省份
       provinceList: [],
       // 城市
@@ -1771,7 +1790,11 @@ export default {
       // table - 1
       tableTop1: ["序号", "合作人", "身份证", "联系方式", "类型", "合作费"],
       // table- 1 - 类型列表
-      erpMlDealOuterCooperationsTypeList: [],
+      erpMlDealOuterCooperationsTypeList: [
+        { label: "第三方", value: 1 },
+        { label: "买方", value: 2 },
+        { label: "公司内部", value: 3 },
+      ],
       // table - 2
       tableTop2: [
         "序号",
@@ -1786,6 +1809,22 @@ export default {
       ],
       // table- 2 - 类型列表
       erpMlDealProfitsProfitTypeList: [],
+      //选择分配部门传值参数
+      selectAreaParms: {
+        userId: "",
+        userName: "",
+        organizationId: "",
+        organizationName: "", // 部门名称
+        selectType: 2, //1选人，2选组织
+      },
+      // 选择分配人传值参数
+      selectOrgParms: {
+        userId: "",
+        userName: "",
+        organizationId: "",
+        organizationName: "",
+        selectType: 1, //1选人，2选组织
+      },
       // 关联合同弹窗
       associatedContractObj: {
         isShow: false,
@@ -1812,11 +1851,18 @@ export default {
       waibuhezuofei: "1",
       // 金额比例
       jinebili: "1",
+      userId: "",
+      datazidian: {
+        dicType: "",
+      },
     };
   },
 
   created() {
     this.initAddress();
+    this.houseUseList();
+    this.phoneTypeList();
+    // this.$store.dispatch("common_store/getInitInfo");
     this.getBankList();
     this.getErpMlDealProfitsProfitTypeList();
     this.ruleForm = {
@@ -1835,12 +1881,35 @@ export default {
         new Date().getTime() + 180 * 24 * 60 * 60 * 1000
       );
     }
+    if (this.standardCommission) {
+      console.log(this.standardCommission);
+      this.ruleForm.erpMlDeal.standardCommission = this.standardCommission;
+    }
   },
   methods: {
     // 初始化时间国家省份城市
     async initAddress() {
-      let data = await new GetInitInfoList().send();
-      console.log(data);
+      await new getProvinceAndCityList().send().then((res) => {
+        this.provinceList = res.provinceList;
+        this.cityList = res.cityList;
+        console.log(res, "地址");
+      });
+    },
+    // 获取用途初始化数据
+    houseUseList() {
+      this.datazidian.dicType = "HOUSE_USEAGE";
+      new datazd(this.datazidian).send().then((res) => {
+        this.houseUseageList = res;
+        console.log(res, "用途初始化数据");
+      });
+    },
+    // 获取联系方式类型初始化数据
+    phoneTypeList() {
+      this.datazidian.dicType = "PHONE_TYPE";
+      new datazd(this.datazidian).send().then((res) => {
+        this.contractTypeList = res;
+        console.log(res, "联系方式类型初始化数据");
+      });
     },
     // 获取银行列表
     async getBankList() {
@@ -1850,19 +1919,43 @@ export default {
     },
     // 获取业绩分配类型列表
     async getErpMlDealProfitsProfitTypeList() {
-      let data = await new getFunPerformanceTypeList().send();
-      let list = [];
-      for (let item of data) {
-        if (+item.collectionType === 2) {
-          let obj = {
-            label: item.performanceName,
-            value: item.performanceId,
-          };
-          list.push(obj);
-        }
-      }
-      this.erpMlDealProfitsProfitTypeList = list;
+      await new getFunPerformanceTypeList().send().then((res) => {
+        this.erpMlDealProfitsProfitTypeList = res;
+      });
       console.log(this.erpMlDealProfitsProfitTypeList, "业绩分配类型列表");
+    },
+    why(i) {},
+    // 选择部门
+    selsecArea(data) {
+      let val = new ErpCommon().openPerformanceAssignee(this.selectAreaParms);
+      let info = JSON.parse(val);
+      data.compOrgName = info.organizationName || "--";
+      data.orgId = info.organizationId;
+      this.ruleForm.erpMlDeal.branchBankId = info.organizationId;
+      // data = info.organizationId || "--";
+      // this.ruleForm.erpMlDealProfits[i].compOrgName = info.organizationName;
+      console.log(val, "这是筛选分配部门");
+    },
+    //选择分配人
+    selsecPerson(data) {
+      // this.selectOrgParms.selectType = 1;
+      let val = new ErpCommon().openPerformanceAssignee(this.selectOrgParms);
+      let info = JSON.parse(val);
+      let userIds = {
+        userId: "",
+      };
+      data.userName = info.userName || "--";
+      data.userId = info.userId;
+      // this.userId = info.userId;
+      this.ruleForm.erpMlDeal.dealUserId = info.userId;
+      userIds.userId = info.userId;
+      new leaderAllotPerformance(userIds).send().then((res) => {
+        data.profitLeadersName = res.mangeNames;
+        data.profitLeaders = res.mangeIds;
+        console.log(res);
+      });
+      // this.ruleForm.erpMlDealProfits[i].userName = info.userName;
+      console.log(val, "这是筛选相关人员");
     },
     // 时间处理
     getDate(dateVal) {
@@ -2013,22 +2106,32 @@ export default {
       // 建筑面积
       this.ruleForm.erpMlDeal.houseArea = v.area;
       // 产权性质
-      this.ruleForm.erpMlDeal.propertyType = v.nature;
+      // this.ruleForm.erpMlDeal.propertyType = v.nature;
       // 所属片区
-      this.ruleForm.erpMlDeal.houseReg = v.sectionName;
+      this.ruleForm.erpMlDeal.houseReg = v.sectionId;
+      this.houseRegName = v.sectionName;
       // 用途
       this.ruleForm.erpMlDeal.houseUseage = v.useage;
       // 户型
       this.ruleForm.erpMlDeal.houseRoom = v.room;
       this.ruleForm.erpMlDeal.houseHall = v.hall;
       this.ruleForm.erpMlDeal.houseToilet = v.wei;
+      console.log(v.useage);
+    },
+    //选择关联客户回显信息
+    userInfo(data) {
+      console.log(data);
+      this.ruleForm.erpMlDealBuyUsers[0].userName = data.buyCustName;
+      this.ruleForm.erpMlDealBuyUsers[0].userSex = data.buyCustSex;
+      this.ruleForm.erpMlDealBuyUsers[0].firstContractPhone =
+        data.phoneList[0].phoneNumber;
     },
     // 选择片区
     showSelectArea() {
       this.selectAreaObj.isShow = true;
     },
     sectionName(v) {
-      this.ruleForm.erpMlDeal.houseReg = v;
+      this.houseRegList.push(v);
     },
     // 合作费改变
     cooperationCostChange(index) {
@@ -2225,6 +2328,10 @@ export default {
         }
       }
       return num;
+    },
+    // 地址
+    getProvinceList() {
+      return this.$store.state.common_store.province_list;
     },
   },
 };
@@ -2607,23 +2714,23 @@ export default {
               color: #444444;
             }
             &:nth-child(1) {
-              flex: 0 0 10%;
+              width: 10%;
               padding-left: 0.2rem;
             }
             &:nth-child(2) {
-              flex: 0 0 15%;
+              width: 16%;
             }
             &:nth-child(3) {
-              flex: 0 0 20%;
+              width: 20%;
             }
             &:nth-child(4) {
-              flex: 0 0 20%;
+              width: 20%;
             }
             &:nth-child(5) {
-              flex: 0 0 20%;
+              width: 20%;
             }
             &:nth-child(6) {
-              flex: 1 1 auto;
+              width: 14%;
               padding-right: 0.4rem;
             }
             &.del-icon {
@@ -2661,29 +2768,29 @@ export default {
               color: #444444;
             }
             &:nth-child(1) {
-              flex: 0 0 8%;
+              width: 8%;
               padding-left: 0.2rem;
             }
             &:nth-child(2) {
-              flex: 0 0 12%;
+              width: 12%;
             }
             &:nth-child(3) {
-              flex: 0 0 12%;
+              width: 12%;
             }
             &:nth-child(4) {
-              flex: 0 0 10%;
+              width: 10%;
             }
             &:nth-child(5) {
-              flex: 0 0 14%;
+              width: 14%;
             }
             &:nth-child(6) {
-              flex: 0 0 10%;
+              width: 10%;
             }
             &:nth-child(7) {
-              flex: 0 0 12%;
+              width: 12%;
             }
             &:nth-child(8) {
-              flex: 0 0 8%;
+              width: 8%;
             }
             &:nth-child(9) {
               flex: 1 1 auto;

@@ -19,7 +19,7 @@ export default {
       default () {
         return [
           { text: '先生', value: 1 },
-          { text: '女士', value: 2 }
+          { text: '女士', value: 0 }
         ]
       }
     },
