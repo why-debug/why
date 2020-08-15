@@ -20,6 +20,10 @@ export class UserPermission {
   // 工作分调整权--KPI_CONFIGURATE_WORK_SCORE
   // 收佣率调整权--KPI_CONFIGURATE_COMMISSION_RATE
 
+  // --------------------成交报告-------------------------
+  //   1.成交报告导出权--NEWBUILD_EXPORT
+  //   2.成交报告核心查看权--DEAL_REPORT_CORE_SEE
+
   // --------------------代理合同-------------------------
   //   1.代理合同批借权，可审核合同批借--AGENCY_CONTRACT_APPROVE
   //   2.代理合同归档权，可审核合同归档--AGENCY_CONTRACT_FILE_RETURN
@@ -148,7 +152,23 @@ export class UserPermission {
   KPIChangeCommissionAuth() {
     return GetBaseInfoModel.getUserOpers().includes("KPI_CONFIGURATE_COMMISSION_RATE");
   }
-
+  // --------------------成交报告-------------------------
+  //新房成交报告导出权
+  NEWBUILD_EXPORT() {
+    return GetBaseInfoModel.getUserOpers().includes("NEWBUILD_EXPORT");
+  }
+  //新房成交报告核心查看权
+  DEAL_REPORT_CORE_SEE() {
+    return GetBaseInfoModel.getUserOpers().includes("DEAL_REPORT_CORE_SEE");
+  }
+  //二手房成交报告导出权
+  SECOND_HOUSE_EXPORT() {
+    return GetBaseInfoModel.getUserOpers().includes("SECOND_HOUSE_EXPORT");
+  }
+  //二手房成交报告核心查看权
+  SECOND_DEAL_REPORT_CORE_SEE() {
+    return GetBaseInfoModel.getUserOpers().includes("SECOND_DEAL_REPORT_CORE_SEE");
+  }
   // --------------------代理合同-------------------------
   //代理合同批借权，可审核合同批借
   AGENCYContractApproveAuth() {

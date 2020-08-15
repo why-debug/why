@@ -3,12 +3,12 @@ import { APIRequest } from "../../../../common/net/API";
 import { Const } from "../../../../common/utils/Const";
 // 定义参数
 export class GetLinkCustListParams extends APIRequest {
-  custId=''; //员工编号
-  organizationId=''; //组织id
-  pageNum=1; //当前页码
-  pageSize=30;// 请求条数
-  select=''; //客户手机（精准查询）/转介单号（精准查询）
-  userId='';//员工id
+  custId = ''; //员工编号
+  organizationId = ''; //组织id
+  pageNum = 1; //当前页码
+  pageSize = 30;// 请求条数
+  select = ''; //客户手机（精准查询）/转介单号（精准查询）
+  userId = '';//员工id
   constructor() {
     super()
   }
@@ -16,7 +16,7 @@ export class GetLinkCustListParams extends APIRequest {
 
 // 定义请求
 export class GetLinkCustListApi extends PostRequest {
-  constructor( request = new GetLinkCustListParams) {
+  constructor(request = new GetLinkCustListParams) {
     super(request)
   }
 
@@ -35,19 +35,31 @@ export class GetLinkCustListItem {
   custMobile = ""; //(string)客户电话
   custName = ""; //(string)客户名称
   customerType = ""; //(int32)客户类型（0 普通 1转介 2合作客）
+  custSource = ""; //(int32)客户来源
+  customerTypeText = ""; //(int32)客户类型文案
   organizationId = ""; //(int32)组织ID
   organizationName = ""; //(string)组织名称
   referralNumber = ""; //(string)转介单号
   userId = ""; //(int32)经纪人ID
   userName = "";//(string)经纪人名称
+  partnerCust = [];//关联客户
 
   //判断值是否存在
-  getVal(val){
-    if(val != undefined){
+  getVal(val) {
+    if (val != undefined) {
       return val
-    }else{
+    } else {
       return ''
     }
+  }
+  //获取客户类型
+  getcustomerType(num) {
+    let map = new Map()
+      .set(0, "普通")
+      .set(1, "转介")
+      .set(2, "合作客")
+    if (!map.has(num)) return "--";
+    return map.get(num);
   }
 
 }
@@ -70,12 +82,15 @@ export default class GetLinkCustList {
           item.custId = info.custId || '';
           item.custMobile = info.custMobile || '';
           item.custName = info.custName || '';
-          item.customerType = item.getVal(info.customerType);
+          item.custSource = info.custSource || "";
+          item.customerType = info.recommendType || 0;
+          item.customerTypeText = item.getcustomerType(info.recommendType || 0);
           item.organizationId = info.organizationId || '';
           item.organizationName = info.organizationName || '';
-          item.referralNumber = info.referralNumber || '';
+          item.referralNumber = info.recommendNum || '';
           item.userId = info.userId || '';
           item.userName = info.userName || '';
+          item.partnerCust = info.partnerCust || [];
           list.push(item);
         }
         return list;

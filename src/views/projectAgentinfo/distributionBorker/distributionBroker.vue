@@ -22,7 +22,7 @@
                     <div class="u_switch">分销经纪人</div>
                 </div>
                 <div class="g_otherRightList g_flexLeftCenter">
-                    <div class="u_export" @click="f_exportClick" v-if="$UserPermission.DISTRIBUTIONBrokerExportAuth()"><div class="u_exportIcon"></div> 导出</div> 
+                    <div class="u_export" @click="f_exportClick" v-if="haveExportAuth"><div class="u_exportIcon"></div> 导出</div> 
                     <div class="u_count">共{{ total }}条</div>
                 </div>
             </div>
@@ -52,11 +52,11 @@
                         <div class="u_lineListContent g_flexLeftCenter ListCompanySimpleName">
                             <div class="companySimpleName">{{ item.simpleName }}</div>
                             <div class="g_eventList">
-                                <div class="edit g_flexLeftCenter" @click="f_editBorkerInfo(item.borkerId)" v-if="$UserPermission.DISTRIBUTIONBrokerUpdateAuth()">
+                                <div class="edit g_flexLeftCenter" @click="f_editBorkerInfo(item.borkerId)" v-if="haveEditAuth">
                                     <div class="u_editIcon"></div>
                                     <div class="g_text">编辑</div>
                                 </div>
-                                <div class="dele g_flexLeftCenter" @click="f_deletInfo(item.borkerId)" v-if="$UserPermission.DISTRIBUTIONBrokerDeleteAuth()">
+                                <div class="dele g_flexLeftCenter" @click="f_deletInfo(item.borkerId)" v-if="haveDeleteAuth">
                                     <div class="u_deleIcon"></div>
                                     <div class="g_text">删除</div>
                                 </div>
@@ -115,6 +115,9 @@ export default {
             NoData:false,//是否有数据
             isScroll:true,//是否滚动
             empty: false, //是否清空
+            haveExportAuth:false,//是否有导出权限
+            haveEditAuth:false,//是否有编辑权限
+            haveDeleteAuth:false,//是否有删除权限
             parameter: new BorkerListRequestParameter(), //请求参数
             companyAddress: '/newBuildWeb/broker/org/getDistributionCompanyList',//请求所属公司接口地址
             brokerAddress: '/newBuildWeb/broker/org/getDistributionBrokerList',//请求经纪人接口地址:requestAddress="companyAddress"
@@ -187,6 +190,9 @@ export default {
 
             let userOpers = await new GetUserOpers(new GetUserOpersRequest({userId:userId})).send();
             SetBaseInfoModel.setUserOpers(userOpers);
+            this.haveExportAuth = this.$UserPermission.DISTRIBUTIONBrokerExportAuth();
+            this.haveEditAuth = this.$UserPermission.DISTRIBUTIONBrokerUpdateAuth();
+            this.haveDeleteAuth = this.$UserPermission.DISTRIBUTIONBrokerDeleteAuth();
             console.log('--分销经纪人权限初始化完成--');
         },
         //获取顶部筛选数据
@@ -430,6 +436,8 @@ export default {
             this.topParams.deptCode = '';
             this.topParams.timeType = ''; 
             this.topParams.pageOffset = 1;
+            this.searchParams = JSON.parse(JSON.stringify(this.topParams));
+            this.initData();
         },
         //查询
         f_submit() {

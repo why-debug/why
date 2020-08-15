@@ -35,7 +35,7 @@
                     <div class="g_columnTwo">
                         <div class="g_leftInfo g_text">
                             <div class="g_maxWidth g_max">资料类型:</div>
-                            <span>{{ detailList.infoType || '--' }}</span> 
+                            <span>{{ detailList.infoType | filterDataList }}</span> 
                         </div>
                         <div class="g_rightInfo g_text">
                             <div class="g_maxWidth g_max">盖章类型:</div>
@@ -107,6 +107,17 @@ export default {
             },200)
         },
     },
+    filters:{
+        filterDataList(data){
+            console.log( arr,'===========',arr.length);
+            let arr = data || [];
+            let text = '--';
+            if(arr.length>0){
+                text = arr.join();
+            }
+            return text;
+        }
+    }
 }
 </script>
 <style scoped>

@@ -8,13 +8,13 @@
       maxLength="30"
       :value="inputVal"
     ></InputBox>
-    <!-- <div class="search_icon_b" @click="kwdSearch(keyword)">
+    <div class="search_icon_b" @click="kwdSearch(keyword)">
       <img
         class="search_icon"
         src="http://cdn.haofang.net/static/newHouseStandardVersion/customer/sstiao_FD_200.png"
         alt=""
       />
-    </div> -->
+    </div>
   </div>
 </template>
 

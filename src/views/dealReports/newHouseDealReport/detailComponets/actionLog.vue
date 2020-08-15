@@ -15,6 +15,7 @@
       height="383"
       v-if="tableData.length !== 0 && tabActive == 6"
       :data="tableData"
+      style="width:100%"
     >
       <el-table-column
         v-for="(item, index) in tableColumnList"
@@ -36,9 +37,7 @@
         class="input-box"
       />
       <div class="normal" @click="pageChange()">GO</div>
-      <div class="num">
-        共{{ maxPage || 1 }}页，{{ totalNumber || 0 }}条
-      </div>
+      <div class="num">共{{ maxPage || 1 }}页，{{ totalNumber || 0 }}条</div>
     </div>
     <no-data
       v-if="tableData.length === 0 && tabActive != 1"
@@ -67,13 +66,13 @@
           <div class="topContent">{{ item.trackContent }}</div>
           <div class="middleContent">
             <span>{{ item.trackTime | formatTime(true) }}</span>
-            <span>{{ item.remindContent }}</span>
+            <span>{{ item.userName }}-{{ item.reportTypeText }}</span>
           </div>
         </div>
       </div>
     </div>
     <div class="c-right" v-if="tabActive == 1">
-      <followLogLeft></followLogLeft>
+      <followLogLeft :reportId="reportId" :offerNo="offerNo"></followLogLeft>
     </div>
   </div>
 </template>
@@ -93,7 +92,11 @@ import followLogLeft from "@/views/dealReports/newHouseDealReport/detailComponet
 
 export default {
   props: {
-    id: {
+    reportId: {
+      type: Number | String,
+      default: "",
+    },
+    offerNo: {
       type: Number | String,
       default: "",
     },
@@ -101,10 +104,18 @@ export default {
   data() {
     return {
       tabActive: "6",
-      paramsObj: new getNewHouseDealtrackLogRequest(),
-      followLogParams:new getNewHouseFollowLogRequest(),
+      paramsObj: {
+        reportId: 1, // 成交报告ID
+        pageOffset: 1, // 页码
+        pageRows: 20, // 每页显示数量
+        trackType: 1, // 日志类型  1:操作日志 2跟进日志
+      },
+      followLogParams: {
+        reportId: "", //成交报告ID
+        trackType: 2, //日志类型
+      },
       maxPage: 1, // 最大页数 总页数
-      totalNumber:'',//总共条数
+      totalNumber: "", //总共条数
       tabList: [
         { label: "跟进日志", value: "1" },
         { label: "成交报告日志", value: "2" },
@@ -115,8 +126,8 @@ export default {
       ],
       tableColumnList: [
         { prop: "trackTime", label: "时间", width: "" },
-        { prop: "trackContent", label: "日志类型", width: "" },
-        { prop: "trackType", label: "跟进内容", width: "260" },
+        // { prop: "trackType", label: "日志类型", width: "" }, 
+        { prop: "trackContent", label: "跟进内容", width: "543" },
         { prop: "trackUname", label: "跟进人", width: "" },
       ],
       tableData: [],
@@ -134,7 +145,8 @@ export default {
     followLogLeft,
   },
   created() {
-    this.paramsObj.reportId = this.id;
+    this.paramsObj.reportId = this.reportId;
+    this.followLogParams.reportId = this.reportId;
     this.initData();
     // if (this.paramsObj.reportId) {
     //   this.initData()
@@ -148,17 +160,17 @@ export default {
       )
         .send()
         .then((res) => {
-          console.log(res,'eeeeeeeeeeeeeeeeee');
+          console.log(res, "eeeeeeeeeeeeeeeeee");
           this.tableData = res.list;
           this.maxPage = res.totalPage;
           this.totalNumber = res.totalNumber;
           console.log(this.tableData, "操作日志列表");
         })
         .catch((res) => {
-          console.log(res,'请求失败');
+          console.log(res, "请求失败");
         });
     },
-    // 初始化操作日志数据
+    // 初始化跟进日志数据
     initFollowData() {
       new getNewHouseFollowLogList(
         new getNewHouseFollowLogRequest(this.followLogParams)
@@ -166,6 +178,10 @@ export default {
         .send()
         .then((res) => {
           this.followLogList = res.list;
+          console.log(
+            JSON.parse(JSON.stringify(this.followLogList)),
+            "跟进日志列表"
+          );
         })
         .catch((res) => {
           console.log(res);
@@ -174,7 +190,7 @@ export default {
     changeTab(value) {
       // if (value !== '6') return
       this.tabActive = value;
-      if (value == '1') this.initFollowData();
+      if (value == "1") this.initFollowData();
     },
     //切换页码
     paginationChange() {
@@ -188,7 +204,7 @@ export default {
       }
       this.paramsObj.pageOffset = pageOffset;
     },
-     //数入页码
+    //数入页码
     inputVal() {
       let pageOffset = this.paramsObj.pageOffset;
       if (pageOffset <= 1 || pageOffset == "") {
@@ -224,6 +240,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/deep/.el-table th > .cell {
+  color: #888 !important;
+}
+/deep/.el-table .cell {
+  font-size: 0.14rem;
+}
+/deep/.el-table td div{
+  color: #444;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -234,6 +259,8 @@ input[type="number"] {
 .action-log {
   width: 100%;
   position: relative;
+  padding: 0 0.1rem 0.1rem 0.1rem;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -348,13 +375,13 @@ input[type="number"] {
       display: flex;
       justify-content: space-between;
       .leftDate {
-        display: flex;
+        // display: flex;
         width: 0.9rem;
         height: 100%;
         font-size: 0.13rem;
         color: #ff7f00;
-        align-content: space-between;
-        flex-wrap: wrap;
+        // align-content: space-between;
+        // flex-wrap: wrap;
         .date {
           width: 100%;
           height: 0.13rem;
@@ -368,11 +395,11 @@ input[type="number"] {
         }
       }
       .rightText {
-        display: flex;
+        // display: flex;
         width: 4.34rem;
         height: 100%;
-        display: flex;
-        flex-wrap: wrap;
+        // display: flex;
+        // flex-wrap: wrap;
         .topContent {
           min-width: 4.34rem;
           height: 0.33rem;

@@ -103,7 +103,7 @@
           ></el-input>
           <!-- 业务员姓名 -->
           <el-select
-            v-model="testSelect"
+            v-model="testSelect.userId"
             style="margin-right: 0.1rem"
             :style="{'width': inputWidth1}"
             placeholder="业务员姓名"
@@ -139,6 +139,16 @@
           </div>
         </div>
       </main>
+      <div @click="clickStatus()" class="house_status">
+        <div class="check-li-icon" :class="{'checked': testSelect.houseStatus == '1'}"></div>
+        <div>仅看有效数据</div>
+        <!-- <check-box-only
+          :label="'空房'"
+          :value="'1'"
+          @sendData="handoverStatusChange"
+          :selecteValue="ruleForm.erpMlDeal.handoverStatus"
+        ></check-box-only>-->
+      </div>
     </div>
   </div>
 </template>
@@ -149,6 +159,7 @@ import {
   getHouseListRequest,
   houseListData,
 } from "../../../../net/dealReports/erShouDealReports";
+import checkBoxOnly from "@/views/dealReports/erShouDealReports/components/checkBoxOnly.vue";
 export default {
   props: {
     isShow: {
@@ -157,16 +168,13 @@ export default {
     },
     // 交易类型
     dealType: {
-      type: String,
-      default: "1",
+      type: Number,
+      default: 1,
     },
   },
   data() {
     return {
-      houses: [
-        { label: "w1", value: "1" },
-        { label: "w2", value: "2" },
-      ],
+      houses: [],
       tabActive: "sale",
       tabList: [
         { label: "出售", value: "sale" },
@@ -179,6 +187,8 @@ export default {
       // 请求参数
       testSelect: new houseListData(),
       tableData: [],
+      testSelectList: [],
+      houseStatus: "0",
     };
   },
   methods: {
@@ -187,7 +197,7 @@ export default {
       this.tableData = [];
     },
     async initData() {
-      this.testSelect.dealType = this.dealType == "2" ? "2" : "1";
+      this.testSelect.dealType = this.dealType == 2 ? 2 : 1;
       new getHouseList(this.testSelect).send().then((res) => {
         this.tableData = res;
         console.log(res);
@@ -199,11 +209,14 @@ export default {
       this.$emit("houseInfo", v);
       this.tableData = [];
     },
+    clickStatus() {
+      this.testSelect.houseStatus =
+        this.testSelect.houseStatus == "0" ? "1" : "0";
+      // this.testSelect.houseStatus = this.houseStatus;
+      console.log(this.testSelect.houseStatus);
+    },
   },
-  created() {
-    console.log(this.dealType);
-    this.testSelect.dealType = this.dealType == 2 ? 2 : 1;
-  },
+  created() {},
 };
 </script>
 
@@ -427,15 +440,24 @@ export default {
         }
       }
     }
-    // & > .table-box {
-    //   margin-top: 0.15rem;
-    //   /deep/ .has-gutter {
-    //     tr,
-    //     th {
-    //       background-color: #ebeef0;
-    //     }
-    //   }
-    // }
+    .house_status {
+      display: flex;
+      align-items: center;
+      font-size: 0.15rem;
+      cursor: pointer;
+      .check-li-icon {
+        width: 0.15rem;
+        height: 0.15rem;
+        margin-right: 0.1rem;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 100% 100%;
+        background-image: url("../../../../assets/images/public/checkbox_200.png");
+        &.checked {
+          background-image: url("../../../../assets/images/public/checkbox1_200.png");
+        }
+      }
+    }
   }
 }
 </style>

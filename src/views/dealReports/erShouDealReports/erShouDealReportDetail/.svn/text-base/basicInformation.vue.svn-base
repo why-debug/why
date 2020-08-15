@@ -9,12 +9,15 @@
             <div>
               <div class="active">售</div>
               <div class="active">{{ secondHandDetail.erpMlDeal.payType==1?'一次性付款':'按揭'}}</div>
-              <div :class="secondHandDetail.erpMlDeal.auditStatus==0?'normal':'active'">{{ secondHandDetail.erpMlDeal.auditStatus==0?'未审批':'已审批'}}</div>
+              <div
+                :class="secondHandDetail.erpMlDeal.auditStatus==0?'normal':'active'"
+              >{{ secondHandDetail.erpMlDeal.auditStatus==0?'未审批':'已审批'}}</div>
             </div>
           </div>
           <div class="b-t-right">
-            <span>{{ secondHandDetail.erpMlDeal.dealPrice || "--" }}</span
-            ><span>万元</span> <span>12000</span>元/㎡
+            <span>{{ secondHandDetail.erpMlDeal.dealPrice || "--" }}</span>
+            <span>{{secondHandDetail.erpMlDeal.priceUnit==1?"元":"万元"}}</span>
+            <span>12000</span>元/㎡
           </div>
         </div>
         <div class="t-b-content">
@@ -26,22 +29,22 @@
             <div>合作方式：</div>
             <div>
               {{
-                secondHandDetail.erpMlDeal.cooperationType
-                  | getText("cooperationTypeArr")
+              secondHandDetail.erpMlDeal.cooperationType
+              | getText("cooperationTypeArr")
               }}
             </div>
           </div>
           <div class="item item-1">
             <div>成交类别：</div>
-            <div>{{ secondHandDetail.erpMlDeal.category || "--" }}</div>
+            <div>{{ category || "--" }}</div>
           </div>
           <div class="item item-1 item-left">
             <div>有无投诉：</div>
             <div>
               {{
-                secondHandDetail.erpMlDeal.hasComplaint == 0
-                  ? "无投诉"
-                  : "有投诉"
+              secondHandDetail.erpMlDeal.hasComplaint == 0
+              ? "无投诉"
+              : "有投诉"
               }}
             </div>
           </div>
@@ -49,7 +52,7 @@
             <div>有无纠纷：</div>
             <div>
               {{
-                secondHandDetail.erpMlDeal.hasDispute == 0 ? "无纠纷" : "有纠纷"
+              secondHandDetail.erpMlDeal.hasDispute == 0 ? "无纠纷" : "有纠纷"
               }}
             </div>
           </div>
@@ -57,9 +60,9 @@
             <div>收佣状态：</div>
             <div>
               {{
-                secondHandDetail.erpMlDeal.commissionStatus == 0
-                  ? "未收齐"
-                  : "已收齐"
+              secondHandDetail.erpMlDeal.commissionStatus == 0
+              ? "未收齐"
+              : "已收齐"
               }}
             </div>
           </div>
@@ -71,7 +74,7 @@
             <div>预收佣日期：</div>
             <div>
               {{
-                secondHandDetail.erpMlDeal.estimatedCommissionTime | formatTime
+              secondHandDetail.erpMlDeal.estimatedCommissionTime | formatTime
               }}
             </div>
           </div>
@@ -81,7 +84,7 @@
           </div>
           <div class="item item-1 item-left">
             <div>成 交 人：</div>
-            <div>王健</div>
+            <div>{{secondHandDetail.erpMlDeal.dealUserName||"--"}}</div>
           </div>
           <div class="item item-1">
             <div>成交日期：</div>
@@ -102,23 +105,23 @@
             <div>户 型：</div>
             <div class="roomType">
               {{ secondHandDetail.erpMlDeal.houseRoom || "--" }}室{{
-                secondHandDetail.erpMlDeal.houseHall || "--"
+              secondHandDetail.erpMlDeal.houseHall || "--"
               }}厅{{ secondHandDetail.erpMlDeal.houseToilet || "--" }}卫{{
-                secondHandDetail.erpMlDeal.houseBalcony || "--"
+              secondHandDetail.erpMlDeal.houseBalcony || "--"
               }}阳台
             </div>
           </div>
           <div class="item item-1">
             <div>用 途：</div>
-            <div>{{ secondHandDetail.erpMlDeal.houseUseage || "--" }}</div>
+            <div>{{ secondHandDetail.erpMlDeal.houseUseageName || "--" }}</div>
           </div>
           <div class="item item-1 item-left">
             <div>交楼状态：</div>
             <div>
               {{
-                secondHandDetail.erpMlDeal.handoverStatus == 0
-                  ? "空房"
-                  : "带家电"
+              secondHandDetail.erpMlDeal.handoverStatus == 0
+              ? "空房"
+              : "带家电"
               }}
             </div>
           </div>
@@ -138,43 +141,41 @@
             <div>房产证编号：</div>
             <div>
               {{
-                secondHandDetail.erpMlDeal.ownerType == 1
-                  ? "房产证"
-                  : "不动产证"
+              secondHandDetail.erpMlDeal.ownerType == 1
+              ? "房产证"
+              : "不动产证"
               }}
               {{ secondHandDetail.erpMlDeal.ownerNo || "--" }}
             </div>
           </div>
           <div class="item item-1 item-left">
             <div>租约到期：</div>
-            <div>
-              {{ secondHandDetail.erpMlDeal.leaseEndTime | formatTime }}
-            </div>
+            <div>{{ secondHandDetail.erpMlDeal.leaseEndTime | formatTime }}</div>
           </div>
           <div class="item item-1">
             <div>产权现状：</div>
             <div>
               {{
-                secondHandDetail.erpMlDeal.ownerStatus == 1 ? "红本" : "抵押"
+              secondHandDetail.erpMlDeal.ownerStatus == 1 ? "红本" : "抵押"
               }}
             </div>
           </div>
           <div class="item item-1">
             <div>查档状态：</div>
-            <div>{{ secondHandDetail.erpMlDeal.fileStatus || "--" }}</div>
+            <div>{{ fileStatus || "--" }}</div>
           </div>
           <div class="item item-1 item-left">
             <div>产权性质：</div>
             <div>
               {{
-                secondHandDetail.erpMlDeal.propertyType
-                  | getText("propertyTypeArr")
+              secondHandDetail.erpMlDeal.propertyType
+              | getText("propertyTypeArr")
               }}
             </div>
           </div>
           <div class="item item-3s">
             <div>片 区：</div>
-            <div>{{ secondHandDetail.erpMlDeal.houseReg || "--" }}</div>
+            <div>{{ secondHandDetail.erpMlDeal.houseRegName || "--" }}</div>
           </div>
           <div class="item all-item item-left">
             <div>物业信息：</div>
@@ -197,7 +198,7 @@
           </div>
           <div class="item">
             <div>地 域：</div>
-            <div>{{ item.sellRegion || "--" }}</div>
+            <div>{{ item.sellRegion==0?"大陆":"海外" || "--" }}</div>
           </div>
           <div class="item item-left">
             <div>电 话：</div>
@@ -207,7 +208,7 @@
             <div>证 件 号：</div>
             <div>
               {{ item.credentialsNo || "--" }}({{
-                item.credentialsType || "--"
+              item.credentialsType==1?"身份证":"驾驶证" || "--"
               }})
             </div>
           </div>
@@ -219,7 +220,7 @@
             <div>户 籍：</div>
             <div>
               {{ item.registrationType == 1 ? "本市户籍" : "非本市户籍" }},{{
-                item.country || "--"
+              item.country || "--"
               }}{{ item.cityId || "--" }}
             </div>
           </div>
@@ -244,7 +245,7 @@
           <div class="look-view-btn">查看 &gt;</div>
           <div class="item item-left">
             <div>客户来源：</div>
-            <div>{{ item.fromSource || "--" }}</div>
+            <div>{{ item.fromSourceName || "--" }}</div>
           </div>
           <div class="item">
             <div>合作/转介单号：</div>
@@ -256,7 +257,7 @@
           </div>
           <div class="item">
             <div>地 域：</div>
-            <div>{{ item.userRegion || "--" }}</div>
+            <div>{{ item.userRegion==0?"大陆":"海外" || "--" }}</div>
           </div>
           <div class="item item-left">
             <div>电 话：</div>
@@ -266,7 +267,7 @@
             <div>证 件 号：</div>
             <div>
               {{ item.credentialsNo || "--" }}({{
-                item.credentialsType || "--"
+              item.credentialsType==1?"身份证":"驾驶证" || "--"
               }})
             </div>
           </div>
@@ -274,7 +275,7 @@
             <div>户 籍：</div>
             <div>
               {{ item.registrationType == 1 ? "本市户籍" : "非本市户籍" }},{{
-                item.country || "--"
+              item.registrationProvinceName || "--"
               }}{{ item.cityId || "--" }}
             </div>
           </div>
@@ -284,7 +285,7 @@
           </div>
           <div class="item item-left all-item">
             <div>联系地址：</div>
-            <div>{{ item.address || "--" }}</div>
+            <div>{{ item.realAdress || "--" }}</div>
           </div>
           <div class="item item-left all-item">
             <div>备 注：</div>
@@ -297,9 +298,10 @@
         <section_title title="业绩信息" class="performance-title" />
         <main>
           <section>
-            <subtitle title="外部合作费" has_icon="" />
+            <subtitle title="外部合作费" has_icon />
             <div class="total_tips">
-              合作费: <span class="fc_f57107">{{ "--" }}</span>
+              合作费:
+              <span class="fc_f57107">{{ cooperationCost||"--" }}</span>
             </div>
             <div class="table">
               <div class="head row">
@@ -319,29 +321,23 @@
                 <div class="col">{{ item.idNo || "--" }}</div>
                 <div class="col">{{ item.contractPhone || "--" }}</div>
                 <!-- <div class="col">{{item.type |getTypeText}}</div> -->
-                <div class="col">{{ item.type || "--" }}</div>
-                <div class="col fc_f57107">
-                  {{ item.cooperationCost || "--" }}
-                </div>
+                <div class="col">{{ item.type==1?'第三方':'买方' || "--" }}</div>
+                <div class="col fc_f57107">{{ item.cooperationCost || "--" }}</div>
               </div>
             </div>
           </section>
           <section>
             <subtitle title="业绩分配" />
-            <data_table
-              :initData="secondHandDetail.erpMlDealProfit"
-              title="上报业绩："
-            />
+            <data_table :initData="secondHandDetail" />
           </section>
         </main>
-      
       </div>
     </div>
-      <div class="bottom-box">
-        <div class="normal">制 单 人：张三丰-世纪城南路</div>
-        <div class="normal">制单日期：2018-09-09</div>
-        <div class="dayin-btn" @click="goPrintView">打印</div>
-      </div>
+    <div class="bottom-box">
+      <div class="normal">制 单 人：{{"--"}}</div>
+      <div class="normal">制单日期：{{"--"}}</div>
+      <!-- <div class="dayin-btn" @click="goPrintView">打印</div> -->
+    </div>
   </div>
 </template>
 
@@ -414,7 +410,7 @@ export default {
   },
   watch: {
     projectDetailInfo: {
-      handler: function(newVal, oldVal) {
+      handler: function (newVal, oldVal) {
         this.secondHandDetail = newVal;
         //转换外部合作费格式
         this.formatCooperationList();
@@ -426,7 +422,50 @@ export default {
   },
   created() {
     this.secondHandDetail = this.projectDetailInfo;
+
     console.log(this.secondHandDetail, "二手成交报告详情");
+  },
+  computed: {
+    // 成交类别
+    category() {
+      switch (this.secondHandDetail.erpMlDeal.category) {
+        case 1:
+          return "一般成交";
+          break;
+        case 2:
+          return "事后加佣";
+          break;
+        case 3:
+          return "口头代理费";
+          break;
+        case 4:
+          return "外区分佣";
+      }
+    },
+    // 查档状态
+    fileStatus() {
+      switch (this.secondHandDetail.erpMlDeal.fileStatus) {
+        case 1:
+          return "有效";
+          break;
+        case 2:
+          return "抵押";
+          break;
+        case 3:
+          return "查封";
+          break;
+        case 4:
+          return "其它";
+      }
+    },
+    //合作费
+    cooperationCost() {
+      let nums = 0;
+      this.secondHandDetail.erpMlDealOuterCooperation.forEach((v) => {
+        nums += v.cooperationCost;
+      });
+      return nums;
+    },
   },
   methods: {
     //转换外部合作费格式
@@ -462,9 +501,9 @@ export default {
       }
     },
     //跳转到打印界面
-    goPrintView(){
-      this.$router.push({ path: "/secondHandDealPrint",query:{} });
-    }
+    goPrintView() {
+      this.$router.push({ path: "/secondHandDealPrint", query: {} });
+    },
   },
   filters: {
     //合作方式文本
@@ -566,6 +605,7 @@ export default {
               font-weight: bold;
             }
             &:nth-child(3) {
+              margin-left: 0.08rem;
               font-size: 0.16rem;
             }
           }
@@ -850,7 +890,7 @@ export default {
               height: 100%;
               line-height: 0.49rem;
               &:nth-of-type(1) {
-                width: 0.81rem;
+                width: 1.25rem;
                 text-indent: 0.16rem;
               }
               &:nth-of-type(2) {

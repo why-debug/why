@@ -1,134 +1,93 @@
 <template>
   <div class="report-no">
-    <div class="title">
-      合同编号：{{ projectDetail.erpMlDeal.entrustNo || "--" }}
-    </div>
+    <div class="title">编号：{{ projectDetail.erpMlDeal.entrustNo || "--" }}</div>
     <div class="content">
       <div class="item">
         <div>合同编号：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.entrustNo || "--" }}
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.entrustNo || "--" }}</div>
       </div>
       <div class="item">
         <div>签约日期：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.signDate | formatTime }}
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.signDate | formatTime }}</div>
       </div>
       <div class="item">
         <div>业主佣金：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.sellOwnerCommsion || "--" }}元
-        </div>
+        <div class="normal">{{projectDetail.erpMlDeal.sellOwnerCommsion || "--" }}元</div>
       </div>
       <div class="item">
         <div>客户佣金：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.sellOwnerCommsion || "--" }}元
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.buyCustomerCommsion || "--" }}元</div>
       </div>
       <div class="item">
         <div>按揭手续费：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.mortgageFee || "--" }}元
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.mortgageFee || "--" }}元</div>
       </div>
       <div class="item">
         <div>客户必要费用：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.buyNecessaryCost || "--" }}元
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.buyNecessaryCost || "--" }}元</div>
       </div>
       <div class="item">
         <div>业主必要费用：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.sellNecessaryCost || "--" }}元
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.sellNecessaryCost || "--" }}元</div>
       </div>
       <div class="item">
         <div>第一笔定金：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.firstEarnestMoney || "--" }}元
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.firstEarnestMoney || "--" }}元</div>
       </div>
       <div class="item">
         <div>第一笔支付时间：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.firstEarnestMoneyDate | formatTime }}
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.firstEarnestMoneyDate | formatTime }}</div>
       </div>
       <div class="item">
         <div>第二笔定金：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.secondEarnestMoney || "--" }}元
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.secondEarnestMoney || "--" }}元</div>
       </div>
       <div class="item">
         <div>第二笔支付时间：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.secondEarnestMoneyDate | formatTime }}
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.secondEarnestMoneyDate | formatTime }}</div>
       </div>
       <div class="item">
         <div>交楼押金：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.transferDeposit || "--" }}元
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.transferDeposit || "--" }}元</div>
       </div>
       <div class="item">
         <div>交楼押金交付时间：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.transferDepositPayTime | formatTime }}
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.transferDepositPayTime | formatTime }}</div>
       </div>
       <div class="item">
         <div>首期款：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.downPayments || "--" }}元
-        </div>
-      </div>
-      <div class="item">
-        <div>监管时间：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.superviseDate | formatTime }}
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.downPayments || "--" }}元</div>
       </div>
       <div class="item">
         <div>按揭金额：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.mortgageAmount || "--" }}元
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.mortgageAmount || "--" }}元</div>
       </div>
       <div class="item">
         <div>按揭时间：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.mortgageDate | formatTime }}
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.mortgageDate | formatTime }}</div>
       </div>
       <div class="item">
         <div>应公证委托时间：</div>
-        <div class="normal">
-          {{ projectDetail.erpMlDeal.notarizationDate | formatTime }}
-        </div>
+        <div class="normal">{{ projectDetail.erpMlDeal.notarizationDate | formatTime }}</div>
       </div>
-        <div class="item">
-          <div>备注：</div>
-          <div class="normal">
-            {{ projectDetail.erpMlDeal.remarks || "--" }}
-          </div>
-        </div>
+      <div class="item">
+        <div>备注：</div>
+        <div class="normal">{{ projectDetail.erpMlDeal.remarks || "--" }}</div>
       </div>
+    </div>
     <div class="bottom-btn">
-      <div class="btn-1">电子合同</div>
-      <div class="btn-2">编辑</div>
-      <div class="btn-3">审核</div>
+      <!-- <div class="btn-1">电子合同</div> -->
+      <div class="btn-2" @click="goEdit()">编辑</div>
+      <!-- <div class="btn-3" @click="add()">审核</div> -->
     </div>
   </div>
 </template>
 
 <script>
-import { SecondHandReportInfoDetailParams } from '../../../../net/dealReports/erShouDealReportDetail'
+import {
+  SecondHandReportInfoDetailParams,
+  SecondHandReportInfoDetail,
+} from "../../../../net/dealReports/erShouDealReportDetail";
 export default {
   data() {
     return {
@@ -142,10 +101,16 @@ export default {
         return new SecondHandReportInfoDetailParams();
       },
     },
+    dealId: {
+      type: Number | String,
+      default() {
+        return "";
+      },
+    },
   },
   watch: {
     projectDetailInfo: {
-      handler: function(newVal, oldVal) {
+      handler: function (newVal, oldVal) {
         this.projectDetail = newVal;
       },
       deep: true,
@@ -175,6 +140,22 @@ export default {
       if (p < 9999) return price;
       return p / 10000;
     },
+  },
+  methods: {
+    //编辑二手房成交报告
+    goEdit() {
+      this.$router.push({
+        path: "/addErShouDealReport",
+        query: { dealId: this.dealId },
+      });
+    },
+    // add() {
+    //   new SecondHandReportInfoDetail({id:"10"}).send().then((res) => {
+    //     // console.log(res);
+    //     // this.secondHandDetailInfo = res;
+    //     console.log(res, "二手成交报告详情初始化数据");
+    //   });
+    // },
   },
 };
 </script>

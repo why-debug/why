@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 112
-/svndata/siteProduct/!svn/ver/52986/trunk/frontend_pure/meilian-erp-vue/src/net/projectAgentinfo/fileInfoRequest
+/svndata/siteProduct/!svn/ver/54795/trunk/frontend_pure/meilian-erp-vue/src/net/projectAgentinfo/fileInfoRequest
 END
 GetFileInfoList.js
 K 25
@@ -25,5 +25,5 @@ GetFileInfoDetails.js
 K 25
 svn:wc:ra_dav:version-url
 V 134
-/svndata/siteProduct/!svn/ver/52248/trunk/frontend_pure/meilian-erp-vue/src/net/projectAgentinfo/fileInfoRequest/GetFileInfoDetails.js
+/svndata/siteProduct/!svn/ver/54795/trunk/frontend_pure/meilian-erp-vue/src/net/projectAgentinfo/fileInfoRequest/GetFileInfoDetails.js
 END

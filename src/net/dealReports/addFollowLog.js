@@ -7,19 +7,21 @@ import { Const } from "@/utils/Const";
 // 添加新房跟进日志- 请求参数
 class addNewHouseFollowLogRequest extends APIRequest {
     userId = ""; //操作人的人id
-    userName = ""; //操作人名称
-    remindPersonId = ""; //提醒的人id
-    remindPerson = ""; //提醒的人名称
-    remindInput = ""; //填写的提醒内容
-    followContent = ""; //填写跟进内容
+    toUsersId = ""; //提醒人列表 逗号分割
+    remindContent = ""; //填写的提醒内容
+    trackContent = ""; //填写跟进内容
+    trackType = ""; //日志类型  1:操作日志 2跟进日志
+    reportId = ""; //成交报告Id
+    reportType = ""; //成交报告类型 1:新房  2:二手房
     constructor(obj = {}) {
         super();
         this.userId = obj.userId || '';
-        this.userName = obj.userName || '';
-        this.remindPersonId = obj.remindPersonId || '';
-        this.remindPerson = obj.remindPerson || '';
-        this.remindInput = obj.remindInput || '';
-        this.followContent = obj.followContent || '';
+        this.toUsersId = obj.toUsersId || '';
+        this.remindContent = obj.remindContent || '';
+        this.trackContent = obj.trackContent || ''; 
+        this.trackType = obj.trackType || 2;
+        this.reportId = obj.reportId || "";
+        this.reportType = obj.reportType || 1;
     }
 }
 // 添加跟进日志 - 请求地址
@@ -29,7 +31,7 @@ class addNewHouseFollowLogApi extends PostRequest {
     }
 
     getUrl() {
-        return '/newBuildWeb/crms/org/getDeveloperTrackList'
+        return '/newBuildWeb/broker/commission/addReportFollowUpLog'
     }
 }
 // 获取操作日志列表

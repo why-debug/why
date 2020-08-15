@@ -44,7 +44,15 @@ class getDistributionListResponse extends APIResponse {
 // demo
 class getDistributionList {
   request;
-  constructor(request = new getDistributionListRequest()) { 
+  //判断值是否存在
+  getValue(val) {
+    if (val != undefined && val !== "") {
+      return val
+    } else {
+      return ""
+    }
+  }
+  constructor(request = new getDistributionListRequest()) {
     this.request = request;
   }
 
@@ -59,10 +67,10 @@ class getDistributionList {
       //判断审批状态
       let getApprovaltVal = function (val) {
         if (val != undefined) {
-          switch(val){
+          switch (val) {
             case -2: return 4;
             case -1: return 2;
-            case  0: return 0;
+            case 0: return 0;
             case 1: return 1;
             case 2: return 3;
           }
@@ -101,14 +109,14 @@ class getDistributionList {
         obj.approvalStatus = getApprovaltVal(item.approvalStatus);//审批状态
         obj.contractStatus = getContractVal(item.contractStatus);//合同状态
         obj.customerProtectionPeriod = item.customerProtectionPeriod || "";//客户保护期
-        obj.commission = item.commission || "";//佣金结算方式
+        obj.commission = item.settlementMethod || "";//佣金结算方式
         obj.legalAffairs = item.legalAffairs || "";//法务跟进人
-        obj.risk = item.risk || "";//是否有风险
-        obj.stamp = item.stamp || "";//是否盖章
-        obj.void = item.void || "";//是否作废
-        obj.archive = item.archive || "";//是否归档
-        obj.material = item.material || "";//资料是否缺失
-        obj.entryDate = item.entryDate || "";//录入日期
+        obj.risk = this.getValue(item.isRisk);//是否有风险
+        obj.stamp =this.getValue(item.whetherStamped) ;//是否盖章
+        obj.void = this.getValue(item.isCancle);//是否作废
+        obj.archive =this.getValue(item.isArchive);//是否归档
+        obj.material =this.getValue(item.isData) ;//资料是否缺失
+        obj.entryDate = item.createTime || "";//录入日期
 
         list.push(obj)
       });

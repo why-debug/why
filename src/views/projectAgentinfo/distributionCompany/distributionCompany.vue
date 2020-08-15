@@ -21,8 +21,8 @@
                     <div class="u_switch">分销公司</div>
                 </div>
                 <div class="g_otherRightList g_flexLeftCenter">
-                    <div class="u_export" @click="f_addClick" v-if="$UserPermission.DISTRIBUTIONCpyAddAuth()"><div class="u_addIcon g_icon"></div> 新增</div>
-                    <div class="u_export" @click="f_exportClick" v-if="$UserPermission.DISTRIBUTIONCpyExportAuth()"><div class="u_exportIcon g_icon"></div> 导出</div>
+                    <div class="u_export" @click="f_addClick" v-if="haveAddAuth"><div class="u_addIcon g_icon"></div> 新增</div> 
+                    <div class="u_export" @click="f_exportClick" v-if="haveExportAuth"><div class="u_exportIcon g_icon"></div> 导出</div>
                     <div class="u_count">共{{ total }}条</div>
                 </div>
             </div>
@@ -51,11 +51,11 @@
                         <div class="u_lineListContent g_flexLeftCenter simpleName">
                             <div class="companySimpleName">{{ item.simpleName }}</div>
                             <div class="g_eventList">
-                                <div class="edit g_flexLeftCenter" @click="f_editCompany(item.companyId)" v-if="$UserPermission.DISTRIBUTIONCpyUpdateAuth()">
+                                <div class="edit g_flexLeftCenter" @click="f_editCompany(item.companyId)" v-if="haveEditAuth">
                                     <div class="u_editIcon"></div>
                                     <div class="g_text">编辑</div>
                                 </div>
-                                <div class="dele g_flexLeftCenter" @click="f_deletInfo(item.companyId)" v-if="$UserPermission.DISTRIBUTIONCpyDeleteAuth()">
+                                <div class="dele g_flexLeftCenter" @click="f_deletInfo(item.companyId)" v-if="haveDeleteAuth">
                                     <div class="u_deleIcon"></div>
                                     <div class="g_text">删除</div>
                                 </div>
@@ -110,6 +110,10 @@ export default {
             isLoad:false,//下拉加载  false加载  true不加载
             NoData:false,//是否有数据
             isScroll:true,//是否滚动
+            haveExportAuth:false,//是否有导出权限
+            haveEditAuth:false,//是否有编辑权限
+            haveDeleteAuth:false,//是否有删除权限
+            haveAddAuth:false,//是否有新增权限
             isCompanyDetailSwitch:false, //详情
             isAddCompangSwitch:false,//新增
             empty:false, //清空
@@ -166,9 +170,13 @@ export default {
 
         if (!userId) return;
 
-        let userOpers = await new GetUserOpers(new GetUserOpersRequest({userId:userId})).send();
+        let userOpers = await new GetUserOpers(new GetUserOpersRequest({userId:userId})).send(); 
         SetBaseInfoModel.setUserOpers(userOpers);
-        console.log('--分销公司权限初始化完成--');
+        this.haveExportAuth = this.$UserPermission.DISTRIBUTIONCpyExportAuth();
+        this.haveEditAuth = this.$UserPermission.DISTRIBUTIONCpyUpdateAuth();
+        this.haveDeleteAuth = this.$UserPermission.DISTRIBUTIONCpyDeleteAuth();
+        this.haveAddAuth = this.$UserPermission.DISTRIBUTIONCpyAddAuth();
+        console.log('--分销公司权限初始化完成--');    
       },
     //获取顶部筛选数据
     topData(){
@@ -348,6 +356,8 @@ export default {
             this.topParams.timeEndStr = '';
             this.topParams.deptCode = ''; 
             this.topParams.pageOffset = 1;
+            this.parameter = JSON.parse(JSON.stringify(this.topParams));
+            this.initData();
         },
         //查询
         f_submit(){

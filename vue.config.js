@@ -1,5 +1,3 @@
-
-
 const path = require('path');
 const defaultSettings = require('./src/settings.js');
 
@@ -32,6 +30,7 @@ module.exports = {
         // target: 'http://appverify.51vfang.cn/',  
         // target: 'http://192.168.200.29:9007',
         target: 'http://gray.51vfang.cn/',
+        // target: 'http://192.168.200.42:9007',
         changeOrigin: true,
         pathRewrite: {
           '^/proxy': '/'
@@ -51,7 +50,7 @@ module.exports = {
     resolve: {
       alias: {
         '@': resolve('src'),
-        'vue$': 'vue/dist/vue.esm.js'    // 处理vue节点
+        'vue$': 'vue/dist/vue.esm.js' // 处理vue节点
       }
     }
   },

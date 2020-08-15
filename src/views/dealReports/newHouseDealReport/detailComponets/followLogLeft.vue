@@ -1,6 +1,6 @@
 <template>
   <div class="report-no">
-    <div class="title">合同号：HK0015560</div>
+    <div class="title">合同号：{{offerNo}}</div>
     <div class="content">
       <div class="centerBox">
         <div class="remind">
@@ -15,7 +15,7 @@
               placeholder="默认本人"
               suffix-icon="el-icon-arrow-down"
               :readonly="true"
-              v-model="params.userName"
+              v-model="params.remindPerson"
               @click.native="selectPerson"
             >
             </el-input>
@@ -29,7 +29,7 @@
             :style="{ width: '2.11rem', height: '0.46rem' }"
             autosize
             placeholder="填写提醒内容"
-            v-model="params.remindInput"
+            v-model="params.remindContent"
             show-word-limit
           >
           </el-input>
@@ -48,7 +48,7 @@
             :style="{ width: '2.11rem', height: '0.84rem' }"
             autosize
             placeholder="填写跟进内容"
-            v-model="params.followContent"
+            v-model="params.trackContent"
           >
           </el-input>
         </div>
@@ -82,55 +82,102 @@ import { ErpCommon } from "../../../../utils/ErpCommon";
 export default {
   data() {
     return {
-       //选择人员传值参数
-       selectPersonParms:{
-        userId:'',
-        userName:"",
-        organizationId:'',
-        organizationName:"",
-        selectType:1,//1选人，2选组织
-       },
-      generalText:['已收齐客户资料！','已收齐客户资料！','已收齐客户资料！'],//常用语
-      params:{
-      userId:"",//操作人的人id
-      userName:"",//操作人名称
-      remindPersonId:"",//提醒的人id
-      remindPerson:"",//提醒的人
-      remindInput: "", //填写的提醒内容
-      followContent:"",//填写跟进内容
-      }
+      //选择人员传值参数
+      selectPersonParms: {
+        userId: "",
+        userName: "",
+        organizationId: "",
+        organizationName: "",
+        selectType: 1, //1选人，2选组织
+      },
+      generalText: ["已收齐客户资料！", "已收齐客户资料！", "已收齐客户资料！"], //常用语
+      params: {
+        reportId: "", //成交报告Id
+        userId: "", //操作人的人id
+        userName: "", //操作人名称
+        toUsersId: "", //提醒的人id
+        remindPerson: "", //提醒的人
+        trackType: 2, //日志类型  1:操作日志 2跟进日志
+        remindContent: "", //填写的提醒内容
+        trackContent: "", //填写跟进内容
+      },
     };
   },
-  props: {},
+  props: {
+    reportId: {
+      type: Number | String,
+      default: "",
+    },
+    offerNo: {
+      type: Number | String,
+      default: "",
+    },
+  },
   watch: {},
-  created() {},
-  methods:{
+  created() {
+    this.params.reportId = this.reportId;
+    console.log(this.reportId, "成交报告id");
+    this.initUserInfo();
+  },
+  methods: {
+    //获取用户信息
+    initUserInfo() {
+      let userId = new ErpCommon().getOperator("USER_ID") || "";
+      let userName = new ErpCommon().getOperator("USER_NAME") || "";
+      this.params.userId = userId; //获取用户id
+      this.params.userName = userName; //获取用户名称
+      this.params.toUsersId = userId;
+      this.params.remindPerson = userName;
+      console.log(
+        this.params.userId,
+        "用户id",
+        this.params.userName,
+        "用户姓名"
+      );
+    },
     //添加跟进内容
-    addFollowContent(data){
-      this.params.followContent += data;
+    addFollowContent(data) {
+      this.params.trackContent += data;
     },
     //选择提醒的人
-    selectPerson(){
-      this.selectPersonParms.userId = this.params.userId;
-      this.selectPersonParms.userName = this.params.userName;
-      let data = new ErpCommon().openPerformanceAssignee(this.selectPersonParms);
-      if(data == '') return;
+    selectPerson() {
+      this.selectPersonParms.userId = this.params.toUsersId;
+      this.selectPersonParms.userName = this.params.remindPerson;
+      let data = new ErpCommon().openPerformanceAssignee(
+        this.selectPersonParms
+      );
+      if (data == "") return;
       let val = JSON.parse(data);
-      console.log( val,'选择的人员');
-      this.params.userId= val.userId || '';
-      this.params.userName= val.userName || '';
+      console.log(val, "选择的人员");
+      this.params.toUsersId = val.userId || "";
+      this.params.remindPerson = val.userName || "";
     },
     //保存跟进内容
-    saveFollowData(){
-      new addwHouseFollowLogList(new addNewHouseFollowLogRequest(this.params)).send()
-      .then((res)=>{
-        console.log(res,保存成功);
-      })
-      .catch((res)=>{
-        console.log(res,保存失败);
-      })
-    }
-  }
+    saveFollowData() {
+      if (!this.saveCheck()) return;
+      new addwHouseFollowLogList(new addNewHouseFollowLogRequest(this.params))
+        .send()
+        .then((res) => {
+          console.log(res, "保存成功");
+          this.$erpCommon.toast("保存成功");
+          this.$parent.initFollowData();
+        })
+        .catch((res) => {
+          this.$erpCommon.toast(res.errMsg || "服务器开小差了,请稍后再试");
+        });
+    },
+    //保存验证
+    saveCheck() {
+      if (this.params.trackContent == "") {
+        this.$erpCommon.toast("跟进内容不能为空");
+        return false;
+      } else if (this.params.trackContent.length < 10) {
+        this.$erpCommon.toast("跟进内容不能小于10！");
+        return false;
+      }
+      return true;
+    },
+  },
 };
 </script>
 
@@ -145,7 +192,7 @@ export default {
     text-indent: 0.1rem;
     color: #006797;
     font-size: 0.14rem;
-    font-family: MicrosoftYaHei-Bold;
+    font-weight: bold;
   }
   & > .content {
     width: 100%;

@@ -11,7 +11,7 @@
   }
 }
 /deep/ .el-form-item {
-  margin: 0 0 0 0.4rem;
+  margin: 0 0 0 0.4rem !important;
   &>.el-form-item__content {
     display: flex; 
     position: relative;
@@ -21,7 +21,7 @@
 }
 
 /deep/ .input_title {
-  width: @title_width;
+  min-width: @title_width;
   font-family: SimSun;
   font-size: 0.12rem;
   font-weight: bold;
@@ -146,4 +146,9 @@
 
 /deep/ input {
   line-height: 1!important;
+}
+
+
+/deep/.el-date-editor .el-icon-circle-close {
+  display: none !important;
 }

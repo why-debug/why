@@ -9,8 +9,10 @@ export class AddReporInfoParams extends APIRequest {
     reportType;
     //类别
     reportClass;
-    // 主单号
+    // 主单号 (成交报告编号)
     reportNo;
+    // 主单号 主单号(当类别为事后加佣时记录该引用数据的主单号)
+    reportCommissionNo;
     // 合作方式（暂无字段）
     cooperationType;
     // 外区分行
@@ -200,6 +202,7 @@ export class AddReporInfoParams extends APIRequest {
         this.reportType = obj.reportType || '';
         this.reportClass = obj.reportClass || '';
         this.reportNo = obj.reportNo || '';
+        this.reportCommissionNo = obj.reportCommissionNo || '';
         this.cooperationType = obj.cooperationType || '';
         this.cooperationOutsideId = obj.cooperationOutsideId || '';
         this.cooperationOutsideCityId = obj.cooperationOutsideCityId || '';
@@ -277,3 +280,137 @@ export class AddReporInfo {
     }
 
 }
+
+
+//------------ 获取分配类型列表 getDistributeTypeList-------------------------------------------------
+
+//定义参数 (标准接口) 
+export class DistributeTypeRequest extends APIRequest {
+    //请求数据接口参数
+    constructor(obj = {}) {
+      super();
+    }
+  }
+  // 接口地址
+  class DistributeTypeApi extends PostRequest {
+    constructor(request = new DistributeTypeRequest()) {
+      super(request);
+    }
+    getUrl() {
+      return "/newBuildWeb/broker/commission/getPerformanceType"
+    }
+    getNeedToken() {
+      return true;
+    }
+  }
+  
+  // 发起请求
+  export class GetDistributeTypeList {
+    request;
+    constructor(request = new DistributeTypeRequest()) {
+      this.request = request;
+    }
+    send() {
+      return new DistributeTypeApi(this.request).send()
+        .then((res) => {
+          if (res.errCode !== Const.successCode) {
+            return Promise.reject(res);
+          }
+  
+          if (!res || !res.data) return [];
+          let list = res.data || []
+          return list
+        })
+    }
+  }
+
+
+//------------ 获取结佣必备资料 GetDataSheetList-------------------------------------------------
+
+//定义参数 (标准接口) 
+export class DataSheetListRequest extends APIRequest {
+    //请求数据接口参数
+    dealId = "";
+    constructor(obj = {}) {
+      super();
+      this.dealId = obj.dealId || "";
+    }
+  }
+  // 接口地址
+  class DataSheetListeApi extends PostRequest {
+    constructor(request = new DataSheetListRequest()) {
+      super(request);
+    }
+    getUrl() {
+      return "/newBuildWeb/broker/commission/settlementDataSheet"
+    }
+    getNeedToken() {
+      return true;
+    }
+  }
+  
+  // 发起请求
+  export class GetDataSheetList {
+    request;
+    constructor(request = new DataSheetListRequest()) {
+      this.request = request;
+    }
+    send() {
+      return new DataSheetListeApi(this.request).send()
+        .then((res) => {
+          if (res.errCode !== Const.successCode) {
+            return Promise.reject(res);
+          }
+  
+          if (!res || !res.data) return [];
+          let list = res.data || []
+          return list
+        })
+    }
+  }
+
+
+  //------------ 查询收佣列表 BrokerageByComp------------------------------------------------- 
+
+//定义参数 (标准接口) 
+export class GetBrokerageByCompRequest extends APIRequest {
+    //请求数据接口参数
+    houseType = "";//1:新房、2:二手房
+    constructor(obj = {}) {
+      super();
+      this.houseType = obj.houseType || 1;
+    }
+  }
+  // 接口地址
+  class GetBrokerageByCompApi extends PostRequest {
+    constructor(request = new GetBrokerageByCompRequest()) {
+      super(request);
+    }
+    getUrl() {
+      return "/erpWeb/managerCenter/contract/getBrokerageByComp"
+    }
+    getNeedToken() {
+      return true;
+    }
+  }
+  
+  // 发起请求
+  export class GetBrokerageByComp {
+    request;
+    constructor(request = new GetBrokerageByCompRequest()) {
+      this.request = request;
+    }
+    send() {
+      return new GetBrokerageByCompApi(this.request).send()
+        .then((res) => {
+          if (res.errCode !== Const.successCode) {
+            return Promise.reject(res);
+          }
+  
+          if (!res || !res.data) return {};
+          let obj = res.data || {}
+          return obj
+        })
+    }
+  }
+  

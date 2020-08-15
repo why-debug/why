@@ -4,7 +4,7 @@
     <main>
       <section>
         <subtitle title="外部合作费" has_icon="" />
-        <div class="total_tips">合作费: <span class="fc_f57107">{{initParams.agentName}}</span></div>
+        <div class="total_tips">合作费: <span class="fc_f57107">{{initParams.outCooperations | cooperationCost}}元</span></div>
         <div class="table">
           <div class="head row">
             <div class="col">合作人</div>
@@ -14,11 +14,11 @@
             <div class="col">合作费</div>
           </div>
           <div class="row" v-for="(item,index) in initParams.outCooperations" :key="index">
-            <div class="col">{{item.userName}}</div>
-            <div class="col">{{item.userIccode}}</div>
-            <div class="col">{{item.userMobile}}</div>
+            <div class="col">{{item.userName || '--'}}</div>
+            <div class="col">{{item.userIccode  || '--'}}</div>
+            <div class="col">{{item.userMobile  || '--'}}</div>
             <div class="col">{{item.cooperationClass |getCooperationClassText}}</div>
-            <div class="col fc_f57107">{{item.cooperationCost}}</div>
+            <div class="col fc_f57107">{{item.cooperationCost  || '0'}}</div>
           </div>
         </div>
       </section>
@@ -74,6 +74,11 @@ export default {
       }
     }
   },
+  watch:{
+    initParams(){
+      this.initData();
+    }
+  },
   created(){
     this.initData();
   },
@@ -114,6 +119,15 @@ export default {
       if(val == '') return val;
       let num = Number(val);
       return arr[num -1];
+    },
+    //总计合作费
+    cooperationCost(data){
+      let arr = data || [];
+      let toal = 0;
+      for(let item of arr){
+        toal += (parseInt(item.cooperationCost) ||0);
+      }
+      return toal;
     }
   }
 }

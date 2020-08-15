@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import { ErpCommon } from "../../../../utils/ErpCommon";
 import searchInput from "../../../../components/form/searchInput";
 import { getAreaList } from "../../../../net/dealReports/erShouDealReports";
 export default {
@@ -97,7 +98,7 @@ export default {
       activeRadio: 0,
       paramsObj: "",
       areaSelect: {
-        cityId: "001", //城市id
+        cityId: "", //城市id
         sectionName: "", //商圈名称
       },
       radioIcon: require("../../../../assets/images/public/radioBox_200.png"),
@@ -117,11 +118,18 @@ export default {
     },
     // 查询
     async initData() {
-      new getAreaList(this.areaSelect).send().then((res) => {
-        this.tableData = res;
-        console.log(res);
-      });
-      console.log(this.radio);
+      new getAreaList(this.areaSelect)
+        .send()
+        .then((res) => {
+          this.tableData = res;
+          console.log(res);
+        })
+        .catch((res) => {
+          new ErpCommon().toast(
+            res.errMsg || "服务器开小差了,请稍后再试!",
+            "error"
+          );
+        });
     },
     // 点击单选
     rows(i) {

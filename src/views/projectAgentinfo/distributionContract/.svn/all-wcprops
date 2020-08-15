@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 119
-/svndata/siteProduct/!svn/ver/54541/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/distributionContract
+/svndata/siteProduct/!svn/ver/54808/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/distributionContract
 END
 approvalContract.vue
 K 25
@@ -19,7 +19,7 @@ index.vue
 K 25
 svn:wc:ra_dav:version-url
 V 129
-/svndata/siteProduct/!svn/ver/54541/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/distributionContract/index.vue
+/svndata/siteProduct/!svn/ver/54808/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/distributionContract/index.vue
 END
 agencyContractDetails.vue
 K 25

@@ -12,7 +12,7 @@ const closingRecords = (resolve) => require(['@/views/dealReports/closingRecords
 const contractNoManagement = (resolve) => require(['@/views/dealReports/contractNoManagement/index'], resolve);
 // 策划费
 const planningFees = (resolve) => require(['@/views/dealReports/planningFees/index'], resolve);
-// 新增二手房交易报告
+// 二手房 新增交易报告
 const addErShouDealReport = (resolve) => require(['@/views/dealReports/erShouDealReports/addErShouDealReport/index'], resolve);
 // 二手房 成交报告打印
 const secondHandDealPrint = (resolve) => require(['@/views/dealReports/erShouDealReports/erShoudealPrint/index'], resolve);
@@ -62,28 +62,6 @@ const KPICountDetail = (resolve) => require(['@/views/KPIModule/KPICount/compone
 // 潜在业绩
 const PotentialPerformance = (resolve) => require(['@/views/potentialPerformance/index'], resolve);
 
-// 新房意向单
-const IntentionSheet = (resolve) => require(['@/views/newHouseIntentionSheet/intentionSheet/index'], resolve);
-//新增新房意向单
-const addIntention = (resolve) => require(['@/views/newHouseIntentionSheet/intentionSheet/addIntention/index'], resolve);
-//新增新房收款单
-const addReceipt = (resolve) => require(['@/views/newHouseIntentionSheet/intentionSheet/addReceipt/index'], resolve);
-//新增新房付款单
-const addPayMent = (resolve) => require(['@/views/newHouseIntentionSheet/intentionSheet/addPayMent/index'], resolve);
-//新增转成交
-const transactionDeal = (resolve) => require(['@/views/newHouseIntentionSheet/intentionSheet/transactionDeal/addNewHouseDealReport'], resolve);
-//新增诚意金转款单(跨物业)
-const transferEarnestMoneyCross = (resolve) => require(['@/views/newHouseIntentionSheet/intentionSheet/transferEarnestMoneyCross/index'], resolve);
-//新增诚意金转款单(同物业)
-const transferEarnestMoneySame = (resolve) => require(['@/views/newHouseIntentionSheet/intentionSheet/transferEarnestMoneySame/index'], resolve);
-
-// 新房收付审批
-const receiptPaymentApproval = (resolve) => require(['@/views/newHouseIntentionSheet/receiptPaymentApproval/index'], resolve);
-// 新房收付审批-付款审批
-const paymentApproval = (resolve) => require(['@/views/newHouseIntentionSheet/receiptPaymentApproval/payApproval/index'], resolve);
-// 新房收付审批-转款审批
-const transferApproval = (resolve) => require(['@/views/newHouseIntentionSheet/receiptPaymentApproval/transferApprovalList/addTransferApproval/index'], resolve);
-
 
 /**
  * 重写路由的push、replace方法
@@ -99,8 +77,7 @@ Router.prototype.replace = function replace(location) {
 Vue.use(Router);
 
 var router = new Router({
-    routes: [
-        {
+    routes: [{
             path: "/",
             name: "index",
             component: index,
@@ -109,6 +86,9 @@ var router = new Router({
         {
             path: "/dealReports/dealReportsList",
             name: "dealReportsList",
+            meta: {
+                keepAlive: true
+            },
             component: dealReportsList
         },
         {
@@ -186,7 +166,7 @@ var router = new Router({
                 },
                 //分销合同
                 {
-                    path: "distributionContract",
+                    path: "/distributionContract",
                     name: "distributionContract",
                     meta: {
                         keepAlive: false
@@ -367,96 +347,6 @@ var router = new Router({
                 keepAlive: true
             }
         },
-        //新房意向单
-        {
-            path: "/intentionSheet/index",
-            name: "intentionSheet",
-            component: IntentionSheet,
-            meta: {
-                keepAlive: true
-            }
-        },
-        //新增新房意向单
-        {
-            path: "/addIntention",
-            name: "addIntention",
-            component: addIntention,
-            meta: {
-                keepAlive: false
-            }
-        },
-        //新增新房收款单
-        {
-            path: "/addReceipt",
-            name: "addReceipt",
-            component: addReceipt,
-            meta: {
-                keepAlive: false
-            }
-        },
-        //新增新房付款单
-        {
-            path: "/addPayMent",
-            name: "addPayMent",
-            component: addPayMent,
-            meta: {
-                keepAlive: false
-            }
-        },
-        //新增转成交
-        {
-            path: "/transactionDeal",
-            name: "transactionDeal",
-            component: transactionDeal,
-            meta: {
-                keepAlive: false
-            }
-        },
-        //新增诚意金转款单(跨物业)
-        {
-            path: "/transferEarnestMoneyCross",
-            name: "transferEarnestMoneyCross",
-            component: transferEarnestMoneyCross,
-            meta: {
-                keepAlive: false
-            }
-        },
-        //新增诚意金转款单(同物业)
-        {
-            path: "/transferEarnestMoneySame",
-            name: "transferEarnestMoneySame",
-            component: transferEarnestMoneySame,
-            meta: {
-                keepAlive: false
-            }
-        },
-        //新房收付审批
-        {
-            path: "/receiptPaymentApproval/index",
-            name: "receiptPaymentApproval",
-            component: receiptPaymentApproval,
-            meta: {
-                keepAlive: false
-            }
-        },
-        //新房收付审批-付款审批流程
-        {
-            path: "/paymentApproval",
-            name: "paymentApproval",
-            component: paymentApproval,
-            meta: {
-                keepAlive: false
-            }
-        },
-        //新房收付审批-转款审批流程
-        {
-            path: "/transferApproval",
-            name: "transferApproval",
-            component: transferApproval,
-            meta: {
-                keepAlive: false
-            }
-        },
     ]
 });
 
@@ -468,7 +358,7 @@ router.beforeEach((to, from, next) => {
         document.title = to.meta.title
     }
 
-    // 设置全局会话等链接上的参数        
+    // 设置全局会话等链接上的参数 :
     if (to && to.query) {
         for (var pro in to.query) {
             window[pro] = to.query[pro];

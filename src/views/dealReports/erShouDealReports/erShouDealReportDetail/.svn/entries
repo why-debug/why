@@ -1,15 +1,15 @@
 10
 
 dir
-54614
+54811
 http://172.16.140.92:9001/svndata/siteProduct/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/erShouDealReports/erShouDealReportDetail
 http://172.16.140.92:9001/svndata/siteProduct
 
 
 
-2020-06-18T07:53:23.436844Z
-53340
-xiongjuncheng
+2020-08-15T01:21:19.585432Z
+54809
+wanghaiyang
 
 
 
@@ -66,11 +66,11 @@ file
 
 
 
-2020-06-16T08:03:12.533681Z
-5797f576b6832da7800f8fbe0fbb54ad
-2020-06-16T08:03:12.533681Z
-53290
-xiongjuncheng
+2020-08-14T16:37:04.216731Z
+3a18332c714b43f8d9bdda5132a85ae3
+2020-08-15T01:21:19.585432Z
+54809
+wanghaiyang
 
 
 
@@ -92,7 +92,7 @@ xiongjuncheng
 
 
 
-7478
+7517
 
 customerRelationship.vue
 file
@@ -137,11 +137,11 @@ file
 
 
 
-2020-06-18T07:53:23.436844Z
-39a2c87b847316ac6ac6acb3167ce497
-2020-06-18T07:53:23.436844Z
-53340
-xiongjuncheng
+2020-08-14T17:08:23.530221Z
+bbd929f22da4760dc764c66de0e1c4be
+2020-08-15T01:21:19.585432Z
+54809
+wanghaiyang
 
 
 
@@ -163,7 +163,7 @@ xiongjuncheng
 
 
 
-26386
+27409
 
 index.vue
 file
@@ -171,11 +171,11 @@ file
 
 
 
-2020-06-18T07:53:23.436844Z
-bb8d1027e6c021fc469293affea506d7
-2020-06-18T07:53:23.436844Z
-53340
-xiongjuncheng
+2020-08-13T10:22:35.680496Z
+d144cd90818dd2cefd58ab6f6bac3bd7
+2020-08-14T02:39:24.364598Z
+54765
+wanghaiyang
 
 
 
@@ -197,7 +197,7 @@ xiongjuncheng
 
 
 
-6705
+8799
 
 reportNo.vue
 file
@@ -205,44 +205,10 @@ file
 
 
 
-2020-02-19T02:48:52.609409Z
-57d7d10d107ec4bfe65a85cfa583c5e5
-2020-02-19T02:48:52.609409Z
-49943
-liaohang
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-4076
-
-newActionLog.vue
-file
-
-
-
-
-2020-06-18T07:53:23.436844Z
-f41906e7f493f157004077bb960623a6
-2020-06-18T07:53:23.436844Z
-53340
+2020-08-10T01:52:13.538482Z
+0ab5ba18b1b86bc240dc561108a6848d
+2020-08-08T13:04:00.275131Z
+54619
 xiongjuncheng
 
 
@@ -265,7 +231,41 @@ xiongjuncheng
 
 
 
-10316
+4568
+
+newActionLog.vue
+file
+
+
+
+
+2020-08-13T10:27:20.912811Z
+8437a621895a1fe4ceb7b118dc13fb9e
+2020-08-14T02:39:24.364598Z
+54765
+wanghaiyang
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10332
 
 attachmentInformation.vue
 file

@@ -59,12 +59,25 @@
               :value="item.value"
             ></el-option>
           </el-select>
-          <el-input
-            v-model="ruleForm.erpMlDeal.mainDealId"
+          <el-select
             :style="{'width': inputWidth3, 'margin-left': '0.1rem','font-size':'0.1rem'}"
             :disabled="ruleForm.erpMlDeal.category !== 2"
+            v-model="ruleForm.erpMlDeal.mainDealNo"
+            filterable
+            remote
             placeholder="事后加佣需选主单号"
-          ></el-input>
+            :remote-method="remoteMethod"
+            :loading="loading"
+            minlength="4"
+          >
+            <el-option
+              @click.native="adds(item)"
+              v-for="item in options"
+              :key="item.dealNo"
+              :label="item.dealNo+item.dealHouseInfo"
+              :value="item.dealNo"
+            ></el-option>
+          </el-select>
         </el-form-item>
       </div>
       <div class="form-item-common form-item-box">
@@ -99,38 +112,24 @@
         <!-- 成交分行 -->
         <el-form-item class="form-item" prop="erpMlDeal.branchBankId">
           <div class="label-title red">成交分行</div>
-          <el-select
-            v-model="ruleForm.erpMlDeal.branchBankId"
+          <el-input
+            v-model="branchBankName"
             :style="{'width': inputWidth1}"
             placeholder
             @click.native="selsecArea"
-          >
-            <el-option
-              v-for="item in branchBankList"
-              :key="item.value"
-              :label="item.organizationName"
-              :value="item.organizationId"
-            ></el-option>
-          </el-select>
+          ></el-input>
         </el-form-item>
       </div>
       <div class="form-item-common form-item-box">
         <!-- 成交人 -->
         <el-form-item class="form-item" prop="erpMlDeal.dealUserId">
           <div class="label-title red">成交人</div>
-          <el-select
-            v-model="ruleForm.erpMlDeal.dealUserId"
+          <el-input
+            v-model="dealUserName"
             :style="{'width': inputWidth1}"
             placeholder
             @click.native="selsecPerson"
-          >
-            <el-option
-              v-for="item in dealUserList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          ></el-input>
         </el-form-item>
         <!-- 外区所在城市 -->
         <el-form-item
@@ -191,6 +190,7 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
+              :disabled="item.disabled"
               @click.native="dealHouseStyleChange"
             ></el-option>
           </el-select>
@@ -247,7 +247,7 @@
               v-for="item in houseUseageList"
               :key="item.value"
               :label="item.dicCnMsg"
-              :value="item.dicValue"
+              :value="item.dicId"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -283,7 +283,7 @@
           </div>
         </el-form-item>
         <!-- 所属片区 -->
-        <el-form-item class="form-item" prop="erpMlDeal.houseReg">
+        <el-form-item class="form-item areas" prop="erpMlDeal.houseReg">
           <div class="label-title">所属片区</div>
           <el-input
             v-model="houseRegName"
@@ -416,7 +416,7 @@
       <div class="form-item-common form-item-box">
         <!-- 合同编号 -->
         <el-form-item class="form-item" prop="erpMlDeal.entrustNo">
-          <div class="label-title red">合同编号</div>
+          <div class="label-title">合同编号</div>
           <el-select
             v-model="ruleForm.erpMlDeal.entrustType"
             :style="{'width': inputWidth2}"
@@ -427,13 +427,11 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              @click.native="entrustTypeChange"
             ></el-option>
           </el-select>
           <el-input
             v-model="ruleForm.erpMlDeal.entrustNo"
             :style="{'width': inputWidth3, 'margin-left': '0.1rem'}"
-            :disabled="true"
           ></el-input>
         </el-form-item>
         <!-- 成交总价 -->
@@ -1294,10 +1292,12 @@
                 v-for="item in fromSourceList"
                 :key="item.value"
                 :label="item.dicCnMsg"
-                :value="item.dicValue"
+                :value="item.dicId"
               ></el-option>
             </el-select>
-            <div class="other-title">（转介/合作）单号：GSDB154141010（转介）</div>
+            <div
+              class="other-title"
+            >（转介/合作）单号：{{itemClient.referralCooperationsNumber||"--"}}({{itemClient.referralCooperationsType==1?'转介':'合作'}})</div>
           </el-form-item>
         </div>
         <div class="form-item-common form-item-box">
@@ -1305,7 +1305,7 @@
           <el-form-item class="form-item">
             <div class="label-title">备 注</div>
             <el-input
-              v-model="itemClient.desc"
+              v-model="itemClient.remarks"
               type="textarea"
               :rows="textareaRow"
               resize="none"
@@ -1492,11 +1492,12 @@
                 :style="{'width': '100%'}"
               ></el-input>
             </div>
-            <div>{{item.getProfitLeaders()}}</div>
+            <div>{{item.profitLeadersName}}</div>
             <div class="del-icon" @click="delErpMlDealProfits(index)"></div>
           </div>
         </div>
       </div>
+      <!-- <performanceInfo></performanceInfo> -->
     </el-form>
 
     <!-- 关联合同 -->
@@ -1519,6 +1520,7 @@
 </template>
 
 <script>
+import performanceInfo from "./performance_info";
 import { getProvinceAndCityList } from "@/net/dealReports/address.js";
 import { ErpCommon } from "../../../../utils/ErpCommon";
 import {
@@ -1532,8 +1534,10 @@ import {
   getFunPerformanceTypeList,
   leaderAllotPerformance,
   datazd,
+  masterOdd,
+  masterData,
 } from "@/net/dealReports/erShouDealReports.js";
-
+import { SecondHandReportInfoDetail } from "@/net/dealReports/erShouDealReportDetail.js";
 import topTitle from "@/views/dealReports/erShouDealReports/components/topTitle.vue";
 import checkBox from "@/views/dealReports/erShouDealReports/components/checkBox.vue";
 import checkBoxOnly from "@/views/dealReports/erShouDealReports/components/checkBoxOnly.vue";
@@ -1555,6 +1559,7 @@ export default {
     associateCustomer,
     chooseProperty,
     selectArea,
+    performanceInfo,
   },
   data() {
     // 户型验证
@@ -1666,10 +1671,10 @@ export default {
       },
       // 类型
       dealTypeList: [
-        { label: "售", value: "1" },
-        { label: "租", value: "2" },
-        { label: "代办", value: "3" },
-        { label: "返利", value: "4" },
+        { label: "售", value: 1 },
+        { label: "租", value: 2 },
+        { label: "代办", value: 3 },
+        { label: "返利", value: 4 },
       ],
       // 类别
       categoryList: [
@@ -1679,7 +1684,9 @@ export default {
         { label: "外区分佣", value: 4 },
       ],
       // 事后加佣
-      mainDealList: [],
+      options: [],
+      list: [],
+      loading: false,
       // 合作方式
       cooperationTypeList: [
         { label: "跨市合作", value: 1 },
@@ -1687,9 +1694,9 @@ export default {
         { label: "区内合作", value: 3 },
       ],
       // 成交分行
-      branchBankList: [],
+      branchBankName: "",
       // 成交人
-      dealUserList: [],
+      dealUserName: "",
       // 外区所在城市
       otherDealCityList: [],
       // 外区分行
@@ -1697,7 +1704,7 @@ export default {
       // 房源
       dealHouseStyleList: [
         { label: "内部合作", value: 1 },
-        { label: "外部合作", value: 2 },
+        { label: "外部合作", value: 2, disabled: true },
       ],
       // 房产证
       ownerTypeList: [
@@ -1707,7 +1714,6 @@ export default {
       // 用途
       houseUseageList: [],
       // 所属片区
-      // houseRegList: [],
       houseRegName: "",
       // 产权性质
       propertyTypeList: [
@@ -1859,11 +1865,17 @@ export default {
   },
 
   created() {
+    //获取url 是否存在合同id
+    let reportId = this.$route.query.dealId || ""; //url参数
+    // 初始化编辑数据
+    if (reportId) {
+      this.initData(reportId);
+    }
     this.initAddress();
     this.houseUseList();
     this.phoneTypeList();
     this.clientSourceList();
-    // this.$store.dispatch("common_store/getInitInfo");
+    this.$store.dispatch("common_store/getInitInfo");
     this.getBankList();
     this.getErpMlDealProfitsProfitTypeList();
     this.ruleForm = {
@@ -1888,6 +1900,30 @@ export default {
     }
   },
   methods: {
+    //若为编辑则初始化详情数据
+    initData(reportId) {
+      new SecondHandReportInfoDetail({ id: reportId })
+        .send()
+        .then((res) => {
+          console.log(res, "二手房成交报告编辑初始化数据");
+          this.houseRegName = res.erpMlDeal.erpMlDeal.houseRegName;
+          // this.dealUserName = res.dealUserName;
+          // this.branchBankName = res.erpMlDeal.dealOrganizationName;
+          this.ruleForm.erpMlDeal = res.erpMlDeal;
+          this.ruleForm.erpMlDealSellers = res.erpMlDealSeller;
+          this.ruleForm.erpMlDealBuyUsers = res.erpMlDealBuyUser;
+          this.ruleForm.erpMlDealOuterCooperations =
+            res.erpMlDealOuterCooperation;
+          this.ruleForm.erpMlDealProfits = res.erpMlDealProfit;
+        })
+        .catch((res) => {
+          console.log(res, "err");
+          new ErpCommon().toast(
+            res.errMsg || "服务器开小差了,请稍后再试!",
+            "error"
+          );
+        });
+    },
     // 初始化时间国家省份城市
     async initAddress() {
       await new getProvinceAndCityList().send().then((res) => {
@@ -1933,14 +1969,14 @@ export default {
       });
       console.log(this.erpMlDealProfitsProfitTypeList, "业绩分配类型列表");
     },
-    why(i) {},
     // 选择部门
     selsecArea(data) {
       let val = new ErpCommon().openPerformanceAssignee(this.selectAreaParms);
       let info = JSON.parse(val);
       data.compOrgName = info.organizationName || "--";
       data.orgId = info.organizationId;
-      this.ruleForm.erpMlDeal.branchBankId = info.organizationId;
+      this.ruleForm.erpMlDeal.dealOrganizationId = info.organizationId;
+      this.branchBankName = info.organizationName;
       // data = info.organizationId || "--";
       // this.ruleForm.erpMlDealProfits[i].compOrgName = info.organizationName;
       console.log(val, "这是筛选分配部门");
@@ -1955,9 +1991,10 @@ export default {
       };
       data.userName = info.userName || "--";
       data.userId = info.userId;
-      // this.userId = info.userId;
+      this.dealUserName = info.userName;
       this.ruleForm.erpMlDeal.dealUserId = info.userId;
       userIds.userId = info.userId;
+      // 领导人分配业绩
       new leaderAllotPerformance(userIds).send().then((res) => {
         data.profitLeadersName = res.mangeNames;
         data.profitLeaders = res.mangeIds;
@@ -2003,6 +2040,47 @@ export default {
         this.ruleForm.erpMlDeal.mainDealId = "";
       }
     },
+    // 事后加佣主单号模糊查询
+    remoteMethod(query) {
+      // let n = Number(query);
+      console.log(query);
+      if (query.length < 4)
+        return this.$erpCommon.toast("请输入4个以上的关键数字");
+      // if(query.length < 4) return this.$erpCommon.toast("请输入数字");
+      new masterOdd({ dealNo: query }).send().then((res) => {
+        console.log(res, "主单号列表查询结果");
+        this.list = res.data;
+        console.log(this.list);
+      });
+      if (query !== "") {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          this.options = this.list.filter((item) => {
+            return item.dealNo.toLowerCase().indexOf(query.toLowerCase()) > -1;
+          });
+          console.log(this.options);
+        }, 200);
+      } else {
+        this.options = [];
+      }
+    },
+    adds(v) {
+      new masterData({ id: v.dealId }).send().then((res) => {
+        console.log(res, "主单号ID获取的信息");
+        this.ruleForm.erpMlDeal = res.erpMlDeal;
+        this.houseRegName = res.erpMlDeal.shardConnId;
+        this.ruleForm.erpMlDealSellers = res.erpMlDealSeller;
+        this.ruleForm.erpMlDealBuyUsers = res.erpMlDealBuyUser;
+        this.ruleForm.erpMlDealOuterCooperations =
+          res.erpMlDealOuterCooperation;
+        this.ruleForm.erpMlDeal.dealPrice = "";
+        this.ruleForm.erpMlDeal.sellOwnerCommsion = "";
+        this.ruleForm.erpMlDeal.buyCustomerCommsion = "";
+        // this.ruleForm.erpMlDealProfits = res.erpMlDealProfit;
+      });
+    },
+
     // 盘源编号选择
     dealHouseStyleChange() {
       this.showChooseProperty();
@@ -2110,6 +2188,8 @@ export default {
     // 选择物业回显信息
     houseInfo(v) {
       console.log(v);
+      console.log(v.id);
+      this.ruleForm.erpMlDeal.dealHouseId = v.id;
       // 套内面积
       this.ruleForm.erpMlDeal.houseInnerArea = v.innerarea;
       // 建筑面积
@@ -2120,26 +2200,30 @@ export default {
       this.ruleForm.erpMlDeal.houseReg = v.sectionId; //传递请求参数
       this.houseRegName = v.sectionName; //页面显示内容
       // 用途
-      this.ruleForm.erpMlDeal.houseUseage = v.useage;
+      // this.ruleForm.erpMlDeal.houseUseage = v.useage;
       // 户型
       this.ruleForm.erpMlDeal.houseRoom = v.room;
       this.ruleForm.erpMlDeal.houseHall = v.hall;
       this.ruleForm.erpMlDeal.houseToilet = v.wei;
       console.log(v.useage);
+      // 楼盘名称
+      this.ruleForm.erpMlDeal.buildName = v.buildName;
+      //房源业务员ID
+      this.ruleForm.erpMlDeal.agencyHouseUserId = v.userId;
+      // 房源编号
+      this.ruleForm.erpMlDeal.dealHouseNo = v.houseNo;
     },
     //选择关联客户回显信息
     userInfo(data) {
       console.log(data);
-      this.ruleForm.erpMlDealBuyUsers[0].userName = data.buyCustName;
-      this.ruleForm.erpMlDealBuyUsers[0].userSex = data.buyCustSex;
-      this.ruleForm.erpMlDealBuyUsers[0].firstContractPhone =
-        data.phoneParamList[0].phone;
-      this.ruleForm.erpMlDealBuyUsers[0].firstContractType = JSON.stringify(
-        data.phoneParamList[0].phoneType
-      );
-      this.ruleForm.erpMlDealBuyUsers[0].fromSource = JSON.stringify(
-        data.custSource
-      );
+      this.ruleForm.erpMlDealBuyUsers.forEach((item) => {
+        item.userName = data.buyCustName;
+        item.userSex = data.buyCustSex;
+        item.fromSource = JSON.stringify(data.custSource);
+        item.firstContractPhone = data.phoneParamList[0].phone;
+        item.referralCooperationsNumber = data.recommendNum;
+        item.referralCooperationsType = data.recommendType;
+      });
     },
     // 选择片区弹窗
     showSelectArea() {
@@ -2277,18 +2361,35 @@ export default {
     },
     // 保存
     saveIt() {
-      console.log("this.ruleForm", this.ruleForm.erpMlDeal.houseArea);
       console.log(this.ruleForm.erpMlDealBuyUsers);
+      this.ruleForm.erpMlDeal.hasCooperateFee =
+        this.waibuhezuofei == "1" ? 1 : 0;
+      // 标准佣金
+      this.ruleForm.erpMlDeal.standardCommission = this.standardCommission;
+      // 折扣
+      this.ruleForm.erpMlDeal.discountCommission = this.discount;
+      //若为编辑时传成交报告ID
+      let dealId = this.$route.query.dealId || ""; //url参数
+      this.ruleForm.erpMlDeal.dealId = dealId;
+      new createMlDealReport(this.ruleForm)
+        .send()
+        .then((res) => {
+          this.tableData = res;
+          if (res.errCode == 200) {
+            this.$router.go(-1);
+          }
+        })
+        .catch((res) => {
+          console.log(res, "err");
+          new ErpCommon().toast(
+            res.errMsg || "服务器开小差了,请稍后再试!",
+            "error"
+          );
+        });
+      //表单验证
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
           console.log("this.ruleForm", this.ruleForm);
-          // let data = new createMlDealReport(this.ruleForm).send()
-          // console.log(data)
-          new createMlDealReport(this.ruleForm).send().then((res) => {
-            // this.tableData = res;
-            console.log(res);
-          });
-          this.$router.go(-1);
         }
       });
     },
@@ -2369,6 +2470,9 @@ export default {
     .el-form-item {
       margin-right: 0;
     }
+  }
+  .areas .el-input__inner {
+    cursor: pointer;
   }
   .el-form-item {
     margin-bottom: 0.18rem;
@@ -2816,8 +2920,11 @@ export default {
               width: 8%;
             }
             &:nth-child(9) {
-              flex: 1 1 auto;
+              flex: 1;
               padding-right: 0.4rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             &.del-icon {
               padding-right: 0;

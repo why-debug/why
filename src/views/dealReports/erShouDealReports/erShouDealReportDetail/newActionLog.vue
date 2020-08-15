@@ -6,9 +6,7 @@
         :key="index"
         @click="changeTab(item.value)"
         :class="{ active: item.value === tabActive }"
-      >
-        {{ item.label }}
-      </div>
+      >{{ item.label }}</div>
     </div>
     <el-table
       class="table-box"
@@ -22,8 +20,7 @@
         :prop="item.prop"
         :label="item.label"
         :width="item.width"
-      >
-      </el-table-column>
+      ></el-table-column>
     </el-table>
     <div class="page-box" v-if="tableData.length !== 0 && tabActive == 6">
       <div class="normal" @click="pageChange('-')">&lt;</div>
@@ -36,9 +33,7 @@
         class="input-box"
       />
       <div class="normal" @click="pageChange()">GO</div>
-      <div class="num">
-        共{{ maxPage || 1 }}页，{{ totalNumber || 0 }}条
-      </div>
+      <div class="num">共{{ maxPage || 1 }}页，{{ totalNumber || 0 }}条</div>
     </div>
     <no-data
       v-if="tableData.length === 0 && tabActive != 1"
@@ -46,22 +41,13 @@
     ></no-data>
     <!-- 跟进日志界面 -->
     <div v-if="tabActive == 1" class="follow-log">
-      <div
-        class="centerBox"
-        v-for="(item, index) in followLogList"
-        :key="index"
-      >
+      <div class="centerBox" v-for="(item, index) in followLogList" :key="index">
         <div class="leftDate">
-          <div
-            class="date"
-            :style="{ color: index == 0 ? '#ff7f00' : '#999999' }"
-          >
-            <span>.</span> {{ item.trackTime | formatTime(false) }}
+          <div class="date" :style="{ color: index == 0 ? '#ff7f00' : '#999999' }">
+            <span>.</span>
+            {{ item.trackTime | formatTime(false) }}
           </div>
-          <div
-            class="leftBorder"
-            :style="{ background: index == 0 ? '#ff7f00' : '#999999' }"
-          ></div>
+          <div class="leftBorder" :style="{ background: index == 0 ? '#ff7f00' : '#999999' }"></div>
         </div>
         <div class="rightText">
           <div class="topContent">{{ item.trackContent }}</div>
@@ -95,16 +81,16 @@ export default {
   props: {
     id: {
       type: Number | String,
-      default: "",
+      default: "1",
     },
   },
   data() {
     return {
       tabActive: "6",
       paramsObj: new getNewHouseDealtrackLogRequest(),
-      followLogParams:new getNewHouseFollowLogRequest(),
+      followLogParams: new getNewHouseFollowLogRequest(),
       maxPage: 1, // 最大页数 总页数
-      totalNumber:'',//总共条数
+      totalNumber: "", //总共条数
       tabList: [
         { label: "跟进日志", value: "1" },
         { label: "成交报告日志", value: "2" },
@@ -115,8 +101,8 @@ export default {
       ],
       tableColumnList: [
         { prop: "trackTime", label: "时间", width: "" },
-        { prop: "trackContent", label: "日志类型", width: "" },
-        { prop: "trackType", label: "跟进内容", width: "260" },
+        { prop: "trackType", label: "日志类型", width: "" },
+        { prop: "trackContent", label: "跟进内容", width: "260" },
         { prop: "trackUname", label: "跟进人", width: "" },
       ],
       tableData: [],
@@ -135,6 +121,7 @@ export default {
   },
   created() {
     this.paramsObj.reportId = this.id;
+    console.log(this.id, "客户ID");
     this.initData();
     // if (this.paramsObj.reportId) {
     //   this.initData()
@@ -148,24 +135,26 @@ export default {
       )
         .send()
         .then((res) => {
-          console.log(res,'eeeeeeeeeeeeeeeeee');
+          console.log(res, "eeeeeeeeeeeeeeeeee");
           this.tableData = res.list;
           this.maxPage = res.totalPage;
           this.totalNumber = res.totalNumber;
           console.log(this.tableData, "操作日志列表");
         })
         .catch((res) => {
-          console.log(res,'请求失败');
+          console.log(res, "请求失败");
         });
     },
-    // 初始化操作日志数据
+    // 初始化跟进日志数据
     initFollowData() {
+      this.followLogParams.reportId = this.id;
       new getNewHouseFollowLogList(
         new getNewHouseFollowLogRequest(this.followLogParams)
       )
         .send()
         .then((res) => {
           this.followLogList = res.list;
+          console.log(this.followLogList, "跟进日志列表");
         })
         .catch((res) => {
           console.log(res);
@@ -174,7 +163,7 @@ export default {
     changeTab(value) {
       // if (value !== '6') return
       this.tabActive = value;
-      if (value == '1') this.initFollowData();
+      if (value == "1") this.initFollowData();
     },
     //切换页码
     paginationChange() {
@@ -188,7 +177,7 @@ export default {
       }
       this.paramsObj.pageOffset = pageOffset;
     },
-     //数入页码
+    //数入页码
     inputVal() {
       let pageOffset = this.paramsObj.pageOffset;
       if (pageOffset <= 1 || pageOffset == "") {

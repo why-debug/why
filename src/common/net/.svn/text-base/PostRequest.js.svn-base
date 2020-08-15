@@ -28,6 +28,8 @@ export class PostRequest extends API{
       let requestParam = this.request || {}
       requestParam['clientKey'] = GetLoginModel.getClientKey()
       requestParam['javaApi'] = this.getUrl();
+      // requestParam['javaDomain'] = 'http://appverify.51vfang.cn';
+      requestParam['javaDomain'] = 'http://gray.51vfang.cn/';
 
       return instance({
         method: 'post',

@@ -14,6 +14,7 @@ export class ReportInfoDetailRequest extends APIRequest {
 
 // 定义返回参数
 export class ReportInfoDetailItem {
+    reportId = "";//成交报告id
     /* -----------------项目信息  20---------------------- */
     agentId = ''; //代理商ID
     //类型
@@ -26,18 +27,22 @@ export class ReportInfoDetailItem {
     reportClassText = '';
     // 主单号
     reportNo = '';
+    // 主单号 主单号(当类别为事后加佣时记录该引用数据的主单号)
+    reportCommissionNo;
     //收佣状态
     commissionStatus = '';
     //收佣状态文本 0：未收齐  1：已收齐
     commissionStatusText = '';
     //制单人
     createUserName = '';
+    //制单人组织
+    createOrgName = '';
     //制单时间
     createTime = "";
     // 合作方式  1：跨市合作  2：市内合作  3：区内合作
     cooperationType = '';
     cooperationTypeText = '';
-    
+
     // 外区分行
     cooperationOutsideId = '';
     // 外区所在城市
@@ -53,6 +58,7 @@ export class ReportInfoDetailItem {
     buildAddr = ''; //项目地址
     // 所属片区
     regId = '';
+    regName = '';
     // 物业地址
     wuyeAddr = '';
     // 用途
@@ -63,7 +69,7 @@ export class ReportInfoDetailItem {
     // 建筑级别
     buildLevelName = '';
     // 室
-    buildRoom = ''; 
+    buildRoom = '';
     // 卫
     buildWei = '';
     // 阳
@@ -117,50 +123,50 @@ export class ReportInfoDetailItem {
 
     // 客户列表
     reporCustListVOs = [{
-        //客户类型
-        custType: '',
-        // 客户关系
-        custClass: '',
-        // 客户姓名/法人姓名
-        custName: '',
-        // 客户性别/法人性别
-        custSex: '',
-        // 地域 
-        territory: '',
-        // 企业名称
-        custCompName: '',
-        // 营业执照号码
-        businessLicenseNo: '',
-        // 证件类型
-        iccodeType: '',
-        // 证件号码
-        custIccode: '',
-        // 户籍是否为本市
-        belonged: '',
-        // 户籍省
-        belongedProvince: '',
-        // 电话号码
-        reportCustMobiles: [{
-            custMobile: '',
-            id: '',
-            mobileType: '',
-        }],
-        // 联系地址-国家 
-        linkCountryId: '',
-        // 联系地址-城市 
-        linkProvinceId: '',
-        // 联系地址-地址 
-        linkAddr: '',
-        // 产权比例
-        proportion: '',
-        // 客户来源
-        custSource: '',
-        // 备注
-        custNote: '',
-        // 关联客户id
-        custId: '',
-        // 客户主键
-        id: '',
+        // //客户类型
+        // custType: '',
+        // // 客户关系
+        // custClass: '',
+        // // 客户姓名/法人姓名
+        // custName: '',
+        // // 客户性别/法人性别
+        // custSex: '',
+        // // 地域 
+        // territory: '',
+        // // 企业名称
+        // custCompName: '',
+        // // 营业执照号码
+        // businessLicenseNo: '',
+        // // 证件类型
+        // iccodeType: '',
+        // // 证件号码
+        // custIccode: '',
+        // // 户籍是否为本市
+        // belonged: '',
+        // // 户籍省
+        // belongedProvince: '',
+        // // 电话号码
+        // reportCustMobiles: [{
+        //     custMobile: '',
+        //     id: '',
+        //     mobileType: '',
+        // }],
+        // // 联系地址-国家 
+        // linkCountryId: '',
+        // // 联系地址-城市 
+        // linkProvinceId: '',
+        // // 联系地址-地址 
+        // linkAddr: '',
+        // // 产权比例
+        // proportion: '',
+        // // 客户来源
+        // custSource: '',
+        // // 备注
+        // custNote: '',
+        // // 关联客户id
+        // custId: '',
+        // // 客户主键
+        // id: '',
     }];
     /* -----------------业绩信息 35--------------------- */
     // 代理佣金
@@ -186,56 +192,60 @@ export class ReportInfoDetailItem {
     // 分成方式
     dividedUnit = '';
     // 外部合作费
-    outCooperations = [{
-        //合作人
-        userName: '',
-        //身份证
-        userIccode: '',
-        //联系方式
-        userMobile: '',
-        //类型
-        cooperationClass: '',
-        //合作费
-        cooperationCost: '',
-        // 主键id
-        id: '',
-        // 成交报告id 
-        reportId: '',
-        // 合作人id 
-        userId: '',
-    }]
-    reportProfitVOs = [{
-        // 业绩类型
-        profitType: '',
-        // 分配类型
-        allotType: '',
-        //分配类型名称
-        allotTypeName: '',
-        // 分配部门
-        allotOrganizationId: '',
-        //分配分组名称
-        allotOrganizationName: '',
-        // 分配人
-        allotUser: '',
-        allotUserName: '',
-        // 业绩月份
-        allotMonth: '',
-        // 分配比例
-        allotRatio: '',
-        //分配业绩
-        allotMoney: '',
-        // 单量
-        signNum: '',
-        // 公司费用
-        compCostFlag: '',
-        // 领导人分配业绩
-        leaderUserName: '',
-        leaderUserId: '',
-        // 主键id
-        id: '',
-        // 成交报告id
-        reportId: '',
-    }]
+    outCooperations = [
+    //     {
+    //     //合作人
+    //     userName: '',
+    //     //身份证
+    //     userIccode: '',
+    //     //联系方式
+    //     userMobile: '',
+    //     //类型
+    //     cooperationClass: '',
+    //     //合作费
+    //     cooperationCost: '',
+    //     // 主键id
+    //     id: '',
+    //     // 成交报告id 
+    //     reportId: '',
+    //     // 合作人id 
+    //     userId: '',
+    // }
+]
+    reportProfitVOs = [
+    //     {
+    //     // 业绩类型
+    //     profitType: '',
+    //     // 分配类型
+    //     allotType: '',
+    //     //分配类型名称
+    //     allotTypeName: '',
+    //     // 分配部门
+    //     allotOrganizationId: '',
+    //     //分配分组名称
+    //     allotOrganizationName: '',
+    //     // 分配人
+    //     allotUser: '',
+    //     allotUserName: '',
+    //     // 业绩月份
+    //     allotMonth: '',
+    //     // 分配比例
+    //     allotRatio: '',
+    //     //分配业绩
+    //     allotMoney: '',
+    //     // 单量
+    //     signNum: '',
+    //     // 公司费用
+    //     compCostFlag: '',
+    //     // 领导人分配业绩
+    //     leaderUserName: '',
+    //     leaderUserId: '',
+    //     // 主键id
+    //     id: '',
+    //     // 成交报告id
+    //     reportId: '',
+    // }
+]
 
     getDefault(val) {
         if (val != '' && val != undefined) {
@@ -245,23 +255,23 @@ export class ReportInfoDetailItem {
         }
     }
     //获取户型
-    getBuildTypeText(buildRoom,buildHall,buildWei,buildYang){
-        return buildRoom +'室' +buildHall +'厅' + buildWei + '卫' + buildYang + '阳台'
+    getBuildTypeText(buildRoom, buildHall, buildWei, buildYang) {
+        return buildRoom + '室' + buildHall + '厅' + buildWei + '卫' + buildYang + '阳台'
     }
     //获取对应类型文本
-    judgeReportType(val,arrName){
-        if(val == '') return val;
+    judgeReportType(val, arrName) {
+        if (val == '') return val;
         let num = Number(val);
         //判断报告类型 类型  1：直销  2：分销  3：租赁
-        let reportTypeArr = ['直销','分销','租赁'];
+        let reportTypeArr = ['直销', '分销', '租赁'];
         //判断报告类别  1：一般成交  2：事后加佣  3：口头代理费  4：外区分佣
-        let classArr = ['一般成交','事后加佣','口头代理费','外区分佣'];
+        let classArr = ['一般成交', '事后加佣', '口头代理费', '外区分佣'];
         //判断付款方式  1:一次性付款  2:按揭付款
-        let payTypeArr = ['一次性付款','按揭付款']; 
+        let payTypeArr = ['一次性付款', '按揭付款'];
         //收佣状态 0：未收齐  1：已收齐
-        let commissionStatusArr = ['未收佣','已收佣'];
-         // 合作方式  1：跨市合作  2：市内合作  3：区内合作
-        let cooperationTypeArr = ['跨市合作','市内合作','区内合作'];
+        let commissionStatusArr = ['未收佣', '已收佣'];
+        // 合作方式  1：跨市合作  2：市内合作  3：区内合作
+        let cooperationTypeArr = ['跨市合作', '市内合作', '区内合作'];
         let obj = {
             reportTypeArr,
             classArr,
@@ -269,8 +279,21 @@ export class ReportInfoDetailItem {
             commissionStatusArr,
             cooperationTypeArr,
         }
-        if(arrName == 'commissionStatusArr') return obj[arrName][num];
+        if (arrName == 'commissionStatusArr') return obj[arrName][num];
         return obj[arrName][num - 1];
+    }
+    //获取负责人姓名
+    getChargeName(data) {
+        let arr = data || []
+        let text = '';
+        if (arr.length > 0) {
+            for (let item of arr) {
+                text += item;
+            }
+            return text;
+        } else {
+            return '--'
+        }
     }
 }
 
@@ -281,7 +304,7 @@ export class ReportInfoDetailApi extends PostRequest {
     }
 
     getUrl() {
-        return '/newBuildWeb/broker/commission/getReporInfo'
+        return '/newBuildWeb/broker/commission/getReportInfo'
     }
 
     getNeedToken() {
@@ -305,23 +328,26 @@ export class ReportInfoDetail {
                 let obj = res.data || {};
 
                 let item = new ReportInfoDetailItem();
+                item.reportId = obj.reportId || '';
                 item.agentId = obj.agentId || '--';
                 item.reportType = obj.reportType || '--';
-                item.reportTypeText =item.judgeReportType(obj.reportType,'reportTypeArr'); 
+                item.reportTypeText = item.judgeReportType(obj.reportType, 'reportTypeArr');
                 item.reportClass = obj.reportClass || '';
-                item.reportClassText =item.judgeReportType(obj.reportClass,'classArr');
+                item.reportClassText = item.judgeReportType(obj.reportClass, 'classArr');
                 item.reportNo = obj.reportNo || '--';
+                item.reportCommissionNo = obj.reportCommissionNo || '';
                 item.commissionStatus = item.getDefault(obj.commissionStatus);
-                item.commissionStatusText =item.judgeReportType(obj.commissionStatus,'commissionStatusArr');
+                item.commissionStatusText = item.judgeReportType(obj.commissionStatus, 'commissionStatusArr');
                 item.createUserName = obj.createUserName || '--';
+                item.createOrgName = obj.createOrgName || '--';
                 item.createTime = obj.createTime || '--';
                 item.cooperationType = obj.cooperationType || '';
-                item.cooperationTypeText = item.judgeReportType( obj.cooperationType,'cooperationTypeArr');
+                item.cooperationTypeText = item.judgeReportType(obj.cooperationType, 'cooperationTypeArr');
                 item.cooperationOutsideId = obj.cooperationOutsideId || '--';
                 item.cooperationOutsideCityId = obj.cooperationOutsideCityId || '--';
                 item.buildId = obj.buildId || '--';
                 item.buildName = obj.buildName || '--';
-                item.chargeName = obj.chargeName || '--';
+                item.chargeName = obj.chargeName || [];
                 item.agentName = obj.agentName || '--';
                 item.developerName = obj.developerName || '--';
                 item.settlementMethod = obj.settlementMethod || '--';
@@ -333,7 +359,7 @@ export class ReportInfoDetail {
                 item.wuyeAddr = obj.wuyeAddr || '--';
                 item.buildUseageName = obj.buildUseageName || '--';
                 item.buildType = obj.buildType || '--';
-                item.buildTypeText = item.getBuildTypeText(obj.buildRoom || '--',obj.buildHall || '--',obj.buildWei || '--',obj.buildYang || '--');
+                item.buildTypeText = item.getBuildTypeText(obj.buildRoom || '--', obj.buildHall || '--', obj.buildWei || '--', obj.buildYang || '--');
                 item.buildLevelName = obj.buildLevelName || '--';
                 item.buildRoom = obj.buildRoom || '--';
                 item.buildWei = obj.buildWei || '--';
@@ -348,7 +374,7 @@ export class ReportInfoDetail {
                 item.dealTime = obj.dealTime || '--';
                 item.offerTime = obj.offerTime || '--';
                 item.payType = obj.payType || '';
-                item.payTypeText = item.judgeReportType(obj.payType,'payTypeArr')  ;
+                item.payTypeText = item.judgeReportType(obj.payType, 'payTypeArr');
                 item.commissionPlanTime = obj.commissionPlanTime || '--';
                 item.firstPaymentTime = obj.firstPaymentTime || '--';
                 item.discountNote = obj.discountNote || '--';

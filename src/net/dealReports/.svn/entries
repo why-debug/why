@@ -1,14 +1,14 @@
 10
 
 dir
-54614
+54811
 http://172.16.140.92:9001/svndata/siteProduct/trunk/frontend_pure/meilian-erp-vue/src/net/dealReports
 http://172.16.140.92:9001/svndata/siteProduct
 
 
 
-2020-08-08T11:16:59.466742Z
-54614
+2020-08-15T01:21:19.585432Z
+54809
 wanghaiyang
 
 
@@ -25,6 +25,40 @@ wanghaiyang
 
 
 5e672093-ee8b-a04a-a967-2d275209167d
+
+getDealListTabInfo.js
+file
+
+
+
+
+2020-08-14T01:20:05.831354Z
+28062d926b8b094688c4fbea0bc5bb18
+2020-08-14T01:19:44.938205Z
+54762
+xiongjuncheng
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2064
 
 address.js
 file
@@ -66,10 +100,10 @@ file
 
 
 
-2020-07-31T05:18:45.889376Z
-f361ecc623b9332372490779311cb090
-2020-08-05T03:17:02.981437Z
-54541
+2020-08-13T07:20:22.552157Z
+f76f01bce3b3bf60ad3501d307e4c106
+2020-08-14T02:39:24.364598Z
+54765
 wanghaiyang
 
 
@@ -92,18 +126,18 @@ wanghaiyang
 
 
 
-11918
+13259
 
 erShouDealReports.js
 file
-54615
 
 
 
-2020-08-08T11:30:41.337060Z
-345f30daa99c03b71f888fa05cde2951
-2020-08-08T11:36:47.614675Z
-54615
+
+2020-08-14T06:45:12.982604Z
+2ce1b9fc4cd6d029cdc3115b022a7e2a
+2020-08-15T01:21:19.585432Z
+54809
 wanghaiyang
 
 
@@ -126,7 +160,7 @@ wanghaiyang
 
 
 
-25775
+28324
 
 addFollowLog.js
 file
@@ -134,10 +168,10 @@ file
 
 
 
-2020-06-03T01:38:32.672740Z
-a1d6941b026298455afe645b5cb8728e
-2020-06-03T01:38:32.672740Z
-52934
+2020-08-12T12:13:06.452390Z
+e0dd61f05b2aee87d8dc76b249c64d37
+2020-08-12T12:13:03.126079Z
+54703
 xiongjuncheng
 
 
@@ -160,7 +194,7 @@ xiongjuncheng
 
 
 
-1850
+1987
 
 dealReportsList.js
 file
@@ -168,11 +202,11 @@ file
 
 
 
-2020-08-08T11:09:36.133694Z
-4cbc1ce20525f82fd05285c792b1d074
-2020-08-08T10:22:56.684931Z
-54613
-liuchilei
+2020-08-15T01:19:03.037351Z
+a61a7adcb5ebe8071edb4e167a91af0a
+2020-08-14T17:30:11.398609Z
+54808
+xiongjuncheng
 
 
 
@@ -194,7 +228,7 @@ liuchilei
 
 
 
-13929
+18925
 
 newHouseOperationLog.js
 file
@@ -202,11 +236,11 @@ file
 
 
 
-2020-06-05T01:26:03.619397Z
-1c80b420d98fda46f7e6afcfa377aea4
-2020-06-05T01:26:03.619397Z
-52986
-xiongjuncheng
+2020-08-13T07:50:01.972934Z
+d3e0501d1684f5640045f45f33adbdc8
+2020-08-14T02:39:24.364598Z
+54765
+wanghaiyang
 
 
 
@@ -228,7 +262,7 @@ xiongjuncheng
 
 
 
-3596
+3736
 
 newHouseFollowLog.js
 file
@@ -236,10 +270,10 @@ file
 
 
 
-2020-06-05T01:26:03.619397Z
-132abaf1ff92b39af51edbdaef888bc3
-2020-06-05T01:26:03.619397Z
-52986
+2020-08-12T12:13:06.468391Z
+74b3cf1c2a3f1219b75ef77d06a09b90
+2020-08-12T12:13:03.126079Z
+54703
 xiongjuncheng
 
 
@@ -262,5 +296,5 @@ xiongjuncheng
 
 
 
-3154
+3591
 

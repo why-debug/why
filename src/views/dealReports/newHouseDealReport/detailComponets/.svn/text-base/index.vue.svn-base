@@ -1,5 +1,5 @@
 <template>
-  <div class="ershou-detail">
+  <div class="ershou-detail" v-if="isShow">
     <div class="content">
       <div class="close-icon" @click="coloseView"></div>
       <div class="c-left">
@@ -17,10 +17,10 @@
         <!-- <attachment-information v-if="leftActive === 'attachmentInformation'"></attachment-information> -->
         <!-- <financial-receipt v-if="leftActive === 'financialReceipt'"></financial-receipt> -->
         <!-- <customer-relationship v-if="leftActive === 'customerRelationship'"></customer-relationship> -->
-        <action-log v-if="leftActive === 'actionLog'" ></action-log>
+        <action-log v-if="leftActive === 'actionLog'"  :reportId="dealId"  :offerNo="newHouseDetailInfo.offerNo"></action-log>
       </div>
       <div class="c-right" v-if="isRight">
-        <report-no v-if="leftActive === 'basicInformation'" :projectDetailInfo="newHouseDetailInfo"></report-no>
+        <report-no v-if="leftActive === 'basicInformation'" :projectDetailInfo="newHouseDetailInfo" :reportId="dealId"></report-no>
       </div>
     </div>
   </div>
@@ -38,18 +38,38 @@ import {ReportInfoDetail,ReportInfoDetailRequest,ReportInfoDetailItem} from '../
 import { ErpCommon } from "../../../../utils/ErpCommon";
 
 export default {
+  components: {
+    basicInformation,
+    attachmentInformation,
+    financialReceipt,
+    customerRelationship,
+    actionLog,
+    reportNo,
+    projectDetail
+  },
   props: {
     isShow: {
       type: Boolean,
       default: false
-    }
+    },
+    dealId: {
+      type: Number|String,
+      default: ''
+    },
+    //新房核心查看权
+    hasNewBuildSeeAuth: {
+      type: Boolean,
+      data() {
+        return false;
+      },
+    },
   },
   data () {
     return {
       leftActive: 'basicInformation',
       newHouseDetailInfo:new ReportInfoDetailItem(),//新房成交报告详情数据
       params:{
-        reportId:1,//成交报告ID
+        reportId:"",//成交报告ID
       },
       leftList: [
         { text: '基本信息', value: 'basicInformation', icon: require('../../../../assets/images/dealReports/Icon1.png'), activeIcon: require('../../../../assets/images/dealReports/Icon1Select_200.png') },
@@ -60,24 +80,27 @@ export default {
       ]
     }
   },
-  components: {
-    basicInformation,
-    attachmentInformation,
-    financialReceipt,
-    customerRelationship,
-    actionLog,
-    reportNo,
-    projectDetail
+  watch:{
+    dealId:{
+      handler:function(newVal,oldVal){
+        this.params.reportId = newVal;
+        this.initData();
+      },
+      deep:true
+    }
   },
   created() {
+    this.params.reportId = this.dealId;
     this.initData();
   },
-  methods: {
+  methods: { 
     //初始化详情数据
     initData(){
+      if(!this.dealId) return;
       new ReportInfoDetail(new ReportInfoDetailRequest(this.params)).send()
       .then((res)=>{
         this.newHouseDetailInfo = res;
+         this.handleDetailInfo();
         console.log(this.newHouseDetailInfo,'成交报告详情初始化数据'); 
       })
       .catch((res)=>{
@@ -85,12 +108,32 @@ export default {
         new ErpCommon().toast(res.errMsg || '服务器开小差了,请稍后再试!', "error");
       })
     },
+    //判断是否有核心查看权,处理数据
+    handleDetailInfo(){
+      console.log(this.hasNewBuildSeeAuth,'新房核心查看权');
+       if(!this.hasNewBuildSeeAuth){
+         this.newHouseDetailInfo.agencyCommission = "****";
+         this.newHouseDetailInfo.custCommission = "****";
+         this.newHouseDetailInfo.distributionCommission = "****";
+         this.newHouseDetailInfo.offerAmount = "****";
+         this.newHouseDetailInfo.offerMoney = "****";
+         this.newHouseDetailInfo.reportCash = "****";
+         this.newHouseDetailInfo.standardCommission = "****";
+         this.newHouseDetailInfo.reportProfitVOs.forEach(key=>{
+           key.allotMoney = "****";
+           key.allotRatio = "****";
+           key.allotUserName = key.allotUserNameName;
+         })
+       }
+       console.log(JSON.parse(JSON.stringify(this.newHouseDetailInfo)),'新房详情------------');
+    },
     // hideIt () {
     //   this.$emit('update:isShow', false)
     // },
     //关闭详情弹窗
      coloseView () {
-      this.$emit('coloseView', false)
+      // this.$emit('coloseView', false)
+       this.$emit('update:isShow', false)
     },
     changeLeft (value) {
       this.leftActive = value

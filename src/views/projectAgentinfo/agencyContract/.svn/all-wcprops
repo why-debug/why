@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 113
-/svndata/siteProduct/!svn/ver/54541/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract
+/svndata/siteProduct/!svn/ver/54806/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract
 END
 approvalContract.vue
 K 25
@@ -19,7 +19,7 @@ index.vue
 K 25
 svn:wc:ra_dav:version-url
 V 123
-/svndata/siteProduct/!svn/ver/54541/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/index.vue
+/svndata/siteProduct/!svn/ver/54806/trunk/frontend_pure/meilian-erp-vue/src/views/projectAgentinfo/agencyContract/index.vue
 END
 agencyContractDetails.vue
 K 25

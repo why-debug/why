@@ -31,7 +31,7 @@ export default class GetPerformanceType {
   send() {
     return new GetPerformanceTypeApi().send()
     .then(res => {
-      if (res.errCode != Const.successCode)  return Promise.reject(res.errMsg)
+      if (res.errCode != Const.successCode)  return Promise.reject(res.errMsg);
       return Promise.resolve(res.data)
     })
   }

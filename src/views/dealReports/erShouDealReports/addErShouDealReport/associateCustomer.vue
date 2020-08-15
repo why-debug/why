@@ -80,8 +80,8 @@ export default {
     },
     // 交易类型
     dealType: {
-      type: String,
-      default: "1",
+      type: Number || String,
+      default: 1,
     },
   },
   data() {
@@ -107,7 +107,7 @@ export default {
     },
     // 查询
     async initData() {
-      this.clientSelect.saleOrRentType = this.dealType == "2" ? "1" : "0";
+      this.clientSelect.saleOrRentType = this.dealType == 2 ? "1" : "0";
       new getClientList(this.clientSelect).send().then((res) => {
         this.tableData = res;
         console.log(res);

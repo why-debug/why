@@ -21,10 +21,10 @@ export class ErpCommon {
      * @param {Boolean} flag true:展示， false:隐藏
      */
     bShowAuditFilter(flag = false) {
-        if (!this.isErp()) {
-            return;
-        }
-        this.erpObj.bShowAuditFilter(flag);
+      if (!this.isErp()) {
+          return;
+      }
+      this.erpObj.bShowAuditFilter(flag);
     }
 
     /**
@@ -198,14 +198,6 @@ export class ErpCommon {
   }
 
 
-     /**
-   * bShowAuditFilter  点击已通过和未通过隐藏erp上面的申述状态
-   * @param {bool} bShow  true  or  false
-   */
-    bShowAuditFilter(bShow) {
-        if (!this.isErp()) { return; }
-    this.erpObj.bShowAuditFilter(bShow);
-  }
 
 
   /**
@@ -297,17 +289,6 @@ export class ErpCommon {
   }
 
   /**
-   * bShowAuditFilter： erp 隐藏展示导航条
-   * @param {Boolean} flag true:展示， false:隐藏
-   */
-  bShowAuditFilter(flag = false) {
-    if (!this.isErp()) {
-      return;
-    }
-    this.erpObj.bShowAuditFilter(flag);
-  }
-
-  /**
    * showFunDetai erp 查看房源详情
    * @param {String} caseId : 房源Id
    * @param {String} caseType : 房源类型
@@ -331,6 +312,23 @@ export class ErpCommon {
       return false;
     }
     return this.erpObj.judgePermission(permissionName);
+  }
+
+  /**
+   * judgePermission erp 判断是否拥有某个权限
+   * @param {String} permissionName : 权限名
+   * @return {Boolean} true/false
+   */
+  hidebut(requestType = 1,tapValue = 1) {
+    if (!this.isErp()) {
+      return false;
+    }
+    let params = {
+      requestType: requestType,
+      tapValue: tapValue,
+    };
+    
+    return this.erpObj.hidebut(JSON.stringify(params));
   }
   
 }

@@ -20,10 +20,10 @@
             </div>
             <div class="g_otherRightList g_flexLeftCenter">
                 <div class="u_export"><searchInput placeholder="请输入申请、归档编号" @Kwd="kwdVal" @kwdSearch="kwdSearch" width="1.7" :empty="searchEmpty"></searchInput></div>
-                <div class="u_export" @click="f_addClick(1)" v-if="$UserPermission.SUPPLEMENTARYCpyAddAuth()"><div class="u_addIcon g_icon"></div> 新增</div>
+                <div class="u_export" @click="f_addClick(1)" v-if="haveAddAuth"><div class="u_addIcon g_icon"></div> 新增</div>
                 <!-- <div class="u_export" @click="f_batchApprovalClick"><div class="u_exportIcon g_icon"></div> 批量审批</div> -->
-                <div class="u_export"><div class="u_ApprovalIcon g_icon"></div> 批量审批</div>
-                <div class="u_export" @click="f_exportClick" v-if="$UserPermission.SUPPLEMENTARYCpyExportAuth()"><div class="u_exportIcon g_icon"></div> 导出</div>
+                <!-- <div class="u_export"><div class="u_ApprovalIcon g_icon"></div> 批量审批</div> -->
+                <div class="u_export" @click="f_exportClick" v-if="haveExportAuth"><div class="u_exportIcon g_icon"></div> 导出</div>
                 <div class="u_count">共{{ total}}条</div>
             </div>
         </div>
@@ -60,18 +60,18 @@
                         <div class="u_lineListContent u_page">
                             <div class="g_share" :title="item.page || '--'">{{ item.page || '--' }}</div>
                             <div class="g_eventList">
-                                <div class="g_flexLeftCenter g_iconHover" @click="f_addClick(2,item.id)" v-if="$UserPermission.SUPPLEMENTARYCpyUpdateAuth()">
+                                <div class="g_flexLeftCenter g_iconHover" @click="f_addClick(2,item.id)" v-if="haveEditAuth">
                                     <div class="u_editIcon"></div>
                                     <div class="g_text">编辑</div>
                                 </div>
-                                <div class="g_flexLeftCenter g_iconHover">
+                                <!-- <div class="g_flexLeftCenter g_iconHover">
                                     <div class="u_printIcon"></div>
                                     <div class="g_text">打印</div>
                                 </div>
                                 <div class="g_flexLeftCenter g_iconHover">
                                     <div class="u_verifyIcon"></div>
                                     <div class="g_text">审核</div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="u_lineListContent u_apply" :title="item.apply || '--'">{{ item.apply || '--' }}</div>
@@ -128,6 +128,9 @@ export default {
     data(){
         return{
             total: 0 ,//列表总共条数
+            haveExportAuth:false,//是否有导出权限
+            haveEditAuth:false,//是否有编辑权限
+            haveAddAuth:false,//是否有新增权限
             isLoad:false,//下拉加载  false加载  true不加载
             NoData:false,//数据是否为空
             allSelectFlag:false,//全选flag，再次点击取反
@@ -140,7 +143,7 @@ export default {
             isEffeciveList:[],//当前选中
             dealNameList:[],//原合同名称
             auditStatusList:[
-                {id:'',text:'全部状态'},
+                {id:'',text:'全部'},
                 {id:0,text:'未审批'},
                 {id:1,text:'审批中'},
                 {id:-1,text:'已驳回'},
@@ -200,6 +203,9 @@ export default {
 
             let userOpers = await new GetUserOpers(new GetUserOpersRequest({userId:userId})).send();
             SetBaseInfoModel.setUserOpers(userOpers);
+            this.haveExportAuth = this.$UserPermission.SUPPLEMENTARYCpyExportAuth();
+            this.haveEditAuth = this.$UserPermission.SUPPLEMENTARYCpyUpdateAuth();
+            this.haveAddAuth = this.$UserPermission.SUPPLEMENTARYCpyAddAuth();
             console.log('--补充公司资料权限初始化完成--');
         },
         //初始化顶部原合同名称列表
@@ -364,6 +370,8 @@ export default {
             this.topParams.statu = "";
             this.topParams.type = "";
             this.topParams.pageNum = 1; 
+            this.searchParams = JSON.parse(JSON.stringify(this.topParams));
+            this.initData();
         },
         //查询
         f_submit(){

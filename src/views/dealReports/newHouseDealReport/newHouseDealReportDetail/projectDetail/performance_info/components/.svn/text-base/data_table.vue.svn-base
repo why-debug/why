@@ -1,7 +1,7 @@
 <template>
   <div class="data_table">
     <!-- 缺少字段 -->
-    <div class="total_tips">{{title}} <span class="fc_f57107">{{'--'}}元</span></div>
+    <div class="total_tips">{{title}} <span class="fc_f57107">{{initData | reportProfitVOs}}元</span></div>
     <div class="table">
       <div class="head row">
         <div class="col">序号</div>
@@ -12,17 +12,16 @@
       </div>
       <div class="row" v-for="(item, i) in initData" :key="i">
         <div class="col">{{ i+1 }}</div>
-        <div class="col">{{ item.allotUser }}</div>
+        <div class="col">{{ item.allotUserName || '--' }}</div>
         <div class="col">
-          <div class="content_box" ><div class="title">分配类型</div><div class="content">{{ item.allotTypeName }}</div></div>
-          <div class="content_box" ><div class="title"><div>部</div><div>门</div></div><div class="content">{{ item.allotOrganizationName }}</div></div>
+          <div class="content_box" ><div class="title">分配类型</div><div class="content">{{ item.allotTypeName || '--'}}</div></div>
+          <div class="content_box" ><div class="title"><div>部</div><div>门</div></div><div class="content" :title="item.allotOrganizationName || '--'">{{ item.allotOrganizationName || '--'}}</div></div>
           <div class="content_box" ><div class="title">公司费用</div><div class="content">{{ item.compCostFlag }}</div></div>
-          <div class="content_box" ><div class="title">业绩月份</div><div class="content">{{ item.allotMonth }}</div></div>
-          <div class="content_box" ><div class="title">提成月份</div><div class="content">{{ item.allotMonth }}</div></div>
+          <div class="content_box" ><div class="title" >{{leaderFlag?'业绩月份':'提成月份'}}</div><div class="content">{{ item.allotMonth }}</div></div>
         </div>
         <div class="col">
-          <div class="content_box" ><div class="title">分配比例</div><div class="content fc_f57107">{{ item.allotRatio }}</div></div>
-          <div class="content_box" ><div class="title">分配业绩</div><div class="content fc_f57107">{{ item.allotMoney }}</div></div>
+          <div class="content_box" ><div class="title">分配比例</div><div class="content fc_f57107">{{ item.allotRatio || 0}}%</div></div>
+          <div class="content_box" ><div class="title">分配业绩</div><div class="content fc_f57107">{{ item.allotMoney ||0}}元</div></div>
           <div class="content_box" ><div class="title"><div>单</div><div>量</div></div><div class="content fc_f57107">{{ item.signNum }}</div></div>
         </div>
         <div class="col">
@@ -58,6 +57,17 @@ export default {
       default:'项目分成：'
     }
  },
+ filters:{
+    //总计合作费
+    reportProfitVOs(data){
+      let arr = data || [];
+      let toal = 0;
+      for(let item of arr){
+        toal += (parseInt(item.allotMoney) ||0);
+      }
+      return toal;
+    }
+ }
 }
 </script>
 
@@ -102,6 +112,7 @@ export default {
             }
             .title {
               width: 0.48rem; display: flex; justify-content: space-between; 
+              white-space: nowrap;
               position: relative;
               &::after {
                 content:':' ; position: absolute; transform: translateY(-50%); top:50%; 
@@ -111,6 +122,9 @@ export default {
             }
             .content {
               margin-left: 0.2rem; max-width: 1rem; word-break: break-all; 
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
             }
 
           }

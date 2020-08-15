@@ -1,15 +1,15 @@
 10
 
 dir
-54614
+54811
 http://172.16.140.92:9001/svndata/siteProduct/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/dealReportsList/components
 http://172.16.140.92:9001/svndata/siteProduct
 
 
 
-2020-08-08T10:22:56.684931Z
-54613
-liuchilei
+2020-08-14T14:58:20.041298Z
+54806
+xiongjuncheng
 
 
 
@@ -32,11 +32,11 @@ file
 
 
 
-2020-08-08T11:10:22.912370Z
-6da1186cb98c3fa82b91f972af7258c8
-2020-08-08T10:22:56.684931Z
-54613
-liuchilei
+2020-08-14T15:02:28.890120Z
+5fe11d356baf5699bfc5ff92543f691f
+2020-08-14T14:58:20.041298Z
+54806
+xiongjuncheng
 
 
 
@@ -58,7 +58,7 @@ liuchilei
 
 
 
-16207
+22676
 
 narrowList.vue
 file
@@ -66,11 +66,11 @@ file
 
 
 
-2020-08-08T11:10:22.915370Z
-9324e729901aebc37ab936b472c41b66
-2020-08-08T10:22:56.684931Z
-54613
-liuchilei
+2020-08-14T01:20:06.413387Z
+6f90e9775faed10c9643c23e442d80cf
+2020-08-14T01:19:44.938205Z
+54762
+xiongjuncheng
 
 
 
@@ -92,5 +92,5 @@ liuchilei
 
 
 
-1964
+4236
 

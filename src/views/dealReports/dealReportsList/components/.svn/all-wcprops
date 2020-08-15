@@ -1,17 +1,17 @@
 K 25
 svn:wc:ra_dav:version-url
 V 120
-/svndata/siteProduct/!svn/ver/54613/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/dealReportsList/components
+/svndata/siteProduct/!svn/ver/54806/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/dealReportsList/components
 END
 broadList.vue
 K 25
 svn:wc:ra_dav:version-url
 V 134
-/svndata/siteProduct/!svn/ver/54613/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/dealReportsList/components/broadList.vue
+/svndata/siteProduct/!svn/ver/54806/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/dealReportsList/components/broadList.vue
 END
 narrowList.vue
 K 25
 svn:wc:ra_dav:version-url
 V 135
-/svndata/siteProduct/!svn/ver/54613/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/dealReportsList/components/narrowList.vue
+/svndata/siteProduct/!svn/ver/54762/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/dealReportsList/components/narrowList.vue
 END

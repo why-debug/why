@@ -1,19 +1,28 @@
-import { PostRequest } from "@/common/net/PostRequest";
-import { APIRequest, APIResponse } from "@/common/net/API";
-import { Const } from "@/utils/Const";
+import {
+    PostRequest
+} from "@/common/net/PostRequest";
+import {
+    APIRequest,
+    APIResponse
+} from "@/common/net/API";
+import {
+    Const
+} from "@/utils/Const";
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 // 获取新房操作日志列表 - 请求参数
 class getNewHouseDealtrackLogRequest extends APIRequest {
-    reportId = 1; // 客户ID
+    reportId = ""; // 客户ID
     pageOffset = 1; // 页码
     pageRows = 20; // 每页显示数量
+    trackType = ""; // 日志类型  1:操作日志 2跟进日志
     constructor(obj = {}) {
         super();
         this.reportId = obj.reportId || 1;
         this.pageOffset = obj.pageOffset || 1;
         this.pageRows = obj.pageRows || 20;
+        this.trackType = obj.trackType || 1;
     }
 }
 // 获取操作日志列表 - 请求地址
@@ -78,12 +87,12 @@ class getNewHouseDealtrackLogList {
                 item.trackTime = info.trackTime || '--';
                 item.trackContent = info.trackContent || '--';
                 item.trackType = info.trackDesc || '--';
-                item.trackUname = info.trackUser || '--';
+                item.trackUname = info.userName || '--';
                 list.push(item);
             }
             response.list = list;
-            response.totalNumber = res.totalNumber || 0; //总条数
-            response.totalPage = res.totalPage || 1; // 总页数
+            response.totalNumber = res.data.total || 0; //总条数
+            response.totalPage = res.data.totalPage || 1; // 总页数
             return response;
         })
     }

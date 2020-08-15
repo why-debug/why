@@ -2,161 +2,262 @@
   <div class="cus_info">
     <main>
       <form_header :title="title" />
-      <el-form :rules="rules" :inline="true" :model="cus_info" class="demo-form-inline">
+      <el-form :inline="true" :model="cus_info" class="demo-form-inline">
         <section class="s_1">
           <el-form-item prop="dealPerson">
-            <div class="input_title required" ><span>成</span><span>交</span><span>人</span></div>
-            <el-select placeholder=" " v-model="cus_info.dealUserOrganizationName">
-              <el-option label="张三" value="shanghai"></el-option>
+            <div class="input_title required">
+              <span>成</span><span>交</span><span>人</span>
+            </div>
+            <!-- <el-input
+              v-model="cus_info.dealUserOrganizationId"
+              @click.native="selsecArea"
+              readonly
+            ></el-input> -->
+            <el-select
+              placeholder=""
+              v-model="organizationName"
+              @click.native="selsecArea"
+              disabled
+            >
+              <el-option label="四级部门" value="895882"></el-option>
               <el-option label="李四" value="beijing"></el-option>
             </el-select>
-            <el-select placeholder=" " v-model="cus_info.dealUserName">
-              <el-option label="李四" value="shanghai"></el-option>
+            <!-- <el-input
+              v-model="cus_info.dealUserId"
+              @click.native="selsecPerson"
+              readonly
+            ></el-input> -->
+            <el-select
+              placeholder=" "
+              v-model="dealUserName"
+              @click.native="selsecPerson"
+              disabled
+            >
+              <el-option label="圆四" value="20333897"></el-option>
               <el-option label="王五" value="beijing"></el-option>
             </el-select>
           </el-form-item>
 
-          <el-form-item v-if="getReportType==2">
-            <div class="input_title"><span>分</span><span>销</span><span>公</span><span>司</span></div>
+          <el-form-item v-if="getReportType == 2">
+            <div class="input_title required">
+              <span>分</span><span>销</span><span>公</span><span>司</span>
+            </div>
+            <!-- :trigger-on-focus="false" -->
             <el-autocomplete
-              v-model="cus_info.distributionCompName"
+              v-model="distributionComName"
               :fetch-suggestions="querySearch"
+              :debounce="1000"
               placeholder="请输入内容"
-              :trigger-on-focus="false"
               @select="handleSelect"
             ></el-autocomplete>
           </el-form-item>
         </section>
         <section class="s_2">
-          <div class="relate_cus" @click="openCustList"> 
-          <!-- <div class="relate_cus" @click="addForm"> -->
-            <div class="icon"></div> 
+          <div class="relate_cus" @click="openCustList">
+            <!-- <div class="relate_cus" @click="addForm"> -->
+            <div class="icon"></div>
             <div class="text">关联客户</div>
           </div>
         </section>
       </el-form>
 
-      <el-form v-for="(item, i) in cus_info.reporCustListVOs" :key="i" :inline="true" :model="item" class="demo-form-inline cus_info_list">
+      <el-form
+        v-for="(item, i) in cus_info.reportCustListVOs"
+        :key="i"
+        :inline="true"
+        :model="item"
+        class="demo-form-inline cus_info_list"
+      >
         <div class="del_form" @click="delForm(i)"></div>
         <section class="s_3">
           <el-form-item prop="cusType">
-            <div class="input_title required"><span>客</span><span>户</span><span>类</span><span>型</span></div>
+            <div class="input_title required">
+              <span>客</span><span>户</span><span>类</span><span>型</span>
+            </div>
             <el-select placeholder=" " v-model="item.custType">
-              <el-option label="个人" value="1"></el-option>
-              <el-option label="企业" value="2"></el-option>
+              <el-option label="个人" :value="1"></el-option>
+              <el-option label="企业" :value="2"></el-option>
             </el-select>
           </el-form-item>
           <!-- 个人版 -->
-          
-          <el-form-item class="personal" v-if="item.custType==1">
-            <div class="input_title required"><span>客</span><span>户</span><span>姓</span><span>名</span></div>
+
+          <el-form-item class="personal" v-if="item.custType == 1">
+            <div class="input_title required">
+              <span>客</span><span>户</span><span>姓</span><span>名</span>
+            </div>
             <el-select placeholder=" " v-model="item.custClass">
-              <el-option label="本人" value="1"></el-option>
-              <el-option label="丈夫" value="2"></el-option>
-              <el-option label="妻子" value="3"></el-option>
-              <el-option label="亲属" value="4"></el-option>
-              <el-option label="朋友" value="5"></el-option>
-              <el-option label="儿子" value="6"></el-option>
-              <el-option label="同学" value="7"></el-option>
-              <el-option label="其他" value="8"></el-option>
+              <el-option label="本人" :value="1"></el-option>
+              <el-option label="丈夫" :value="2"></el-option>
+              <el-option label="妻子" :value="3"></el-option>
+              <el-option label="亲属" :value="4"></el-option>
+              <el-option label="朋友" :value="5"></el-option>
+              <el-option label="儿子" :value="6"></el-option>
+              <el-option label="同学" :value="7"></el-option>
+              <el-option label="其他" :value="8"></el-option>
             </el-select>
-            <el-input v-model="item.custName" maxlength="15" prop="cardType" :rules="{required: true, message: '客户姓名不能为空', trigger: 'blur'}"></el-input>
+            <el-input
+              v-model="item.custName"
+              maxlength="15"
+              prop="cardType"
+              :rules="{
+                required: true,
+                message: '客户姓名不能为空',
+                trigger: 'blur',
+              }"
+            ></el-input>
           </el-form-item>
 
-          <el-form-item class="personal" v-if="item.custType==1">
+          <el-form-item class="personal" v-if="item.custType == 1">
             <el-radio-group v-model="item.custSex" size="medium">
-              <el-radio border value="1" label="先生"></el-radio>
-              <el-radio border value="0" label="女士"></el-radio>
+              <el-radio border  :label="1">先生</el-radio>
+              <el-radio border  :label="0">女士</el-radio>
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item class="personal" v-if="item.custType==1">
-            <div class="input_title required"><span>地</span><span>域</span></div>
+          <el-form-item class="personal" v-if="item.custType == 1">
+            <div class="input_title required">
+              <span>地</span><span>域</span>
+            </div>
             <el-select v-model="item.territory">
-              <el-option label="大陆" value="shanghai"></el-option>
-              <el-option label="海外" value="beijing"></el-option>
+              <el-option label="大陆" :value="0"></el-option>
+              <el-option label="海外" :value="1"></el-option>
             </el-select>
           </el-form-item>
           <!-- 企业版 -->
-          <el-form-item class="corporate" v-if="item.custType==2" prop="enterpriseName">
-            <div class="input_title required"><span>企</span><span>业</span><span>名</span><span>称</span></div>
+          <el-form-item
+            class="corporate"
+            v-if="item.custType == 2"
+            prop="enterpriseName"
+          >
+            <div class="input_title required">
+              <span>企</span><span>业</span><span>名</span><span>称</span>
+            </div>
             <el-input v-model="item.custCompName"></el-input>
           </el-form-item>
 
-          <el-form-item class="corporate" v-if="item.custType==2">
-            <div class="input_title"><div class="long_title">营业执照号码</div></div>
+          <el-form-item class="corporate" v-if="item.custType == 2">
+            <div class="input_title">
+              <div class="long_title">营业执照号码</div>
+            </div>
             <el-input v-model="item.businessLicenseNo"></el-input>
           </el-form-item>
         </section>
         <!-- 企业客户单独 -->
-        <section class="s_4" v-if="item.custType==2">
+        <section class="s_4" v-if="item.custType == 2">
           <el-form-item>
-            <div class="input_title"><span>法</span><span>人</span><span>姓</span><span>名</span></div>
+            <div class="input_title">
+              <span>法</span><span>人</span><span>姓</span><span>名</span>
+            </div>
             <el-input v-model="item.custName" placeholder="审批人"></el-input>
             <el-radio-group v-model="item.custSex" size="medium">
-              <el-radio border label="男">先生</el-radio>
-              <el-radio border label="女">女士</el-radio>
+              <el-radio border  :label="1">先生</el-radio>
+              <el-radio border  :label="0">女士</el-radio>
             </el-radio-group>
           </el-form-item>
 
           <el-form-item>
-            <div class="input_title required"><span>地</span><span>域</span></div>
-            <el-select  v-model="item.territory">
-              <el-option label="大陆" value="shanghai"></el-option>
-              <el-option label="海外" value="beijing"></el-option>
+            <div class="input_title required">
+              <span>地</span><span>域</span>
+            </div>
+            <el-select v-model="item.territory">
+              <el-option label="大陆" :value="0"></el-option>
+              <el-option label="海外" :value="1"></el-option>
             </el-select>
           </el-form-item>
         </section>
 
         <section class="s_5">
           <el-form-item prop="cardType">
-            <div class="input_title required"><span>证</span><span>件</span><span>号</span></div>
-            <el-select  v-model="item.iccodeType">
-              <el-option label="身份证" value="1"></el-option>
-              <el-option label="护照" value="2"></el-option>
-              <el-option label="军官证" value="3"></el-option>
-              <el-option label="士兵证" value="4"></el-option>
-              <el-option label="回乡证" value="5"></el-option>
-              <el-option label="台胞证" value="6"></el-option>
+            <div class="input_title required">
+              <span>证</span><span>件</span><span>号</span>
+            </div>
+            <el-select v-model="item.iccodeType">
+              <el-option label="身份证" :value="1"></el-option>
+              <el-option label="护照" :value="2"></el-option>
+              <el-option label="军官证" :value="3"></el-option>
+              <el-option label="士兵证" :value="4"></el-option>
+              <el-option label="回乡证" :value="5"></el-option>
+              <el-option label="台胞证" :value="6"></el-option>
             </el-select>
-            <el-input v-model="item.custlccode"></el-input>
+            <el-input
+              v-model="item.custIccode"
+              :maxlength="getCradNoMaxLen(item.iccodeType, item.territory)"
+            ></el-input>
           </el-form-item>
 
           <el-form-item>
-            <div class="input_title"><span>户</span><span>籍</span></div>
+            <div class="input_title required"><span>户</span><span>籍</span></div>
             <el-select placeholder=" " v-model="item.belonged">
-              <el-option label="深户" value="1"></el-option>
-              <el-option label="非深户" value="2"></el-option>
+              <el-option label="本市" :value="1"></el-option>
+              <el-option label="非本市" :value="2"></el-option>
             </el-select>
-            <el-select class="belonged" placeholder="暂无数据" v-model="item.belongedProvince">
-              <el-option v-for="(item, i) in getProvinceList" :key="i" :label="item.provinceName" :value="item.provinceId"></el-option>
+            <el-select
+              class="belonged"
+              placeholder="暂无数据"
+              v-model="item.belongedProvince"
+            >
+              <el-option
+                v-for="(item, i) in getProvinceList"
+                :key="i"
+                :label="item.provinceName"
+                :value="item.provinceId"
+              ></el-option>
             </el-select>
           </el-form-item>
         </section>
 
         <section class="s_6">
-          <el-form-item  v-for="(tel, index) in item.reportCustMobiles" :key="index" :index="index">
-            <div class="input_title"><span>电</span><span>话</span></div>
-            <el-select placeholder="暂无数据" v-model="tel.mobileType">
-              <el-option label="手机" value="1"></el-option>
-              <el-option label="座机" value="2"></el-option>
+          <el-form-item
+            v-for="(tel, index) in item.reportCustMobiles"
+            :key="index"
+            :index="index"
+          >
+            <div class="input_title required"><span>电</span><span>话</span></div>
+            <el-select v-model="tel.mobileType">
+              <el-option label="手机" :value="1"></el-option>
+              <el-option label="座机" :value="2"></el-option>
             </el-select>
             <!-- <el-input v-model="tel.custMobile"></el-input> -->
-            <el-input @keydown.native="btKeyDown"  @keyup.native="btKeyDown" maxlength="11" v-model.number="tel.custMobile" >
+            <el-input
+              @keydown.native="btKeyDown"
+              @keyup.native="btKeyDown"
+              maxlength="11"
+              v-model.number="tel.custMobile"
+            >
             </el-input>
-            <div v-if="index>0" class="del_icon" @click="delTel(i, index, tel.id)"></div>
+            <div
+              v-if="index > 0"
+              class="del_icon"
+              @click="delTel(i, index)"
+            ></div>
           </el-form-item>
           <div class="add_icon" @click="addTel(i)"></div>
         </section>
 
         <section class="s_7">
           <el-form-item>
-            <div class="input_title"><span>联</span><span>系</span><span>地</span><span>址</span></div>
-            <el-select @change="getCityList(item.linkCountryId)" placeholder=" " v-model="item.linkCountryId">
-              <el-option v-for="(item, i) in getCountryList" :key="i" :label="item.cnName" :value="item.id"></el-option>
+            <div class="input_title required">
+              <span>联</span><span>系</span><span>地</span><span>址</span>
+            </div>
+            <el-select
+              @change="getCityList(item.linkCountryId)"
+              placeholder=" "
+              v-model="item.linkCountryId"
+            >
+              <el-option
+                v-for="(item, i) in getCountryList"
+                :key="i"
+                :label="item.cnName"
+                :value="item.id"
+              ></el-option>
             </el-select>
             <el-select placeholder=" " v-model="item.linkCityId">
-              <el-option v-for="(item, i) in city_list" :key="i" :label="item.cityName" :value="item.cityId"></el-option>
+              <el-option
+                v-for="(item, i) in city_list"
+                :key="i"
+                :label="item.cityName"
+                :value="item.cityId"
+              ></el-option>
             </el-select>
             <el-input v-model="item.linkAddr"></el-input>
           </el-form-item>
@@ -164,70 +265,124 @@
 
         <section class="s_8">
           <el-form-item>
-            <div class="input_title"><span>产</span><span>权</span><span>比</span><span>例</span></div>
+            <div class="input_title">
+              <span>产</span><span>权</span><span>比</span><span>例</span>
+            </div>
             <!-- <el-input v-model="item.proportion">
             </el-input> -->
-             <el-input @keydown.native="btKeyDown"  @keyup.native="btKeyDown" maxlength="2" v-model.number="item.proportion" >
+            <el-input
+              @keydown.native="btKeyDown($event, 3)"
+              @keyup.native="btKeyDown($event, 3)"
+              v-model="item.proportion"
+            >
             </el-input>
           </el-form-item>
 
           <el-form-item>
-            <div class="input_title"><span>客</span><span>户</span><span>来</span><span>源</span></div>
-            <el-select placeholder="无选项" v-model="item.custSource">
-              <el-option label="万元" value="shanghai"></el-option>
-              <el-option label="亿元" value="beijing"></el-option>
+            <div class="input_title required">
+              <span>客</span><span>户</span><span>来</span><span>源</span>
+            </div>
+            <el-select placeholder="请选择客户来源" v-model="item.custSource">
+              <!-- <el-option label="普通" :value="0"></el-option> -->
+              <!-- <el-option label="转介" :value="1"></el-option>
+              <el-option label="合作客" :value="2"></el-option> -->
+              <el-option
+                v-for="item in fromSourceList"
+                :key="item.dicId"
+                :label="item.dicCnMsg"
+                :value="item.dicValue"
+              >
+              </el-option>
             </el-select>
+            <div
+              class="referral_no"
+              v-if="item.customerTypeText && item.referralNumber"
+            >
+              （转介/合作）单号：{{ item.referralNumber }}（{{
+                item.customerTypeText
+              }}）
+            </div>
           </el-form-item>
         </section>
-        
+
         <section class="s_9">
           <el-form-item prop="desc">
             <div class="input_title"><span>备</span><span>注</span></div>
-            <el-input 
+            <el-input
               resize="none"
               type="textarea"
-              maxlength="1000"
+              maxlength="500"
               rows="5"
               show-word-limit
               v-model="item.custNote"
               placeholder="请输入备注信息"
-              ></el-input>
+            ></el-input>
           </el-form-item>
         </section>
       </el-form>
     </main>
-    <cust_list v-if="cust_list_show"  @closeView="closePopup"/>
+    <cust_list
+      v-if="cust_list_show"
+      @closeView="closePopup"
+      :reportType="reportType"
+    />
   </div>
 </template>
 
 <script>
-import form_header from '../../components/form_header'
-import GetInitInfo from '../../../../../net/newHouseDealReport/add/selection/GetInitInfo'
-import cust_list from '../../components/cus_info_components/cust_list'
-import GetDistributionCompanyList from '../../../../../net/newHouseDealReport/add/selection/GetDistributionCompanyList'
-import {CreateCommonRules} from '../utils/Rules'
+import form_header from "../../components/form_header";
+import { datazd } from "../../../../../net/dealReports/erShouDealReports";
+import GetInitInfo from "../../../../../net/newHouseDealReport/add/selection/GetInitInfo";
+import cust_list from "../../components/cus_info_components/cust_list";
+import {
+  GetDistributionCompanyList,
+  GetCompanyListRequest,
+} from "../../../../../net/newHouseDealReport/add/selection/GetDistributionCompanyList";
+import { CreateCommonRules } from "../utils/Rules";
 import { ReportInfoDetailItem } from "../../../../../net/newHouseDealReport/display/reporInfoDetail";
+import { ErpCommon } from "../../../../../utils/ErpCommon";
 const reg = /^[1-9]\d{0,11}$/;
 export default {
   components: {
-    form_header, cust_list
-  }, 
+    form_header,
+    cust_list,
+  },
   data() {
-    return { 
-      rules:this.setCommonRules(),  //验证规则
-      title:'客户信息', 
-      select_country:'', 
-      select_city:'', 
-      cust_list_show: false, 
-      city_list:[], 
+    return {
+      title: "客户信息",
+      fromSourceList: [], //客户来源列表
+      reportType: "", //项目类型
+      organizationName: "", //成交组织名
+      dealUserName: "", //成交人名字
+      select_country: "",
+      select_city: "",
+      distributionComName: "",
+      cust_list_show: false,
+      city_list: [],
       cus_info: {
-        dealUserOrganizationId: '', 
-        dealUserOrganizationName: '', 
-        dealUserId: '', 
-        reporCustListVOs:[]
-      }, 
-    }
-  }, 
+        dealUserOrganizationId: "",
+        dealUserId: "",
+        distributionCompId: "",
+        reportCustListVOs: [],
+      },
+      //选择区域传值参数
+      selectAreaParms: {
+        userId: "",
+        userName: "",
+        organizationId: "",
+        organizationName: "",
+        selectType: 2, //1选人，2选组织
+      },
+      //选择分配人传值参数
+      selectOrgParms: {
+        userId: "",
+        userName: "",
+        organizationId: "",
+        organizationName: "",
+        selectType: 1, //1选人，2选组织
+      },
+    };
+  },
   props: {
     initData: {
       type: Object,
@@ -237,172 +392,399 @@ export default {
     },
   },
   created() {
-      //编辑初始化数据
+    //初始化客户来源
+    this.clientSourceList();
+    //编辑初始化数据
     this.initDetailInfo();
-    this.$store.dispatch('common_store/getInitInfo')
-  }, 
-   watch: {
-    initData:{
-      handler:function(){
+    this.$store.dispatch("common_store/getInitInfo");
+    this.reportType = this.$store.state.add_new_hosue_report_store.project_info.reportType;
+  },
+  watch: {
+    initData: {
+      handler: function() {
         this.initDetailInfo();
       },
-      deep:true
+      deep: true,
     },
-  }, 
+  },
   methods: {
-    //将详情数据对应赋值
-    initDetailInfo(){
+    // 获取客户来源初始化数据
+    clientSourceList() {
+      let request = {
+        dicType: "CUST_SOURCE",
+      };
+      new datazd(request)
+        .send()
+        .then((res) => {
+          this.fromSourceList = res;
+        })
+        .catch((err) => {
+          this.$erpCommon.toast(err.errMsg || "服务器开小差了,请稍后再试");
+        });
+    },
+    // //将详情数据对应赋值
+    initDetailInfo() {
       let info = this.cus_info;
-      for(let item in info){
+      for (let item in info) {
         info[item] = this.initData[item];
       }
-      console.log(info,'这是客户信息初始化数据');
+      this.cus_info.reportCustListVOs =
+        this.initData["reporCustListVOs"] || [];  
+      console.log(info, "这是客户信息初始化数据");
     },
-    addForm() {
-      this.cus_info.reporCustListVOs.push({
+    //添加客户
+    addForm(data) {
+      console.log(
+        JSON.parse(JSON.stringify(this.cus_info)),
+        "hhhhhhhhhhhhhhh "
+      );
+
+      this.cus_info.reportCustListVOs.push({
         // 客户类型
-        custType:'1', 
-        distributionCompId:'', 
+        custType: 1,
+        // distributionCompId:'',
         //------------个人客户-------------
         // 客户关系
-        custClass:'', 
+        custClass: 1,
         //客户姓名
-        custName:'', 
+        custName: data.custName,
+        //客户id
+        custId: data.custId,
         // 客户性别
-        custSex:'', 
+        custSex: data.custSex,
         //---------企业客户------------
         //企业名称
-        custCompName:'' ,
+        custCompName: "",
         //营业执照号码
-        businessLicenseNo:'' ,
+        businessLicenseNo: "",
         //地域
-        territory:'', 
+        territory: 0,
         //-----------公有属性
         //证件类型
-        iccodeType:'1', 
+        iccodeType: 1,
         //证件号
-        custIccode:'', 
+        custIccode: data.custCcId,
         //户籍所属
-        belonged:'', 
+        belonged: "",
         // 户籍省份
-        belongedProvince:'', 
+        belongedProvince: "",
         //电话
-        reportCustMobiles:[
-          {custMobile: '', mobileType: '1'}, 
-          
-        ], 
+        reportCustMobiles: [{ custMobile: data.custMobile, mobileType: 1 }],
         // 联系地址-国家
-        linkCountryId:'', 
+        linkCountryId: "",
         // 联系地址-城市
-        linkCityId:'', 
+        linkCityId: data.cityId,
         // 联系地址-详细
-        linkAddr:'', 
+        linkAddr: data.custAddr,
         // 产权比例
-        proportion:'', 
+        proportion: "",
         //客户来源
-        custSource:'', 
+        custSource: data.custSource,
+        //转介类型
+        customerTypeText: data.customerTypeText,
+        //转介单号
+        referralNumber: data.referralNumber,
         //备注
-        custNote:'', 
-      })
+        custNote: "",
+      });
     },
     delForm(From_list_index) {
-      this.cus_info.reporCustListVOs.splice(From_list_index, 1)
-    }, 
+      this.cus_info.reportCustListVOs.splice(From_list_index, 1);
+    },
     addTel(form_index) {
-      this.cus_info_list[form_index].reportCustMobiles.push({
-        value: '',
-        key: Date.now()
-      })
-    }, 
+      console.log(form_index, "哈哈哈");
+      this.cus_info.reportCustListVOs[form_index].reportCustMobiles.push({
+        value: "",
+        key: Date.now(),
+      });
+    },
     delTel(form_index, tel_index) {
-      this.cus_info_list[form_index].reportCustMobiles.splice(tel_index, 1)
-    }, 
+      this.cus_info.reportCustListVOs[form_index].reportCustMobiles.splice(
+        tel_index,
+        1
+      );
+    },
     getCityList(country_id) {
-      this.city_list= this.$store.state.common_store.city_list.filter(item => {
-        return item.countryId== country_id
-      })
-    }, 
+      this.city_list = this.$store.state.common_store.city_list.filter(
+        (item) => {
+          return item.countryId == country_id;
+        }
+      );
+    },
     //输入验证
-    btKeyDown(e) {
-      let flag = reg.test(e.target.value);
-      //允许输入0
-      if (!flag && "0" !== e.target.value + "") {
-        e.target.value = "";
+    btKeyDown(e, maxlength) {
+      let value = e.target.value;
+      let intVal = value.toString().split(".");
+      if (!!intVal[0] && intVal[0].length > maxlength) {
+        value = intVal[0].substring(0, maxlength);
       }
+      //先把非数字的都替换掉，除了数字和.
+      value = value.replace(/[^\d.]/g, "");
+      //保证只有出现一个.而没有多个.
+      value = value.replace(/\.{2,}/g, ".");
+      //必须保证第一个为数字而不是.
+      value = value.replace(/^\./g, "");
+      //保证.只出现一次，而不能出现两次以上
+      value = value
+        .replace(".", "$#$")
+        .replace(/\./g, "")
+        .replace("$#$", ".");
+      //只能输入两个小数
+      value = value.replace(/^(\-)*(\d+)\.(\d\d).*$/, "$1$2.$3");
+      //输入比例不能大于100
+      if (maxlength == 3 && (value > 100 || value == "100.")) {
+        console.log("大于100 了");
+        value = 100;
+      }
+      e.target.value = value;
     },
     //打开弹窗
     openCustList() {
-      this.cust_list_show= true; 
+      if (!this.reportType) {
+        this.$erpCommon.toast("请选择合同类型");
+        return;
+      }
+      this.cust_list_show = true;
       document.body.style.overflow = "hidden"; //禁止页面滚动
-    }, 
+    },
     //关闭弹窗
-    closePopup(){
+    closePopup(data) {
       this.cust_list_show = false;
+      if (data) {
+        console.log(data, "选中的客户val");
+        this.addForm(data);
+      }
       document.body.style.overflow = ""; //禁止页面滚动
     },
-    //表单验证
-    setCommonRules() {
-      let params= {
-        dealPerson: ['required'], 
-        enterpriseName: ['required'], 
-        cusType: ['required'], 
-        cardType: ['required'], 
-      }; 
-      return new CreateCommonRules(params).getCommonRules()
-    },
+    //查询分销公司
     querySearch(queryString, callback) {
-      let p= {
-        compName: queryString
-      }
-      new GetDistributionCompanyList(p).send()
-      .then(res => {
-        callback(res)
-      })
-      .catch(res => {
-        callback('网络错误')
-      })
-    }, 
-    handleSelect() {}, 
+      let request = {
+        compName: queryString,
+      };
+      new GetDistributionCompanyList(new GetCompanyListRequest(request))
+        .send()
+        .then((res) => {
+          let list = res || [];
+          // autocomplete只识别value字段并在下拉列中显示
+          list.forEach((key) => {
+            key.value = key.compName;
+          });
+          callback(list);
+        })
+        .catch((res) => {
+          callback("网络错误");
+        });
+    },
+    //筛选公司
+    // createStateFilter(queryString) {
+    //   return (state) => {
+    //     return (
+    //       state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+    //     );
+    //   };
+    // },
+    handleSelect(data) {
+      console.log(data, "选中的参数================");
+      this.cus_info.distributionCompId = data.compId;
+    },
     //saveCusData提交参数
-    saveCusData(){
-      this.$emit('cusInfo',this.cus_info)
-    }
-  }, 
+    saveCusData() {
+      this.$emit("cusInfo", this.cus_info);
+    },
+    //客户信息必填
+    custInfoCheck() {
+      let request = this.cus_info;
+      if (
+        request.dealUserOrganizationId == "" ||
+        !request.dealUserOrganizationId
+      ) {
+        this.$erpCommon.toast("请选择成交组织");
+        return false;
+      }
+      if (request.dealUserId == "" || !request.dealUserId) {
+        this.$erpCommon.toast("请选择成交人");
+        return false;
+      }
+      if (this.getReportType == 2) {
+        if (request.distributionCompId == "" || !request.distributionCompId) {
+          this.$erpCommon.toast("请选择分销公司");
+          return false;
+        }
+      }
+      if(request.reportCustListVOs.length<=0){
+        this.$erpCommon.toast("请选择关联客户");
+          return false;
+      }
+      for (let item of request.reportCustListVOs) {
+        if (item.custType == "" || !item.custType) {
+          this.$erpCommon.toast("请选择客户类型");
+          return false;
+        }
+        //若客户类型为个人
+        if (item.custType == 1) {
+          if (item.custName == "" || !item.custName) {
+            this.$erpCommon.toast("请填写客户姓名");
+            return false;
+          }
+        } else if (item.custType == 2) {
+          if (item.custCompName == "" || !item.custCompName) {
+            this.$erpCommon.toast("请填写企业名称");
+            return false;
+          }
+          if (item.businessLicenseNo == "" || !item.businessLicenseNo) {
+            this.$erpCommon.toast("请填写营业执照号码");
+            return false;
+          }
+        }
+        if (item.custSex === "") {
+          this.$erpCommon.toast("请选择性别");
+          return false;
+        }
+        console.log(item.custIccode,'证件号码===========');
+        if (!item.custIccode) {
+          this.$erpCommon.toast("请填写证件号吗");
+          return false;
+        }
+        if (item.belonged === "") {
+          this.$erpCommon.toast("请选择户籍");
+          return false;
+        }
+        if (item.belongedProvince === "") {
+          this.$erpCommon.toast("请选择户籍省份");
+          return false;
+        }
+        //电话
+        let telList = item.reportCustMobiles || [];
+        for(let info of telList){
+          if(info.custMobile ==""){
+          this.$erpCommon.toast("请输入电话号码");
+          return false;
+          }
+          else if(!this.telCheck(info.custMobile)){
+          this.$erpCommon.toast("电话号码格式有误");
+          return false;
+          }
+        }
+        if (
+          item.linkCountryId == "" ||
+          item.linkCityId == "" ||
+          item.linkAddr == ""
+        ) {
+          this.$erpCommon.toast("请填写联系地址");
+          return false;
+        }
+        if (item.custSource === "") {
+          this.$erpCommon.toast("请选择客户来源");
+          return false;
+        }
+      }
+      return true;
+    },
+    //电话验证
+    telCheck(data){
+       let val = data.toString() || '0';
+       //手机号的输入验证
+        val = val.replace(/[^\d]/g,''); //只要数字
+        if(val.match(/^(0|86|17951)?(13[0-9]|15[012356789]|16[0-9]|17[678]|18[0-9]|19[0-9]|14[57])[0-9]{8}$/)){
+          val = val.trim();
+        }else if(val.trim().length == 3 && !val.match(/^13[0-9]|15[0-9]|16[0-9]|17[0-9]|19[0-9]|18[0-9]|14[0-9]$/)){
+          val = '';
+        }
+        return val;
+    },
+    //选择分配部门
+    selsecArea(data) {
+      let val = new ErpCommon().openPerformanceAssignee(this.selectAreaParms);
+      let info = JSON.parse(val);
+      this.selectAreaParms.organizationId = info.organizationId || "";
+      this.selectAreaParms.organizationName = info.organizationName || "";
+      this.cus_info.dealUserOrganizationId = info.organizationId || "";
+      this.organizationName = info.organizationName || "";
+      console.log(val, "这是筛选分配部门");
+    },
+    //选择相关人员
+    selsecPerson(data) {
+      this.selectOrgParms.selectType = 1;
+      let orgId = this.selectAreaParms.organizationId || "";
+      this.selectOrgParms.organizationId = orgId;
+      if (orgId == "") {
+        this.$erpCommon.toast("请选择组织");
+        return;
+      }
+      let val = new ErpCommon().openPerformanceAssignee(this.selectOrgParms);
+      let info = JSON.parse(val);
+      this.cus_info.dealUserId = info.userId || "";
+      this.dealUserName = info.userName || "";
+      console.log(val, "这是筛选相关人员");
+      //  cus_info: {
+      //   dealUserOrganizationId: "",
+      //   dealUserId: "",
+      //   distributionCompId: "",
+      //   reportCustListVOs: [],
+      // },
+    },
+    //证件号长度限制
+    getCradNoMaxLen(idType, nativePlace) {
+      if (nativePlace) return "30";
+      switch (idType) {
+        case "1":
+          return "18"; //身份证
+        case "2":
+          return "20"; //护照
+        case "3":
+          return "15"; //军官证
+        case "4":
+          return "30"; //其他
+        case "5":
+          return "10"; //回乡证
+        case "6":
+          return "18"; //台胞证
+      }
+      return 20;
+    },
+  },
   computed: {
     getCountryList() {
-      return this.$store.state.common_store.country_list
-    }, 
+      return this.$store.state.common_store.country_list;
+    },
     getProvinceList() {
-      return this.$store.state.common_store.province_list
-    }, 
+      return this.$store.state.common_store.province_list;
+    },
     getReportType() {
-      return this.$store.state.add_new_hosue_report_store.project_info.reportType
-    }
-
-  }
-
-}
+      this.reportType = this.$store.state.add_new_hosue_report_store.project_info.reportType;
+      return this.$store.state.add_new_hosue_report_store.project_info
+        .reportType;
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
-  @select_width:0.85rem; 
+@select_width: 0.85rem;
 /deep/ .el-select {
-  width:@select_width!important; 
+  width: @select_width!important;
 }
 </style>
 
 <style lang="less" scoped>
+/deep/.el-input.is-disabled .el-input__inner {
+  background-color: #fff;
+}
+/deep/.el-select .el-input.is-disabled .el-input__inner {
+  cursor: pointer;
+}
 .cus_info {
   main {
-    width: 10.24rem; margin:0 auto;
-    /deep/  .el-form {
+    width: 10.24rem;
+    margin: 0 auto;
+    /deep/ .el-form {
       &:nth-of-type(1) {
-        &>.s_1 {
+        & > .s_1 {
           .el-form-item {
             &:nth-of-type(1) {
               .el-select {
                 &:nth-of-type(2) {
-                  width: 1.98rem!important;
+                  width: 1.98rem !important;
                 }
                 &:nth-of-type(3) {
                   margin-left: 0.08rem;
@@ -417,183 +799,237 @@ export default {
             }
           }
         }
-        &>.s_2 {
+        & > .s_2 {
           .relate_cus {
-            width: 0.75rem; height: 0.15rem; display: flex; justify-content: space-between; align-items: center; 
-            margin-left: 1.14rem; cursor: pointer;
+            width: 0.75rem;
+            height: 0.15rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 1.14rem;
+            cursor: pointer;
             &:hover {
               color: #259cf3;
             }
             .icon {
-              height: 0.15rem; width: 0.15rem; border-radius: 50%; background-position: center; background-size: contain; background-repeat: no-repeat; 
-              background-image: url("../../../../../assets/images/public/add_200.png")
+              height: 0.15rem;
+              width: 0.15rem;
+              border-radius: 50%;
+              background-position: center;
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-image: url("../../../../../assets/images/public/add_200.png");
             }
           }
         }
       }
       &.cus_info_list {
         position: relative;
-        &>.del_form {
-          position: absolute; top: 0.075rem; left:0.43rem; 
-          height: 0.15rem; width: 0.15rem; border-radius: 50%; background-position: center; background-size: contain; background-repeat: no-repeat; 
-          background-image: url("../../../../../assets/images/public/delete_5_200.png"); 
+        & > .del_form {
+          position: absolute;
+          top: 0.075rem;
+          left: 0.43rem;
+          height: 0.15rem;
+          width: 0.15rem;
+          border-radius: 50%;
+          background-position: center;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-image: url("../../../../../assets/images/public/delete_5_200.png");
           cursor: pointer;
         }
-        &>section {
+        & > section {
           &.s_3 {
             margin-top: 0;
-            &>.el-form-item.personal {
+            & > .el-form-item.personal {
               &:nth-of-type(2) {
-                &>.el-form-item__content {
-                  &>.el-select {
-                    width: 0.6rem!important;
+                & > .el-form-item__content {
+                  & > .el-select {
+                    width: 0.6rem !important;
                   }
-                  &>.el-input {
+                  & > .el-input {
                     margin-left: 0.08rem;
                     width: 1.05rem;
                   }
                 }
               }
               &:nth-of-type(3) {
-                margin-left: 0.08rem; width: 1.28rem;
-                &>.el-form-item__content {
-                  &>.el-radio-group {
-                    display: flex; justify-content: space-between; align-items: center; 
-                    &>.el-radio {
-                      display: block; width: 0.63rem; margin: 0!important; line-height: 0.28rem; 
-                      &>span.el-radio__label {
-                        line-height: 0.3rem;  
+                margin-left: 0.08rem;
+                width: 1.28rem;
+                & > .el-form-item__content {
+                  & > .el-radio-group {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    & > .el-radio {
+                      display: block;
+                      width: 0.63rem;
+                      margin: 0 !important;
+                      line-height: 0.28rem;
+                      & > span.el-radio__label {
+                        line-height: 0.3rem;
                       }
                     }
                   }
                 }
               }
             }
-            &>.el-form-item.corporate {
+            & > .el-form-item.corporate {
               &:nth-of-type(2) {
                 margin-left: 0.28rem;
-                &>.el-form-item__content {
-                  &>.el-input {
+                & > .el-form-item__content {
+                  & > .el-input {
                     width: 2.94rem;
                   }
                 }
               }
               &:nth-of-type(3) {
                 margin-left: 0.3rem;
-                &>.el-form-item__content {
-                  &>.input_title {
-                    width: 0.825rem
+                & > .el-form-item__content {
+                  & > .input_title {
+                    width: 0.825rem;
                   }
-                  &>.el-input {
-                    margin-left: 1.055rem; width: 2.46rem;
+                  & > .el-input {
+                    margin-left: 1.055rem;
+                    width: 2.46rem;
                   }
                 }
               }
             }
           }
-      
+
           &.s_4 {
-            &>.el-form-item {
+            & > .el-form-item {
               &:nth-of-type(1) {
-                &>.el-form-item__content {
-                  &>.el-input {
+                & > .el-form-item__content {
+                  & > .el-input {
                     width: 1.3rem;
                   }
-                  &>.el-radio-group {
-                    display: flex; justify-content: flex-start; align-items: center; margin-left: 0.06rem;
-                    &>.el-radio {
-                      display: block; width: 0.63rem; margin: 0!important; line-height: 0.28rem; 
+                  & > .el-radio-group {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    margin-left: 0.06rem;
+                    & > .el-radio {
+                      display: block;
+                      width: 0.63rem;
+                      margin: 0 !important;
+                      line-height: 0.28rem;
                       &:nth-of-type(2) {
-                        margin-left: 0.1rem!important;
+                        margin-left: 0.1rem !important;
                       }
-                      &>span.el-radio__label {
-                        line-height: 0.3rem;  
+                      & > span.el-radio__label {
+                        line-height: 0.3rem;
                       }
                     }
                   }
                 }
               }
               &:nth-of-type(2) {
-                &>.el-form-item {
-                  &>.el-form-item__content {
-                    &>.el-input {
-                      width: 1.8rem; margin-left: 0.08rem;
+                & > .el-form-item {
+                  & > .el-form-item__content {
+                    & > .el-input {
+                      width: 1.8rem;
+                      margin-left: 0.08rem;
                     }
                   }
                 }
               }
             }
           }
-          
+
           &.s_5 {
-            &>.el-form-item {
-              &>.el-form-item__content {
-                &>.el-input, &>.el-select.belonged {
-                  width: 1.8rem!important; margin-left: 0.08rem;
-                }
-              }
-            }
-          }
-      
-          &.s_6 {
-            position: relative;
-            &>.el-form-item {
-              display: block; margin-bottom: 0.1rem; width: 3.77rem;
-              &>.el-form-item__content {
-                position: relative;
-                &>.el-input {
-                  width: 1.8rem; margin-left: 0.08rem;
-                }
-                &>.del_icon {
-                  position: absolute; right:0; transform: translateY(-50%); top:50%; width: 0.18rem; height: 0.18rem;
-                  background-position: center; background-size: contain; background-image: url("../../../../../assets/images/public/delete_5_200.png"); 
-                }
-              }
-            }
-            &>.add_icon {
-              position: absolute; left: 4.25rem; top:0.06rem; width: 0.18rem; height: 0.18rem;
-              background-position: center; background-size: contain; background-image: url("../../../../../assets/images/public/add_200.png"); 
-            }
-          }
-      
-          &.s_7 {
-            &>.el-form-item {
-              &>.el-form-item__content {
-                &>.el-select:nth-of-type(3) {
+            & > .el-form-item {
+              & > .el-form-item__content {
+                & > .el-input,
+                & > .el-select.belonged {
+                  width: 1.8rem !important;
                   margin-left: 0.08rem;
                 }
-                &>.el-input {
-                  width: 3.83rem; margin-left: 0.08rem;
+              }
+            }
+          }
+
+          &.s_6 {
+            position: relative;
+            & > .el-form-item {
+              display: block;
+              margin-bottom: 0.1rem;
+              width: 3.77rem;
+              & > .el-form-item__content {
+                position: relative;
+                & > .el-input {
+                  width: 1.8rem;
+                  margin-left: 0.08rem;
+                }
+                & > .del_icon {
+                  position: absolute;
+                  right: 0;
+                  transform: translateY(-50%);
+                  top: 50%;
+                  width: 0.18rem;
+                  height: 0.18rem;
+                  background-position: center;
+                  background-size: contain;
+                  background-image: url("../../../../../assets/images/public/delete_5_200.png");
+                }
+              }
+            }
+            & > .add_icon {
+              position: absolute;
+              left: 4.25rem;
+              top: 0.06rem;
+              width: 0.18rem;
+              height: 0.18rem;
+              background-position: center;
+              background-size: contain;
+              background-image: url("../../../../../assets/images/public/add_200.png");
+            }
+          }
+
+          &.s_7 {
+            & > .el-form-item {
+              & > .el-form-item__content {
+                & > .el-select:nth-of-type(3) {
+                  margin-left: 0.08rem;
+                }
+                & > .el-input {
+                  width: 3.83rem;
+                  margin-left: 0.08rem;
                 }
               }
             }
           }
-      
+
           &.s_8 {
-            &>.el-form-item:nth-of-type(1) {
-              &>.el-form-item__content {
-                &>.el-input {
+            & > .el-form-item:nth-of-type(1) {
+              & > .el-form-item__content {
+                & > .el-input {
                   width: 2.72rem;
                   &::after {
-                    content:'%'; position: absolute; right:0.09rem; font-size: 0.12rem; color: #999999;
+                    content: "%";
+                    position: absolute;
+                    right: 0.09rem;
+                    font-size: 0.12rem;
+                    color: #999999;
                   }
                 }
               }
             }
-            &>.el-form-item:nth-of-type(2) {
-              &>.el-form-item__content {
-                &>.el-select {
-                  width: 1.77rem!important;
+            & > .el-form-item:nth-of-type(2) {
+              & > .el-form-item__content {
+                & > .el-select {
+                  width: 1.77rem !important;
                 }
               }
             }
           }
-      
+
           &.s_9 {
-            &>.el-form-item {
+            & > .el-form-item {
               height: 1.1rem;
-              &>.el-form-item__content {
-                &>.el-input {
+              & > .el-form-item__content {
+                & > .el-input {
                   height: 1.1rem;
                 }
               }
@@ -603,5 +1039,10 @@ export default {
       }
     }
   }
+}
+.referral_no {
+  line-height: 0.3rem;
+  font-size: 0.12rem;
+  color: #444444;
 }
 </style>

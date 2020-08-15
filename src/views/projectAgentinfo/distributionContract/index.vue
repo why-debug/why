@@ -3,43 +3,108 @@
     <div class="order">
       <!-- 顶部筛选 -->
       <!-- 列表顶部搜索导出 -->
-       <div class="g_topselect">
-            <div class="g_selectMenu">
-                <div class="u_topSelect"><selectOrg   @onSelectChange="f_selectOrg" :empty="empty" :defaultText="'申请组织'"></selectOrg></div>
-                <div class="u_topSelect"><topSelect  @onSelectChange="f_selectAgentName" :defaultText="'合同名称'" :empty="empty" :defaultList="dealNameList" imgPath="xuqiu_200"></topSelect></div>
-                <div class="u_topSelect"><topSelect  @onSelectChange="f_selectCompanyName" :defaultText="'分销公司'" :empty="empty" :defaultList="companyList"></topSelect></div>
-                <div class="u_topSelect"><selectRadio @onSelectChange="f_dateType" :list="dateList" :defaultText="'时间类型'" :empty="empty" imgSrc="type_200"></selectRadio></div>
-                <div class="u_topSelect"><selectDataTime @upDataTime="f_agentDate" :empty="empty"  :defaultText="'合同时间'" :timeType="topParams.timeType"></selectDataTime></div>
-                <div class="u_topSelect"><selectRadio @onSelectChange="f_auditStatus" :list="auditStatusList" :defaultText="'审批状态'"  :empty="empty" imgSrc="status_200"></selectRadio></div>
-                <div class="u_topSelect"><selectRadio @onSelectChange="f_approval" :list="approvalList" :defaultText="'待我审批'"  :empty="empty" imgSrc="ownership_200"></selectRadio></div>
-                <div class="u_topSelect"><selectRadio @onSelectChange="f_distributionScope" :list="distributionScopeList" :defaultText="'分销范围'" :empty="empty" imgSrc="area_200"></selectRadio></div>
-            </div>
-            <div class="g_btnList">
-                <div class="u_btn g_submit" @click="topSearch">查询</div>
-                <div class="u_btn" @click="f_clear">重置</div>
-            </div>
+      <div class="g_topselect">
+        <div class="g_selectMenu">
+          <div class="u_topSelect">
+            <selectOrg
+              @onSelectChange="f_selectOrg"
+              :empty="empty"
+              :defaultText="'申请组织'"
+            ></selectOrg>
+          </div>
+          <div class="u_topSelect">
+            <topSelect
+              @onSelectChange="f_selectAgentName"
+              :defaultText="'合同名称'"
+              :empty="empty"
+              :defaultList="dealNameList"
+              imgPath="xuqiu_200"
+            ></topSelect>
+          </div>
+          <div class="u_topSelect">
+            <topSelect
+              @onSelectChange="f_selectCompanyName"
+              :defaultText="'分销公司'"
+              :empty="empty"
+              :defaultList="companyList"
+            ></topSelect>
+          </div>
+          <div class="u_topSelect">
+            <selectRadio
+              @onSelectChange="f_dateType"
+              :list="dateList"
+              :defaultText="'时间类型'"
+              :empty="empty"
+              imgSrc="type_200"
+            ></selectRadio>
+          </div>
+          <div class="u_topSelect">
+            <selectDataTime
+              @upDataTime="f_agentDate"
+              :empty="empty"
+              :defaultText="'合同时间'"
+              :timeType="topParams.timeType"
+            ></selectDataTime>
+          </div>
+          <div class="u_topSelect">
+            <selectRadio
+              @onSelectChange="f_auditStatus"
+              :list="auditStatusList"
+              :defaultText="'审批状态'"
+              :empty="empty"
+              imgSrc="status_200"
+            ></selectRadio>
+          </div>
+          <div class="u_topSelect">
+            <selectRadio
+              @onSelectChange="f_approval"
+              :list="approvalList"
+              :defaultText="'待我审批'"
+              :empty="empty"
+              imgSrc="ownership_200"
+            ></selectRadio>
+          </div>
+          <div class="u_topSelect">
+            <selectRadio
+              @onSelectChange="f_distributionScope"
+              :list="distributionScopeList"
+              :defaultText="'分销范围'"
+              :empty="empty"
+              imgSrc="area_200"
+            ></selectRadio>
+          </div>
         </div>
-       <!-- <div class="middle"></div> -->
+        <div class="g_btnList">
+          <div class="u_btn g_submit" @click="topSearch">查询</div>
+          <div class="u_btn" @click="f_clear">重置</div>
+        </div>
+      </div>
+      <!-- <div class="middle"></div> -->
       <div class="build-top f_r_s">
         <div class="left_box">
           <div class="active">分销合同</div>
         </div>
         <div class="right_box">
-          <SearchInput :placeholder="placeholderText" @Kwd="kwdVal" @kwdSearch="kwdSearch" :empty="searchEmpty"></SearchInput>
-          <div class="topseach" @click="toAddContract" >
+          <SearchInput
+            :placeholder="placeholderText"
+            @Kwd="kwdVal"
+            @kwdSearch="kwdSearch"
+            :empty="searchEmpty"
+          ></SearchInput>
+          <div class="topseach" @click="toAddContract" v-if="haveAddAuth">
             <img
               src="../../../assets/images/projectAgentInfo/agentContract/add_3_200.png"
               class="addIcon"
             />
             <span class="addSpan">新增</span>
           </div>
-          <div class="topseach" @click="batchApproval">
+          <!-- <div class="topseach" @click="batchApproval">
             <img
               src="../../../assets/images/projectAgentInfo/agentContract/contract_1_200.png"
               class="addIcon"
             />
             <span class="addSpan">批量审批</span>
-          </div>
+          </div> -->
           <!-- <div class="topseach">
             <img
               src="../../../assets/images/projectAgentInfo/agentContract/edit1_200.png"
@@ -48,7 +113,7 @@
             <span class="addSpan">筛选：</span>
             <span class="shaixuan_value">默认</span>
           </div> -->
-          <div class="topseach" @click="f_exportClick" v-if="$UserPermission.AGENCYDistributeExportAuth()">
+          <div class="topseach" @click="f_exportClick" v-if="haveExportAuth">
             <img
               src="../../../assets/images/projectAgentInfo/contract/u_Export.png"
               class="addIcon"
@@ -57,7 +122,7 @@
           </div>
           <span class="all_data">
             <span>共</span>
-            <span class="spanTotal">{{total}}</span>
+            <span class="spanTotal">{{ total }}</span>
             <span>条</span>
           </span>
         </div>
@@ -91,35 +156,60 @@
           </div>
         </div>
 
-          <div class="g_lists" v-if="!!orderList && orderList.length > 0"
-            v-infinite-scroll="!!isScroll?scrollBottom:''"
-            infinite-scroll-distance="10"
-            infinite-scroll-immediate="false"
-            >
+        <div
+          class="g_lists"
+          v-if="!!orderList && orderList.length > 0"
+          v-infinite-scroll="!!isScroll ? scrollBottom : ''"
+          infinite-scroll-distance="10"
+          infinite-scroll-immediate="false"
+        >
+          <div
+            class="content"
+            v-for="(item, index) in orderList"
+            :key="index"
+            @dblclick="goxiangqing(item.dealId)"
+          >
+            <div class="list_item select">
+              <el-checkbox v-model="item.check"></el-checkbox>
+            </div>
             <div
-              class="content"
-              v-for="(item,index) in orderList"
-              :key="index"
-              @dblclick="goxiangqing(item.dealId)"
+              class="list_item time_shenpi"
+              :title="item.approvalTime || '-'"
             >
-              <div class="list_item select">
-                <el-checkbox v-model="item.check"></el-checkbox>
+              {{ item.approvalTime || "-" }}
+            </div>
+            <div
+              class="list_item nowPerson"
+              :title="item.approvalPerson || '-'"
+            >
+              {{ item.approvalPerson || "-" }}
+            </div>
+            <div
+              class="list_item shenpi_status"
+              :title="approvalStatusList[item.approvalStatus] || '-'"
+            >
+              {{ approvalStatusList[item.approvalStatus] }}
+            </div>
+            <div class="list_item hetong_status">
+              <div
+                class="text_status"
+                :title="concatList[item.contractStatus] || '-'"
+              >
+                {{ concatList[item.contractStatus] }}
               </div>
-              <div class="list_item time_shenpi" :title="item.approvalTime ||'-'">{{item.approvalTime ||"-"}}</div>
-              <div class="list_item nowPerson" :title="item.approvalPerson ||'-'">{{item.approvalPerson||"-"}}</div>
-              <div class="list_item shenpi_status" :title="approvalStatusList[item.approvalStatus] ||'-'">{{approvalStatusList[item.approvalStatus]}}</div>
-              <div class="list_item hetong_status">
-                <div class="text_status" :title="concatList[item.contractStatus] ||'-'">{{concatList[item.contractStatus]}}</div>
-                <div
-                  class="status_operate"
-                  @click="goOperating(0,item)"
-                  
-                >
-                  <div class="bianji_ope"></div>
-                  <div>编辑</div>
-                </div>
-                <!-- 暂时屏蔽未做 -->
-                <div
+              <div
+                class="status_operate"
+                @click="goOperating(0, item)"
+                v-if="
+                  (item.approvalStatus === 0 || item.approvalStatus === 2) &&
+                    haveEditAuth
+                "
+              >
+                <div class="bianji_ope"></div>
+                <div>编辑</div>
+              </div>
+              <!-- 暂时屏蔽未做 -->
+              <!-- <div
                   class="status_operate"
                   @click="goOperating(1,item)"
                   v-if="(item.approvalStatus===0||item.approvalStatus===1)&&false"
@@ -193,52 +283,149 @@
                 >
                   <div class="zhongzhi_ope"></div>
                   <div>终止</div>
-                </div>
-              </div>
-              <div class="list_item shenqing_person" :title="item.applicant ||'-'">{{item.applicant||"-"}}</div>
-              <div class="list_item shen_org" :title="item.applicationOrganization ||'-'">{{item.applicationOrganization||"-"}}</div>
-              <div class="list_item shen_number" :title="item.applicationNumber ||'-'">{{item.applicationNumber||"-"}}</div>
-              <div class="list_item gui_number" :title="item.archiveNumber ||'-'">{{item.archiveNumber||"-"}}</div>
-              <div class="list_item contact_name" :title="item.contractName ||'-'">{{item.contractName||"-"}}</div>
-              <div class="list_item agent" :title="item.Agent ||'-'">{{item.Agent||"-"}}</div>
-              <div class="list_item project_name" :title="item.projectName ||'-'">{{item.projectName||"-"}}</div>
-              <div class="list_item agent_time" :title="item.agencyTermStart||'-'+'至'+item.agencyTermEnd ||'-'">{{item.agencyTermStart||"-"}}至{{item.agencyTermEnd||"-"}}</div>
-              <div class="list_item baohu" :title="item.customerProtectionPeriod ||'-'">{{item.customerProtectionPeriod||"-"}}</div>
-              <div class="list_item yongjin" :title="item.commission ||'-'">{{item.commission||"-"}}</div>
-              <div class="list_item fawu" :title="item.legalAffairs ||'-'">{{item.legalAffairs||"-"}}</div>
-              <div class="list_item fenxain" :title="item.risk ||'-'">{{item.risk||"-"}}</div>
-              <div class="list_item gaizhang" :title="item.stamp ||'-'">{{item.stamp||"-"}}</div>
-              <div class="list_item zuofei" :title="item.void ||'-'">{{item.void||"-"}}</div>
-              <div class="list_item guidang" :title="item.archive ||'-'">{{item.archive||"-"}}</div>
-              <div class="list_item ziliao" :title="item.material ||'-'">{{item.material||"-"}}</div>
-              <div class="list_item luru" :title="item.entryDate ||'-'">{{item.entryDate||"-"}}</div>
+                </div> -->
+            </div>
+            <div
+              class="list_item shenqing_person"
+              :title="item.applicant || '-'"
+            >
+              {{ item.applicant || "-" }}
+            </div>
+            <div
+              class="list_item shen_org"
+              :title="item.applicationOrganization || '-'"
+            >
+              {{ item.applicationOrganization || "-" }}
+            </div>
+            <div
+              class="list_item shen_number"
+              :title="item.applicationNumber || '-'"
+            >
+              {{ item.applicationNumber || "-" }}
+            </div>
+            <div
+              class="list_item gui_number"
+              :title="item.archiveNumber || '-'"
+            >
+              {{ item.archiveNumber || "-" }}
+            </div>
+            <div
+              class="list_item contact_name"
+              :title="item.contractName || '-'"
+            >
+              {{ item.contractName || "-" }}
+            </div>
+            <div class="list_item agent" :title="item.Agent || '-'">
+              {{ item.Agent || "-" }}
+            </div>
+            <div
+              class="list_item project_name"
+              :title="item.projectName || '-'"
+            >
+              {{ item.projectName || "-" }}
+            </div>
+            <div
+              class="list_item agent_time"
+              :title="
+                item.agencyTermStart || '-' + '至' + item.agencyTermEnd || '-'
+              "
+            >
+              {{ item.agencyTermStart || "-" }}至{{ item.agencyTermEnd || "-" }}
+            </div>
+            <div
+              class="list_item baohu"
+              :title="item.customerProtectionPeriod || '-'"
+            >
+              {{ item.customerProtectionPeriod || "-" }}
+            </div>
+            <div class="list_item yongjin" :title="item.commission || '-'">
+              {{ item.commission || "-" }}
+            </div>
+            <div class="list_item fawu" :title="item.legalAffairs || '-'">
+              {{ item.legalAffairs || "-" }}
+            </div>
+            <div class="list_item fenxain" :title="item.risk || '-'">
+              {{ item.risk | hasRisk }}
+            </div>
+            <div class="list_item gaizhang" :title="item.stamp || '-'">
+              {{ item.stamp | hasStamp }}
+            </div>
+            <div class="list_item zuofei" :title="item.void || '-'">
+              {{ item.void | hasVoid }}
+            </div>
+            <div class="list_item guidang" :title="item.archive || '-'">
+              {{ item.archive | hasArchive }}
+            </div>
+            <div class="list_item ziliao" :title="item.material || '-'">
+              {{ item.material | hasMaterial }}
+            </div>
+            <div class="list_item luru" :title="item.entryDate || '-'">
+              {{ item.entryDate | formatTime }}
             </div>
           </div>
-         <div class="no_dataBox" v-if="!!NoData">
-                <div class="no-data">
-                    <img src="../../../assets/images/public/nodate.png" alt="">
-                    <div class="no_dataSpan">暂时没有相关数据哦!</div>
-            </div>
+        </div>
+        <div class="no_dataBox" v-if="!!NoData">
+          <div class="no-data">
+            <img src="../../../assets/images/public/nodate.png" alt="" />
+            <div class="no_dataSpan">暂时没有相关数据哦!</div>
           </div>
+        </div>
 
         <div class="isLoading" v-if="!!isLoad">
-        <img src="../../../assets/images/projectAgentInfo/common/loadIng.gif" />
-      </div>
-   
+          <img
+            src="../../../assets/images/projectAgentInfo/common/loadIng.gif"
+          />
+        </div>
       </div>
       <!-- :operateId="operateId" -->
-      <Batch v-if="toChange===1" @closeView="closeView" :title="`批量审批`" :dealId="dealId"></Batch>
-      <Termination v-if="toChange===9" @closeView="closeView" :title="`分销合同终止`" :dealId="dealId" :operationPerson="statusParams" ></Termination>
-      <Void v-if="toChange===4" @closeView="closeView" :title="`分销合同作废`" :dealId="dealId"></Void>
-      <Archive v-if="toChange===8" @closeView="closeView" :title="`归档`" :dealId="dealId"></Archive>
-      <GiveBack v-if="toChange===6" @closeView="closeView" :title="`归还`" :dealId="dealId"></GiveBack>
-      <Approval v-if="toChange===7" @closeView="closeView" :title="`流程审批`" :dealId="dealId"></Approval>
-      <Loan v-if="toChange===5" @closeView="closeView" :title="`新增外借`" :dealId="dealId"></Loan>
+      <Batch
+        v-if="toChange === 1"
+        @closeView="closeView"
+        :title="`批量审批`"
+        :dealId="dealId"
+      ></Batch>
+      <Termination
+        v-if="toChange === 9"
+        @closeView="closeView"
+        :title="`分销合同终止`"
+        :dealId="dealId"
+        :operationPerson="statusParams"
+      ></Termination>
+      <Void
+        v-if="toChange === 4"
+        @closeView="closeView"
+        :title="`分销合同作废`"
+        :dealId="dealId"
+      ></Void>
+      <Archive
+        v-if="toChange === 8"
+        @closeView="closeView"
+        :title="`归档`"
+        :dealId="dealId"
+      ></Archive>
+      <GiveBack
+        v-if="toChange === 6"
+        @closeView="closeView"
+        :title="`归还`"
+        :dealId="dealId"
+      ></GiveBack>
+      <Approval
+        v-if="toChange === 7"
+        @closeView="closeView"
+        :title="`流程审批`"
+        :dealId="dealId"
+      ></Approval>
+      <Loan
+        v-if="toChange === 5"
+        @closeView="closeView"
+        :title="`新增外借`"
+        :dealId="dealId"
+      ></Loan>
     </div>
   </div>
 </template>
 <script>
-import topSelect from "../form/topSelect"
+import topSelect from "../form/topSelect";
 import selectDataTime from "../form/selectDataTime";
 import selectRadio from "../../../components/topSelect/selectRadio";
 import selectOrg from "../../../components/topSelect/selectOrg.vue";
@@ -250,11 +437,14 @@ import Archive from "./components/archive";
 import GiveBack from "./components/giveBack";
 import Approval from "./components/approval";
 import Loan from "./components/loan";
-import {ErpCommon} from '../../../utils/ErpCommon'
+import { ErpCommon } from "../../../utils/ErpCommon";
 import { getDistributionList } from "../../../net/projectAgentinfo/distributionContract/distributionList.js";
-import {GetCompangList} from "../../../net/projectAgentinfo/companyRequest/GetCompangInfoList.js"
-import {GetUserOpers, GetUserOpersRequest} from "../../../net/common/GetUserOpers";
-import {SetBaseInfoModel} from "../../../model/BaseInfoModel";
+import { GetCompangList } from "../../../net/projectAgentinfo/companyRequest/GetCompangInfoList.js";
+import {
+  GetUserOpers,
+  GetUserOpersRequest,
+} from "../../../net/common/GetUserOpers";
+import { SetBaseInfoModel } from "../../../model/BaseInfoModel";
 export default {
   components: {
     SearchInput,
@@ -268,46 +458,49 @@ export default {
     selectRadio,
     selectOrg,
     topSelect,
-    selectDataTime
+    selectDataTime,
   },
   data() {
     return {
-      total:0,//列表总条数
-      topParams:{},//顶部筛选参数
-      searchEmpty:false,//是否清空搜索框
-      isScroll:true,//是否滚动加载
-      empty:false, //清空
-      selectOrgId:'',//组织id
-      dealNameList:[],//合同名称
-      companyList:[],//分销公司
-      statusParams:{
-        operationPerson:'',//操作人
-        applynNum:''//申请编号
-      },//获取当前操作信息
-      first: {id: '',text: "全部"},//顶部筛选第一项
-      dateList:[
-          {id:1,text:'录入日期'},
-          {id:2,text:'代理期限'},
+      total: 0, //列表总条数
+      topParams: {}, //顶部筛选参数
+      haveExportAuth: false, //是否有导出权限
+      haveEditAuth: false, //是否有编辑权限
+      haveAddAuth: false, //是否有新增权限
+      searchEmpty: false, //是否清空搜索框
+      isScroll: true, //是否滚动加载
+      empty: false, //清空
+      selectOrgId: "", //组织id
+      dealNameList: [], //合同名称
+      companyList: [], //分销公司
+      statusParams: {
+        operationPerson: "", //操作人
+        applynNum: "", //申请编号
+      }, //获取当前操作信息
+      first: { id: "", text: "全部" }, //顶部筛选第一项
+      dateList: [
+        { id: 1, text: "录入日期" },
+        { id: 2, text: "代理期限" },
       ],
-      auditStatusList:[
-          {id:'',text:'全部状态'},
-          {id:0,text:'未审批'},
-          {id:1,text:'审批中'},
-          {id:-1,text:'已驳回'},
-          {id:2,text:'已审批'},
-          {id:-2,text:'已作废'},
-          ],//审批状态列表
-      approvalList:[
-          {id:'',text:'全部状态'},
-          {id:1,text:'我已审批'},
-          {id:-1,text:'我已驳回'},
-          {id:0,text:'待我审批'},
-          ],//待我审批
-      distributionScopeList:[
-          {id:1,text:'分销全部项目'},
-          {id:2,text:'分销指定项目'},
-      ],//分销范围
-      dealId:"",//合同ID
+      auditStatusList: [
+        { id: "", text: "全部" },
+        { id: 0, text: "未审批" },
+        { id: 1, text: "审批中" },
+        { id: -1, text: "已驳回" },
+        { id: 2, text: "已审批" },
+        { id: -2, text: "已作废" },
+      ], //审批状态列表
+      approvalList: [
+        { id: "", text: "全部" },
+        { id: 1, text: "我已审批" },
+        { id: -1, text: "我已驳回" },
+        { id: 0, text: "待我审批" },
+      ], //待我审批
+      distributionScopeList: [
+        { id: 1, text: "分销全部项目" },
+        { id: 2, text: "分销指定项目" },
+      ], //分销范围
+      dealId: "", //合同ID
       toChange: "", //合同的操作
       //审批状态
       personStatus: ["提交人", "审批人", "法务", "权限人"],
@@ -315,11 +508,11 @@ export default {
       //合同状态
       concatList: ["已作废", "外借中", "已外借", "归还中", "已归档"],
       operateId: [], //批量操作的id
-      allContractParam:{},
+      allContractParam: {},
       params: {
-        export:0,//是否导出 0否 1是
+        export: 0, //是否导出 0否 1是
         approvalStatus: "", //"(byte)审批状态 -2 已作废 -1 已驳回 0未审批 1审批中 2已审批",
-        approvalStatusIsMe:0,//待我审批 1:我已审批  -1:我已驳回 0:待我审批(默认), 2:全部
+        approvalStatusIsMe: 0, //待我审批 1:我已审批  -1:我已驳回 0:待我审批(默认), 2:全部
         contractStatus: "", //"(byte)合同状态 -2 已作废 0未操作 1外借中 2已外借 3归档中 4已归档",
         dealName: "", //"(string)合同名称",
         distributionCompanyName: "", //"(string)分销公司名称",
@@ -330,406 +523,494 @@ export default {
         pageRows: 30, //"(int32)",
         timeEndStr: "", //"(string)结束时间",
         timeStartStr: "", //"(string)开始时间",
-        timeType: "" //"(int32)时间类型 1录入时间 2代理期限"
+        timeType: "", //"(int32)时间类型 1录入时间 2代理期限"
       },
-       companyParameter: {
-            export:1,
-            compName : "", //公司名称
-            // personType = '',//人员类型
-            ourDockingPersonId : '', //对接人id 
-            timeStartStr : '', // 开始时间
-            timeEndStr : '', // 结束时间
-            timeType : '', // 时间类型
-            deptCode : '', //门店码
-            pageOffset : 1,//分页加载(当前页面)
-            pageRows : 30,//请求条数(当前页面)   
-            },//分销公司请求参数
+      companyParameter: {
+        export: 1,
+        compName: "", //公司名称
+        // personType = '',//人员类型
+        ourDockingPersonId: "", //对接人id
+        timeStartStr: "", // 开始时间
+        timeEndStr: "", // 结束时间
+        timeType: "", // 时间类型
+        deptCode: "", //门店码
+        pageOffset: 1, //分页加载(当前页面)
+        pageRows: 30, //请求条数(当前页面)
+      }, //分销公司请求参数
       NoData: false,
       isLoad: false,
       placeholderText: "请输入申请、归档编号",
       //状态
       //列表
-      orderList: []
+      orderList: [],
     };
   },
   created() {
     this.topParams = JSON.parse(JSON.stringify(this.params));
     this.allContractParam = JSON.parse(JSON.stringify(this.params));
-    console.log(this.topParams,'这是顶部筛选参数');
+    console.log(this.topParams, "这是顶部筛选参数");
     this.initUserOpers();
     this.topData();
     this.init();
   },
   methods: {
     //初始化权限
-     async initUserOpers(){
-        console.log('--分销合同权限初始化开始Index--');
-        let userId = new ErpCommon().getOperator('USER_ID'); //写死测试userId:20341347 20341322
+    async initUserOpers() {
+      console.log("--分销合同权限初始化开始Index--");
+      let userId = new ErpCommon().getOperator("USER_ID"); //写死测试userId:20341347 20341322
 
-        if (!userId) return;
+      if (!userId) return;
 
-        let userOpers = await new GetUserOpers(new GetUserOpersRequest({userId:userId})).send();
-        SetBaseInfoModel.setUserOpers(userOpers);
-        console.log('--分销合同权限初始化完成--');
-      },
+      let userOpers = await new GetUserOpers(
+        new GetUserOpersRequest({ userId: userId })
+      ).send();
+      SetBaseInfoModel.setUserOpers(userOpers);
+      this.haveExportAuth = this.$UserPermission.AGENCYDistributeExportAuth();
+      this.haveEditAuth = this.$UserPermission.AGENCYDistributeUpdateAuth();
+      this.haveAddAuth = this.$UserPermission.AGENCYDistributeAddAuth();
+      console.log("--分销合同权限初始化完成--");
+    },
     //获取顶部筛选数据
-      topData(){
-          //获取分销公司列表
-          new GetCompangList(this.companyParameter).send()
-          .then((res)=>{
-              //分销公司
-              this.companyList = this.topSelectList(res.companyList,'companyId','companyName');
-              this.companyList.unshift(this.first);
-              console.log(this.companyList,'分销公司列表');
-          })
-          .catch((err)=>{
-              console.log('分销公司请求失败');
-          })
+    topData() {
+      //获取分销公司列表
+      new GetCompangList(this.companyParameter)
+        .send()
+        .then((res) => {
+          //分销公司
+          this.companyList = this.topSelectList(
+            res.companyList,
+            "companyId",
+            "companyName"
+          );
+          this.companyList.unshift(this.first);
+          console.log(this.companyList, "分销公司列表");
+        })
+        .catch((err) => {
+          console.log("分销公司请求失败");
+        });
 
-          //获取所有分销合同列表
-          this.allContractParam.export = 1;
-          this.allContractParam.approvalStatusIsMe = '';
-          new getDistributionList(this.allContractParam).send()
-              .then((res) => {
-                  console.log("合同名称列表: ", res.list);
-                   //合同名称列表
-                  this.dealNameList = this.topSelectList(res.list,'dealId','contractName');
-                  this.dealNameList.unshift(this.first);
-              })
-              .catch((err) => {
-                  console.log("查询所有分销合同报错: ", err);
-              });
-      },
+      //获取所有分销合同列表
+      this.allContractParam.export = 1;
+      this.allContractParam.approvalStatusIsMe = "";
+      new getDistributionList(this.allContractParam)
+        .send()
+        .then((res) => {
+          console.log("合同名称列表: ", res.list);
+          //合同名称列表
+          this.dealNameList = this.topSelectList(
+            res.list,
+            "dealId",
+            "contractName"
+          );
+          this.dealNameList.unshift(this.first);
+        })
+        .catch((err) => {
+          console.log("查询所有分销合同报错: ", err);
+        });
+    },
     init() {
       this.isLoad = true;
       new getDistributionList(this.params)
         .send()
-        .then(res => {
+        .then((res) => {
           this.total = res.total;
-          console.log(res.list,'列表数据')
+          console.log(res.list, "列表数据");
           this.orderList = [...res.list];
           if (this.orderList.length <= 0) {
             this.NoData = true;
-          }else{
+          } else {
             this.NoData = false;
           }
           this.isLoad = false;
         })
-        .catch(res => {
+        .catch((res) => {
           this.isLoad = false;
-          console.log(res)
-          this.$erpCommon.toast(
-            res.errMsg || "服务器开小差了,请稍后再试",
-          );
+          console.log(res);
+          this.$erpCommon.toast(res.errMsg || "服务器开小差了,请稍后再试");
         });
     },
     //新增代理合同
     toAddContract() {
-      this.$router.push({ path: "/addDistributionContract",query:{index:1} });
+      this.$router.push({
+        path: "/addDistributionContract",
+        query: { index: 1 },
+      });
     },
     //下拉加载
     refresh() {
-      this.isLoad =true;
+      this.isLoad = true;
       this.isScroll = false;
       new getDistributionList(this.params)
         .send()
-        .then(res => {
+        .then((res) => {
           this.isLoad = false;
-          let list =res.list;
-          if(list.length<=0) return;
-           if(list.length<30){
-             this.isScroll = false;
-           }else{
-             this.isScroll = true;
-           }
-          this.orderList = [...this.orderList,...list];
+          let list = res.list;
+          if (list.length <= 0) return;
+          if (list.length < 30) {
+            this.isScroll = false;
+          } else {
+            this.isScroll = true;
+          }
+          this.orderList = [...this.orderList, ...list];
         })
-        .catch(res => {
+        .catch((res) => {
           this.isLoad = false;
-          this.$erpCommon.toast(
-            res.errMsg || "服务器开小差了,请稍后再试",
-          );
+          this.$erpCommon.toast(res.errMsg || "服务器开小差了,请稍后再试");
         });
     },
     //顶部筛选列表
-    topSelectList(arr,key1,key2){
-        let list = [];
-        if(arr.length>0){
-          for(let info of arr){
-              //数据格式
-              let item = {id:info[key1],text:info[key2]}
-            list.push(item)
-          }
-          return list;
+    topSelectList(arr, key1, key2) {
+      let list = [];
+      if (arr.length > 0) {
+        for (let info of arr) {
+          //数据格式
+          let item = { id: info[key1], text: info[key2] };
+          list.push(item);
+        }
+        return list;
       }
       return list;
     },
     //申请组织
-    f_selectOrg(data){
-      this.empty = false; 
-      console.log(data,'筛选组织');
-      if(data.text == "全部"){
-           this.topParams.orgId = "";
-        }else{
-          this.topParams.orgId = data.id;
-        }
+    f_selectOrg(data) {
+      this.empty = false;
+      console.log(data, "筛选组织");
+      if (data.text == "全部") {
+        this.topParams.orgId = "";
+      } else {
+        this.topParams.orgId = data.id;
+      }
     },
     //合同名称
-    f_selectAgentName(data){
-      this.empty = false; 
-      console.log(data,'合同名称');
-       if(data.text == "全部"){
-           this.topParams.dealName = "";
-        }else{
-          this.topParams.dealName = data.text;
-        }
+    f_selectAgentName(data) {
+      this.empty = false;
+      console.log(data, "合同名称");
+      if (data.text == "全部") {
+        this.topParams.dealName = "";
+      } else {
+        this.topParams.dealName = data.text;
+      }
     },
-     //分销公司
-    f_selectCompanyName(data){
-      this.empty = false; 
-      console.log(data,'分销公司');
-       if(data.text == "全部"){
-           this.topParams.distributionCompanyName = "";
-        }else{
-          this.topParams.distributionCompanyName = data.text;
-        }
+    //分销公司
+    f_selectCompanyName(data) {
+      this.empty = false;
+      console.log(data, "分销公司");
+      if (data.text == "全部") {
+        this.topParams.distributionCompanyName = "";
+      } else {
+        this.topParams.distributionCompanyName = data.text;
+      }
     },
-     //时间类型
-    f_dateType(data){
-      this.empty = false; 
-      console.log(data,'时间类型');
+    //时间类型
+    f_dateType(data) {
+      this.empty = false;
+      console.log(data, "时间类型");
       this.topParams.timeType = data.id || "";
     },
-     //合同时间
-    f_agentDate(data){
-      this.empty = false; 
-      console.log(data,'合同时间');
+    //合同时间
+    f_agentDate(data) {
+      this.empty = false;
+      console.log(data, "合同时间");
       this.topParams.timeStartStr = data.startTime || "";
       this.topParams.timeEndStr = data.endTime || "";
     },
-     //审批状态
-    f_auditStatus(data){
-      this.empty = false; 
-      console.log(data,'审批状态');
+    //审批状态
+    f_auditStatus(data) {
+      this.empty = false;
+      console.log(data, "审批状态");
       this.topParams.approvalStatus = data.id;
     },
-     //待我审批
-    f_approval(data){
-      this.empty = false; 
-      console.log(data,'待我审批');
+    //待我审批
+    f_approval(data) {
+      this.empty = false;
+      console.log(data, "待我审批");
       //暂时没有字段
       this.topParams.approvalStatusIsMe = data.id;
     },
-     //分销范围
-    f_distributionScope(data){
-      this.empty = false; 
-      console.log(data,'分销范围');
+    //分销范围
+    f_distributionScope(data) {
+      this.empty = false;
+      console.log(data, "分销范围");
       this.topParams.distributionRange = data.id || "";
     },
-     //全选
-    allSelect(){
-      if(this.orderList.length <1) return;
+    //全选
+    allSelect() {
+      if (this.orderList.length < 1) return;
       this.allSelectFlag = !this.allSelectFlag;
-      this.orderList.forEach((key)=>{
+      this.orderList.forEach((key) => {
         key.check = this.allSelectFlag;
-      })
+      });
     },
     //重置
-    f_clear(){
-        this.empty = true;
-        this.searchEmpty = true;
-        this.topParams.approvalStatus = '';
-        this.topParams.approvalStatusIsMe = 0;
-        this.topParams.contractStatus = '';
-        this.topParams.dealName = '';
-        this.topParams.distributionCompanyName = '';
-        this.topParams.distributionRange = '';
-        this.topParams.keyWords = '';
-        this.topParams.orgId = '';
-        this.topParams.timeEndStr = '';
-        this.topParams.timeStartStr = '';
-        this.topParams.timeType = '';
-        this.topParams.pageOffset = 1;
+    f_clear() {
+      this.empty = true;
+      this.searchEmpty = true;
+      this.topParams.approvalStatus = "";
+      this.topParams.approvalStatusIsMe = 0;
+      this.topParams.contractStatus = "";
+      this.topParams.dealName = "";
+      this.topParams.distributionCompanyName = "";
+      this.topParams.distributionRange = "";
+      this.topParams.keyWords = "";
+      this.topParams.orgId = "";
+      this.topParams.timeEndStr = "";
+      this.topParams.timeStartStr = "";
+      this.topParams.timeType = "";
+      this.topParams.pageOffset = 1;
+      this.params = JSON.parse(JSON.stringify(this.topParams));
+      this.init();
     },
-     kwdVal(data){
-        // 关键字
-        this.searchEmpty = false;
-        this.topParams.keyWords = data;
-        console.log(data,'hhhhhhhhhhh');
-        },
-     //关键字检索
-    kwdSearch(data){
-        this.params = JSON.parse(JSON.stringify(this.topParams));
-        this.init();
-        console.log(data,'关键字');
+    kwdVal(data) {
+      // 关键字
+      this.searchEmpty = false;
+      this.topParams.keyWords = data;
+      console.log(data, "hhhhhhhhhhh");
+    },
+    //关键字检索
+    kwdSearch(data) {
+      this.params = JSON.parse(JSON.stringify(this.topParams));
+      this.init();
+      console.log(data, "关键字");
     },
     topSearch(val) {
-      console.log(this.topParams,'这是顶部筛选参数');
+      console.log(this.topParams, "这是顶部筛选参数");
       this.topParams.pageOffset = 1;
       //若选择了条件，没有点击查询，导出时时间不会错误，且编辑数据保存之后列表初始化不会出错
       this.params = JSON.parse(JSON.stringify(this.topParams));
       this.init();
     },
     //操作
-    goOperating(index,val) {
+    goOperating(index, val) {
       this.toChange = index;
-      this.dealId=val.dealId;
+      this.dealId = val.dealId;
       this.statusParams.operationPerson = val.applicant;
       this.statusParams.applynNum = val.applicationNumber;
-      if(index == 0) this.$router.push({ path: "/addDistributionContract",query:{index:2,dealId:val.dealId} });
+      if (index == 0)
+        this.$router.push({
+          path: "/addDistributionContract",
+          query: { index: 2, dealId: val.dealId },
+        });
     },
     //触底加载
     scrollBottom() {
       console.log("到底啦");
-      if(this.isScroll){
-      this.params.pageOffset += 1;
-      this.refresh();
+      if (this.isScroll) {
+        this.params.pageOffset += 1;
+        this.refresh();
       }
     },
     //接受
     accept() {
       this.$erpConfirm({
-        msg: "确定接受该预约单吗？"
+        msg: "确定接受该预约单吗？",
       })
         .then(() => {})
         .catch(() => {});
     },
     //批量审批弹窗
-    batchApproval(){
-      this.toChange=1
+    batchApproval() {
+      this.toChange = 1;
     },
     //导出
-    async f_exportClick(){
-      console.log('这是导出哈哈哈哈');
-        let params = {};
-        // 导出参数
-        let exportParam = {
-            export:1,
-            approvalStatus: this.params.approvalStatus, //审批状态
-            contractStatus: this.params.contractStatus, //合同状态
-            dealName: this.params.dealName, //合同名称
-            distributionCompanyName: this.params.distributionCompanyName, //分销公司名称
-            distributionRange: this.params.distributionRange, //分销范围
-            keyWords: this.params.keyWords, //模糊搜索
-            orgId: this.params.orgId, //申请组织id
-            pageOffset: this.params.pageOffset, //当前页数
-            pageRows: this.params.pageRows, //请求条数
-            timeEndStr: this.params.timeEndStr, //结束时间
-            timeStartStr: this.params.timeStartStr, //开始时间
-            timeType: this.params.timeType, //时间类型    
-        };
-        // 导出接口
-        let data = await new getDistributionList(exportParam).send().then((res)=>{return res.list});
-        console.log(data, '接口数据');
+    async f_exportClick() {
+      console.log("这是导出哈哈哈哈");
+      let params = {};
+      // 导出参数
+      let exportParam = {
+        export: 1,
+        approvalStatus: this.params.approvalStatus, //审批状态
+        contractStatus: this.params.contractStatus, //合同状态
+        dealName: this.params.dealName, //合同名称
+        distributionCompanyName: this.params.distributionCompanyName, //分销公司名称
+        distributionRange: this.params.distributionRange, //分销范围
+        keyWords: this.params.keyWords, //模糊搜索
+        orgId: this.params.orgId, //申请组织id
+        pageOffset: this.params.pageOffset, //当前页数
+        pageRows: this.params.pageRows, //请求条数
+        timeEndStr: this.params.timeEndStr, //结束时间
+        timeStartStr: this.params.timeStartStr, //开始时间
+        timeType: this.params.timeType, //时间类型
+      };
+      // 导出接口
+      let data = await new getDistributionList(exportParam)
+        .send()
+        .then((res) => {
+          return res.list;
+        });
+      console.log(data, "接口数据");
 
-        //导出数据表模板
-        params = {
-            fileName: "分销合同列表",
-            headList: [
-                { name: "审批时间", key: "approvalTime" },
-                { name: "当前审批人", key: "approvalPerson" },
-                { name: "审批状态", key: "approvalStatus" },
-                { name: "合同状态", key: "contractStatus" },
-                { name: "申请人",   key: "applicant" },
-                { name: "申请组织", key: "applicationOrganization" },
-                { name: "申请编号", key: "applicationNumber" },
-                { name: "归档编号", key: "archiveNumber" },
-                { name: "合同名称", key: "contractName" },
-                { name: "分销公司", key: "Agent" },
-                { name: "分销范围", key: "projectName" },
-                { name: "分销期限", key: "projectNameTerm" },
-                { name: "客户保护期", key: "customerProtectionPeriod" },
-                { name: "佣金结算方式", key: "commission" },
-                { name: "法务跟进人", key: "legalAffairs" },
-                { name: "是否有风险", key: "risk" },
-                { name: "是否盖章", key: "stamp" },
-                { name: "是否作废", key: "void" },
-                { name: "是否归档", key: "archive" },
-                { name: "资料是否缺失", key: "material" },
-                { name: "录入日期", key: "entryDate" },
-            ],
-            data: data
-        };
+      //导出数据表模板
+      params = {
+        fileName: "分销合同列表",
+        headList: [
+          { name: "审批时间", key: "approvalTime" },
+          { name: "当前审批人", key: "approvalPerson" },
+          { name: "审批状态", key: "approvalStatus" },
+          { name: "合同状态", key: "contractStatus" },
+          { name: "申请人", key: "applicant" },
+          { name: "申请组织", key: "applicationOrganization" },
+          { name: "申请编号", key: "applicationNumber" },
+          { name: "归档编号", key: "archiveNumber" },
+          { name: "合同名称", key: "contractName" },
+          { name: "分销公司", key: "Agent" },
+          { name: "分销范围", key: "projectName" },
+          { name: "分销期限", key: "projectNameTerm" },
+          { name: "客户保护期", key: "customerProtectionPeriod" },
+          { name: "佣金结算方式", key: "commission" },
+          { name: "法务跟进人", key: "legalAffairs" },
+          { name: "是否有风险", key: "risk" },
+          { name: "是否盖章", key: "stamp" },
+          { name: "是否作废", key: "void" },
+          { name: "是否归档", key: "archive" },
+          { name: "资料是否缺失", key: "material" },
+          { name: "录入日期", key: "entryDate" },
+        ],
+        data: data,
+      };
 
-        // 拼接导出表头标题
-        // params.fileName=this.exportExcelParams.month+" "+params.fileName;
-        //分销期限 将返回的开始时间、结束时间拼接
-         if(this.params.timeStartStr != ""){
-                //去除时分秒
-                let except = (val)=>{
-                    return val.split(' ')[0];
-                }
-                params.fileName=except(this.params.timeStartStr)+"~"+except(this.params.timeEndStr) + params.fileName;
-            }
-         for(let info of data){
-           info.approvalStatus = this.approvalStatusList[info.approvalStatus];
-           info.contractStatus = this.concatList[info.contractStatus];
-            //拼接代理期限
-           if(info.agencyTermStart !=''){
-              info.projectNameTerm = info.agencyTermStart + '至' + info.agencyTermEnd;
-           }else{
-              info.projectNameTerm = '';
-           }
-         }
-        console.log(params, '--导出参数--');
-        console.log(params.fileName, '表头');
-        new ErpCommon().exportExcelData(params);
+      // 拼接导出表头标题
+      // params.fileName=this.exportExcelParams.month+" "+params.fileName;
+      //分销期限 将返回的开始时间、结束时间拼接
+      if (this.params.timeStartStr != "") {
+        //去除时分秒
+        let except = (val) => {
+          return val.split(" ")[0];
+        };
+        params.fileName =
+          except(this.params.timeStartStr) +
+          "~" +
+          except(this.params.timeEndStr) +
+          params.fileName;
+      }
+      for (let info of data) {
+        info.approvalStatus = this.approvalStatusList[info.approvalStatus];
+        info.contractStatus = this.concatList[info.contractStatus];
+        //拼接代理期限
+        if (info.agencyTermStart != "") {
+          info.projectNameTerm =
+            info.agencyTermStart + "至" + info.agencyTermEnd;
+        } else {
+          info.projectNameTerm = "";
+        }
+        //返回风险、作废、归档、资料缺失文本
+        info.archive = this.getText(info.archive);
+        info.void = this.getText(info.void);
+        info.material = this.getText(info.material);
+        info.risk = this.getText(info.risk, true);
+        info.stamp = this.getText(info.stamp);
+      }
+      console.log(params, "--导出参数--");
+      console.log(params.fileName, "表头");
+      new ErpCommon().exportExcelData(params);
     },
     //双击进入详情
     goxiangqing(dealId) {
       // this.goDetails = true;
       // this.$router.push({ path: "/distributionContractDetails" });
-      this.$router.push({ path: "/addDistributionContract",query:{index:3,dealId:dealId} });
+      this.$router.push({
+        path: "/addDistributionContract",
+        query: { index: 3, dealId: dealId },
+      });
       console.log("双击了");
     },
     //关闭详情
     closeView(val) {
-      this.toChange =val;
-    }
-  }
+      this.toChange = val;
+    },
+  },
+  filters: {
+    formatTime(val) {
+      if (val != "" && val != undefined) {
+        return val.split(" ")[0];
+      } else {
+        return "--";
+      }
+    },
+    hasRisk(val) {
+      if (val != undefined && val !== "") {
+        if (val == 0) return "无风险";
+        if (val == 1) return "一般风险";
+        if (val == 2) return "重大风险";
+      } else {
+        return "--";
+      }
+    },
+    hasStamp(val) {
+      if (val != undefined && val !== "") {
+        if (val == 0) return "否";
+        if (val == 1) return "是";
+      } else {
+        return "--";
+      }
+    },
+    hasVoid(val) {
+      if (val != undefined && val !== "") {
+        if (val == 0) return "否";
+        if (val == 1) return "是";
+      } else {
+        return "--";
+      }
+    },
+    hasArchive(val) {
+      if (val != undefined && val !== "") {
+        if (val == 0) return "否";
+        if (val == 1) return "是";
+      } else {
+        return "--";
+      }
+    },
+    hasMaterial(val) {
+      if (val != undefined && val !== "") {
+        if (val == 0) return "否";
+        if (val == 1) return "是";
+      } else {
+        return "--";
+      }
+    },
+  },
 };
 </script>
 <style scoped>
-  /*修改滚动条样式*/
-  div::-webkit-scrollbar {
-    width: 0.08rem;
-    height: 0.08rem;
-  }
+/*修改滚动条样式*/
+div::-webkit-scrollbar {
+  width: 0.08rem;
+  height: 0.08rem;
+}
 </style>
 <style lang="less" scoped>
-.g_topselect{
-    width: 100%;
-    height: 0.32rem;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #259CF3;
+.g_topselect {
+  width: 100%;
+  height: 0.32rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #259cf3;
 }
-.g_selectMenu{
-    width: 90%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+.g_selectMenu {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
-.u_topSelect .selected_text{
-    font-weight: normal!important;
+.u_topSelect .selected_text {
+  font-weight: normal !important;
 }
-.u_topSelect .selected_item{
-    height: 0.32rem!important;
-    line-height: 0.31rem!important;
-    box-sizing: border-box;
-    border-bottom:1px solid #126fb2;
+.u_topSelect .selected_item {
+  height: 0.32rem !important;
+  line-height: 0.31rem !important;
+  box-sizing: border-box;
+  border-bottom: 1px solid #126fb2;
 }
-.g_btnList{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-right: 0.1rem;
+.g_btnList {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 0.1rem;
 }
-.u_btn{
+.u_btn {
   text-align: center;
-  font-size:0.12rem;
+  font-size: 0.12rem;
   padding: 0 0.1rem 0 0.1rem;
   height: 0.26rem;
   line-height: 0.24rem;
@@ -740,14 +1021,14 @@ export default {
   background-size: 100% 100%;
   background-image: url("../../../assets/images/projectAgentInfo/contract/screenDefaul_200.png");
 }
-.u_btn:hover{
+.u_btn:hover {
   background-image: url("../../../assets/images/projectAgentInfo/contract/screenHover_200.png");
 }
-.u_btn:active{
+.u_btn:active {
   background-image: url("../../../assets/images/projectAgentInfo/contract/screenActive_200.png");
 }
-.g_submit{
-  margin-right:0.1rem;
+.g_submit {
+  margin-right: 0.1rem;
 }
 
 .build-top {
@@ -839,8 +1120,8 @@ export default {
 .order {
   width: 100%;
   // height: 100%;
-    position: absolute;
-    height: calc(~"100% - 0.32rem");
+  position: absolute;
+  height: calc(~"100% - 0.32rem");
   background-color: #edf3fb;
 }
 .list_all {
@@ -922,7 +1203,7 @@ export default {
   width: 0.59rem;
   cursor: pointer;
   border-right: 0.01rem dotted #d5d5d5;
-  /deep/ .el-checkbox__input{
+  /deep/ .el-checkbox__input {
     height: 0.2rem;
   }
 }
@@ -1154,21 +1435,21 @@ export default {
   justify-content: center;
   background-color: #edf3fb;
   .no-data {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 
-      & > img {
-        transform: scale(0.9);
-      }
-
-      .no_dataSpan {
-        font-size: 0.18rem;
-        margin-top: 0.1rem;
-        color: #999999;
-      }
+    & > img {
+      transform: scale(0.9);
     }
+
+    .no_dataSpan {
+      font-size: 0.18rem;
+      margin-top: 0.1rem;
+      color: #999999;
+    }
+  }
 }
 .isLoading {
   position: absolute;
@@ -1195,14 +1476,14 @@ export default {
   padding: 0 0.1rem;
   box-sizing: border-box;
 }
-.middle{
+.middle {
   width: 100%;
   height: 0.32rem;
   background-color: #259cf3;
 }
 </style>
 <style>
-.u_topSelect .selected_text{
-    font-weight: normal!important;
+.u_topSelect .selected_text {
+  font-weight: normal !important;
 }
 </style>

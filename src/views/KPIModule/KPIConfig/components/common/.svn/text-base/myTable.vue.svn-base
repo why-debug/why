@@ -131,6 +131,7 @@ import { ErpCommon } from '../../../../../utils/ErpCommon';
       },
       // 计算基础分
       inputChange(item) {
+        console.log(item.kaoHeNum,'套数',item.danXianFen,'单项分',item.fenDinFen,'封顶分','-----------',JSON.parse(JSON.stringify(item)));
         // 计算 : 基础分 = 套数 * 单项分
         if (!isNaN(item.taoNum) && !isNaN(item.danXianFen)){
           item.jiChuFen = item.taoNum * item.danXianFen;

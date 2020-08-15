@@ -86,6 +86,35 @@ export class DetailsArray {
       return '';
     }
   }
+  //判断资料类型
+  getMaterialType(num) {
+    let map = new Map()
+      .set(1, "营业执照")
+      .set(2, "法人代表证明")
+      .set(3, "法人代表身份证")
+      .set(4, "授权委托书")
+      .set(0, "其他");
+    if (!map.has(num)) return "--";
+    return map.get(num);
+  }
+  //获取资料类型text
+  getMaterialArr(val) {
+    let arr = [];
+    if (val.length <= 0) return val;
+    for (let item of val) {
+      //获取补充附件资料
+      if (item.type == 4) {
+        //若是其他类型则单独处理
+        if (item.dataType == 0) {
+          this.otherDesc = item.dataName;
+          // continue;
+        }
+        let info = this.getMaterialType(item.dataType);
+        arr.push(info);
+      }
+    }
+    return arr;
+  }
 
 }
 
@@ -125,7 +154,7 @@ export class GetFileInfoDetailsList {
         item.contactReviewer = item.getStatus(dataList.userName); //原合同当前审核人
         item.contactStatu = item.getStatus(dataList.auditStatus); //原合同当前审核状态
         item.reviewStatuText = item.getReviewStatu(item.contactStatu);    //原和同审核状态 text
-        item.infoType = item.getStatus(dataList.infoType);// 资料类型
+        item.infoType = item.getMaterialArr(dataList.dataSheetList || []);// 资料类型
         item.sealType = item.getStatus(dataList.stampType);// 盖章类型
         item.sealTypeText = item.getSealTypeText(item.sealType);//盖章类型文本
         item.sealDesc = item.getStatus(dataList.corporateChapterRemarks);// 法人章备注

@@ -1,14 +1,14 @@
 10
 
 dir
-54614
+54811
 http://172.16.140.92:9001/svndata/siteProduct/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection
 http://172.16.140.92:9001/svndata/siteProduct
 
 
 
-2020-06-05T01:26:03.619397Z
-52986
+2020-08-14T01:19:44.938205Z
+54762
 xiongjuncheng
 
 
@@ -66,10 +66,10 @@ file
 
 
 
-2020-06-01T09:52:09.416338Z
-8db70a90a8f7036865c58f6e6b292bba
-2020-06-01T09:52:09.416338Z
-52885
+2020-08-14T01:20:05.699347Z
+204d2ae426a2ca7dbf9ec7f6c255af1b
+2020-08-14T01:19:44.938205Z
+54762
 xiongjuncheng
 
 
@@ -92,7 +92,7 @@ xiongjuncheng
 
 
 
-2499
+3046
 
 GetAllUseAndClassAndLevel.js
 file
@@ -202,10 +202,10 @@ file
 
 
 
-2020-06-05T01:26:03.619397Z
-14c45ad42a14dcabeb99d5d41efe6817
-2020-06-05T01:26:03.619397Z
-52986
+2020-08-14T01:20:05.711347Z
+cb4379e333efeceb16a3e6f89c96935e
+2020-08-14T01:19:44.938205Z
+54762
 xiongjuncheng
 
 
@@ -228,7 +228,7 @@ xiongjuncheng
 
 
 
-7929
+11586
 
 GetAllotOrgList.js
 file
@@ -338,11 +338,11 @@ file
 
 
 
-2020-02-21T10:59:59.651286Z
-b8e0c39832c2de7ccd039439b232649e
-2020-02-21T10:59:59.651286Z
-50030
-rentianxiang
+2020-08-10T01:52:13.348471Z
+83ecdd58f3cd560e2d654482855a6e7c
+2020-08-08T13:04:00.275131Z
+54619
+xiongjuncheng
 
 
 
@@ -364,7 +364,7 @@ rentianxiang
 
 
 
-904
+1083
 
 GetPerformanceType.js
 file
@@ -372,11 +372,11 @@ file
 
 
 
-2020-02-21T10:59:59.651286Z
-687b2a43f19ef30903610a7288889486
-2020-02-21T10:59:59.651286Z
-50030
-rentianxiang
+2020-08-10T01:52:13.353471Z
+09e40d07f0c243c492ebcdefb69589c6
+2020-08-08T13:04:00.275131Z
+54619
+xiongjuncheng
 
 
 
@@ -398,7 +398,7 @@ rentianxiang
 
 
 
-848
+849
 
 GetReporBuildInfo.js
 file

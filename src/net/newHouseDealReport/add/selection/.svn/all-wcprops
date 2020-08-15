@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 112
-/svndata/siteProduct/!svn/ver/52986/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection
+/svndata/siteProduct/!svn/ver/54762/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection
 END
 GetRangeUserList.js
 K 25
@@ -13,7 +13,7 @@ GetLinkCustList.js
 K 25
 svn:wc:ra_dav:version-url
 V 131
-/svndata/siteProduct/!svn/ver/52885/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetLinkCustList.js
+/svndata/siteProduct/!svn/ver/54762/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetLinkCustList.js
 END
 GetAllUseAndClassAndLevel.js
 K 25
@@ -37,7 +37,7 @@ AddReporInfo.js
 K 25
 svn:wc:ra_dav:version-url
 V 128
-/svndata/siteProduct/!svn/ver/52986/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/AddReporInfo.js
+/svndata/siteProduct/!svn/ver/54762/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/AddReporInfo.js
 END
 GetAllotOrgList.js
 K 25
@@ -61,13 +61,13 @@ GetDistributionCompanyList.js
 K 25
 svn:wc:ra_dav:version-url
 V 142
-/svndata/siteProduct/!svn/ver/50030/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetDistributionCompanyList.js
+/svndata/siteProduct/!svn/ver/54619/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetDistributionCompanyList.js
 END
 GetPerformanceType.js
 K 25
 svn:wc:ra_dav:version-url
 V 134
-/svndata/siteProduct/!svn/ver/50030/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetPerformanceType.js
+/svndata/siteProduct/!svn/ver/54619/trunk/frontend_pure/meilian-erp-vue/src/net/newHouseDealReport/add/selection/GetPerformanceType.js
 END
 GetReporBuildInfo.js
 K 25

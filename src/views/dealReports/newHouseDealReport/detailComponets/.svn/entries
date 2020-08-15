@@ -1,14 +1,14 @@
 10
 
 dir
-54614
+54811
 http://172.16.140.92:9001/svndata/siteProduct/trunk/frontend_pure/meilian-erp-vue/src/views/dealReports/newHouseDealReport/detailComponets
 http://172.16.140.92:9001/svndata/siteProduct
 
 
 
-2020-06-16T08:03:12.533681Z
-53290
+2020-08-13T03:11:45.842048Z
+54736
 xiongjuncheng
 
 
@@ -100,10 +100,10 @@ file
 
 
 
-2020-06-03T01:38:32.672740Z
-9deb967665e4db2386a49d52ed3e2735
-2020-06-03T01:38:32.672740Z
-52934
+2020-08-13T03:53:40.591171Z
+8a94836b06f35f81195b275333bd2ca3
+2020-08-13T03:11:45.842048Z
+54736
 xiongjuncheng
 
 
@@ -126,7 +126,7 @@ xiongjuncheng
 
 
 
-6744
+8293
 
 reportNo.vue
 file
@@ -134,10 +134,10 @@ file
 
 
 
-2020-06-16T08:03:12.533681Z
-95307761ddf125f65e77f1f8dc9e2537
-2020-06-16T08:03:12.533681Z
-53290
+2020-08-12T12:13:07.107428Z
+b47c9cbd0f7b5e9129fe11c4a37ad32e
+2020-08-12T12:13:03.126079Z
+54703
 xiongjuncheng
 
 
@@ -160,7 +160,7 @@ xiongjuncheng
 
 
 
-7920
+8331
 
 attachmentInformation.vue
 file
@@ -202,10 +202,10 @@ file
 
 
 
-2020-06-16T08:03:12.533681Z
-f41906e7f493f157004077bb960623a6
-2020-06-16T08:03:12.533681Z
-53290
+2020-08-12T12:13:07.092427Z
+d3c19d48f79d117b70a434d9d221203e
+2020-08-12T12:13:03.126079Z
+54703
 xiongjuncheng
 
 
@@ -228,7 +228,7 @@ xiongjuncheng
 
 
 
-10316
+11117
 
 followLogLeft.vue
 file
@@ -236,10 +236,10 @@ file
 
 
 
-2020-06-16T08:03:12.533681Z
-31698338552e9454efaf7d733f95da8e
-2020-06-16T08:03:12.533681Z
-53290
+2020-08-12T12:13:07.097427Z
+fe9087262072216eb387074ba115df7b
+2020-08-12T12:13:03.126079Z
+54703
 xiongjuncheng
 
 
@@ -262,7 +262,7 @@ xiongjuncheng
 
 
 
-8510
+10036
 
 financialReceipt.vue
 file

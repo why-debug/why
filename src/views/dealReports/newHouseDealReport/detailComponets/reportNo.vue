@@ -1,6 +1,6 @@
 <template>
   <div class="report-no">
-    <div class="title">编号：{{projectDetail.offerNo}}</div>
+    <div class="title">编号：{{projectDetail.offerNo || '--'}}</div>
     <div class="content">
       <!-- <div class="item" v-for="(item, index) in reportNoList" :key="index">
         <div>{{item.text}}</div>
@@ -60,8 +60,7 @@
        <div class="item" >
         <div>实收佣金占比：</div>
         <div class="normal">
-          <!-- 缺少字段 -->
-          --
+         {{projectDetail.discountCommission || '0'}}%
         </div>
       </div>
        <div class="item" >
@@ -103,9 +102,9 @@
 
     </div>
     <div class="bottom-btn">
-      <div class="btn-1">电子合同</div>
-      <div class="btn-2">编辑</div>
-      <div class="btn-3">审核</div>
+      <!-- <div class="btn-1">电子合同</div> -->
+      <div class="btn-2"  @click="goEdit">编辑</div>
+      <!-- <div class="btn-3">审核</div> -->
     </div>
   </div>
 </template>
@@ -142,7 +141,14 @@ export default {
       default(){
         return new ReportInfoDetailItem();
       }
-    }
+    },
+    reportId:{
+      type: Number|String,
+      default(){
+        return "";
+      }
+    },
+    
   },
   watch: {
     projectDetailInfo:{
@@ -155,6 +161,12 @@ export default {
   created(){
     this.projectDetail = this.projectDetailInfo;
     console.log(this.projectDetailInfo,'认购信息');
+  },
+  methods:{
+    //编辑新房成交报告
+    goEdit(){
+       this.$router.push({ path: '/addNewHouseDealReport',query:{reportId:this.reportId} });
+    },
   },
    filters:{
       formatTime(val){
@@ -191,6 +203,7 @@ export default {
     text-indent: 0.1rem;
     color: #006797;
     font-size: 0.14rem;
+    white-space: nowrap;
   }
   &>.content {
     width: 100%;
@@ -222,7 +235,7 @@ export default {
     height: auto;
     margin-top: 0.1rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     &>div {
       width: 0.6rem;
       height: 0.3rem;
@@ -247,6 +260,8 @@ export default {
         background-blend-mode: normal, normal;
         box-shadow: 0rem 0.01rem 0.01rem 0rem rgba(0, 0, 0, 0.75), inset 0rem 0.01rem 0rem 0rem rgba(255, 255, 255, 0.2);
         border: solid 0.01rem #45a802;
+        margin-right: 0.2rem;
+        box-sizing: border-box;
       }
       &.btn-3 {
         background-image: linear-gradient(0deg, #449aff 0%, #50a7ff 100%), linear-gradient(#5fc41b, #5fc41b);
