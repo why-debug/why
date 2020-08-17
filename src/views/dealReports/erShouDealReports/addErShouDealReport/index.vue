@@ -1321,183 +1321,7 @@
       <div class="form-item-common" style="margin-top: 0.2rem;">
         <top-title :iconUrl="performanceIcon" :titleName="'业绩信息'"></top-title>
       </div>
-      <div class="performance-box">
-        <div class="performance-list">
-          <div class="performance-list-item">
-            <span class="p-l-left">上报业绩：</span>
-            <span class="p-l-right">{{reportingPerformance}}元</span>
-          </div>
-          <div class="performance-list-item">
-            <span class="p-l-left">标准佣金：</span>
-            <span
-              class="p-l-right"
-            >{{standardCommission}}{{priceUnitList.filter(item => ruleForm.erpMlDeal.priceUnit === item.value)[0].label}}</span>
-          </div>
-          <div class="performance-list-item">
-            <span class="p-l-left">折扣：</span>
-            <span class="p-l-right">{{discount}}%</span>
-          </div>
-          <div class="performance-list-item">
-            <span class="p-l-left">合作费：</span>
-            <span class="p-l-right">{{cooperationFees}}元</span>
-          </div>
-        </div>
-
-        <!-- table - 1 -->
-        <div class="performance-add-box">
-          <div class="p-a-b-left">
-            <check-box-only
-              :label="'外部合作费'"
-              :value="'1'"
-              @sendData="waibuhezuofeiChange"
-              :selecteValue="waibuhezuofei"
-            ></check-box-only>
-            <div
-              class="add-box"
-              @click="addErpMlDealOuterCooperations()"
-              v-if="waibuhezuofei === '1'"
-            >
-              <img src="../../../../assets/images/public/add_200.png" alt />
-              <div>新增</div>
-            </div>
-          </div>
-        </div>
-        <div class="table-box" v-if="waibuhezuofei === '1'">
-          <div class="table-buju-1 table-head">
-            <div v-for="(item, index) in tableTop1" :key="index">{{item}}</div>
-          </div>
-          <div
-            class="table-buju table-buju-1"
-            v-for="(item, index) in ruleForm.erpMlDealOuterCooperations"
-            :key="index"
-          >
-            <div>{{index + 1}}</div>
-            <div>
-              <el-input v-model="item.userName" :style="{'width': '100%'}"></el-input>
-            </div>
-            <div>
-              <el-input v-model="item.idNo" :style="{'width': '100%'}"></el-input>
-            </div>
-            <div>
-              <el-input v-model="item.contractPhone" :style="{'width': '100%'}"></el-input>
-            </div>
-            <div>
-              <el-select v-model="item.type" :style="{'width': '100%'}" placeholder>
-                <el-option
-                  v-for="item in erpMlDealOuterCooperationsTypeList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div class="active">
-              <el-input
-                v-model="item.cooperationCost"
-                @input="cooperationCostChange(index)"
-                :style="{'width': '100%'}"
-              ></el-input>
-            </div>
-            <div class="del-icon" @click="delErpMlDealOuterCooperations(index)"></div>
-          </div>
-        </div>
-
-        <!-- table - 2 -->
-        <div class="performance-add-box">
-          <div class="p-a-b-left">
-            <div>业绩分配</div>
-            <div class="add-box" @click="addErpMlDealProfits()">
-              <img src="../../../../assets/images/public/add_200.png" alt />
-              <div>新增</div>
-            </div>
-          </div>
-          <div class="p-a-b-right">
-            <radio-group-other @sendData="jinebiliChange"></radio-group-other>
-          </div>
-        </div>
-        <div class="table-box">
-          <div class="table-buju-2 table-head">
-            <div v-for="(item, index) in tableTop2" :key="index">{{item}}</div>
-          </div>
-          <div
-            class="table-buju table-buju-2"
-            v-for="(item, index) in ruleForm.erpMlDealProfits"
-            :key="index"
-          >
-            <div>{{index + 1}}</div>
-            <div>
-              <el-select
-                @click.native="why(index)"
-                v-model="item.profitType"
-                :style="{'width': '100%'}"
-                placeholder
-              >
-                <el-option
-                  v-for="item in erpMlDealProfitsProfitTypeList"
-                  :key="item.performanceCode"
-                  :label="item.performanceName"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
-            </div>
-            <div>
-              <el-input
-                @click.native="selsecArea(item)"
-                v-model="item.compOrgName"
-                :style="{'width': '100%'}"
-                :readonly="true"
-              ></el-input>
-            </div>
-            <div>
-              <el-input
-                @click.native="selsecPerson(item)"
-                v-model="item.userName"
-                :style="{'width': '100%'}"
-                :readonly="true"
-              ></el-input>
-            </div>
-            <div>
-              <el-date-picker
-                v-model="item.profitMonth"
-                type="month"
-                :style="{'width': '100%'}"
-                value-format="yyyy-MM"
-                placeholder
-              ></el-date-picker>
-            </div>
-            <div class="active">
-              <el-input
-                v-model="item.profitProportion"
-                @input="profitProportionChange(index)"
-                :disabled="jinebili === '2'"
-                maxlength="2"
-                :style="{'width': '100%'}"
-              >
-                <span slot="suffix">%</span>
-              </el-input>
-            </div>
-            <div class="active">
-              <el-input
-                v-model="item.profitMoney"
-                @input="profitMoneyChange(index)"
-                :disabled="jinebili === '1'"
-                :style="{'width': '100%'}"
-              ></el-input>
-            </div>
-            <div class="active">
-              <el-input
-                v-model="item.orderProportion"
-                @change="orderProportionChange(index)"
-                v-number-one
-                :style="{'width': '100%'}"
-              ></el-input>
-            </div>
-            <div>{{item.profitLeadersName}}</div>
-            <div class="del-icon" @click="delErpMlDealProfits(index)"></div>
-          </div>
-        </div>
-      </div>
-      <!-- <performanceInfo></performanceInfo> -->
+      <performanceInfo :ruleForm="this.ruleForm"></performanceInfo>
     </el-form>
 
     <!-- 关联合同 -->
@@ -1535,7 +1359,7 @@ import {
   leaderAllotPerformance,
   datazd,
   masterOdd,
-  masterData,
+  masterData
 } from "@/net/dealReports/erShouDealReports.js";
 import { SecondHandReportInfoDetail } from "@/net/dealReports/erShouDealReportDetail.js";
 import topTitle from "@/views/dealReports/erShouDealReports/components/topTitle.vue";
@@ -1559,7 +1383,7 @@ export default {
     associateCustomer,
     chooseProperty,
     selectArea,
-    performanceInfo,
+    performanceInfo
   },
   data() {
     // 户型验证
@@ -1605,13 +1429,13 @@ export default {
       ruleForm: {},
       rules: {
         "erpMlDeal.dealDate": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.dealType": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.category": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         // "erpMlDeal.branchBankId": [
         //   { required: true, message: "不能为空", trigger: "blur" },
@@ -1620,51 +1444,51 @@ export default {
         //   { required: true, message: "不能为空", trigger: "blur" },
         // ],
         "erpMlDeal.otherDealCityId": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.otherDealBankId": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         // "erpMlDeal.dealHouseNo": [
         //   { required: true, message: "请选择房源", trigger: "blur" },
         // ],
         "erpMlDeal.dealHouseInfo": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.ownerName": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.houseRoom": [{ validator: checkHouseRoom, trigger: "blur" }],
         "erpMlDeal.houseArea": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.houseInnerArea": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         // "erpMlDeal.entrustNo": [
         //   { required: true, message: "请选择合同", trigger: "blur" },
         // ],
         "erpMlDeal.dealPrice": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.signDate": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.payType": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.sellOwnerCommsion": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.buyCustomerCommsion": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.leaseEndTime": [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: "不能为空", trigger: "blur" }
         ],
         "erpMlDeal.leaseDepositType": [
-          { required: true, message: "不能为空", trigger: "blur" },
-        ],
+          { required: true, message: "不能为空", trigger: "blur" }
+        ]
         // commonRequire: [
         //   { required: true, message: "不能为空", trigger: "blur" },
         // ],
@@ -1674,14 +1498,14 @@ export default {
         { label: "售", value: 1 },
         { label: "租", value: 2 },
         { label: "代办", value: 3 },
-        { label: "返利", value: 4 },
+        { label: "返利", value: 4 }
       ],
       // 类别
       categoryList: [
         { label: "一般成交", value: 1 },
         { label: "事后加佣", value: 2 },
         { label: "口头代理费", value: 3 },
-        { label: "外区分佣", value: 4 },
+        { label: "外区分佣", value: 4 }
       ],
       // 事后加佣
       options: [],
@@ -1691,7 +1515,7 @@ export default {
       cooperationTypeList: [
         { label: "跨市合作", value: 1 },
         { label: "市内合作", value: 2 },
-        { label: "区内合作", value: 3 },
+        { label: "区内合作", value: 3 }
       ],
       // 成交分行
       branchBankName: "",
@@ -1704,12 +1528,12 @@ export default {
       // 房源
       dealHouseStyleList: [
         { label: "内部合作", value: 1 },
-        { label: "外部合作", value: 2, disabled: true },
+        { label: "外部合作", value: 2, disabled: true }
       ],
       // 房产证
       ownerTypeList: [
         { label: "房产证", value: 1 },
-        { label: "不动产证", value: 2 },
+        { label: "不动产证", value: 2 }
       ],
       // 用途
       houseUseageList: [],
@@ -1719,19 +1543,19 @@ export default {
       propertyTypeList: [
         { label: "商品房", value: 1 },
         { label: "小产权房", value: 2 },
-        { label: "军产房", value: 3 },
+        { label: "军产房", value: 3 }
       ],
       // 产权现状
       ownerStatusList: [
         { label: "红本", value: 1 },
-        { label: "抵押", value: 2 },
+        { label: "抵押", value: 2 }
       ],
       // 查档状态
       fileStatusList: [
         { label: "有效", value: 1 },
         { label: "抵押", value: 2 },
         { label: "查封", value: 3 },
-        { label: "其他", value: 4 },
+        { label: "其他", value: 4 }
       ],
       // 按揭银行
       financeBankList: [],
@@ -1740,19 +1564,19 @@ export default {
       // 成交价格单位
       priceUnitList: [
         { label: "元", value: 1 },
-        { label: "万元", value: 2 },
+        { label: "万元", value: 2 }
       ],
       // 付款方式
       payTypeList: [
         { label: "一次性", value: 1 },
-        { label: "按揭", value: 2 },
+        { label: "按揭", value: 2 }
       ],
       // 租约押金类型
       leaseDepositTypeList: [],
       // 业主类型
       typeList: [
         { label: "本人", value: 1 },
-        { label: "企业", value: 2 },
+        { label: "企业", value: 2 }
       ],
       // 业主关系
       relationshipList: [
@@ -1763,7 +1587,7 @@ export default {
         { label: "朋友", value: 5 },
         { label: "儿子", value: 6 },
         { label: "其他", value: 7 },
-        { label: "同学", value: 8 },
+        { label: "同学", value: 8 }
       ],
       // 地域
       regionList: [
@@ -1771,17 +1595,17 @@ export default {
         { label: "香港", value: 2 },
         { label: "澳门", value: 3 },
         { label: "台湾", value: 4 },
-        { label: "海外", value: 5 },
+        { label: "海外", value: 5 }
       ],
       // 证件类型
       credentialsTypeList: [
         { label: "身份证", value: 1 },
-        { label: "护照", value: 2 },
+        { label: "护照", value: 2 }
       ],
       // 户籍
       registrationTypeList: [
         { label: "本市户籍", value: 1 },
-        { label: "非本市户籍", value: 2 },
+        { label: "非本市户籍", value: 2 }
       ],
       // 联系方式类型
       contractTypeList: [],
@@ -1799,7 +1623,7 @@ export default {
       erpMlDealOuterCooperationsTypeList: [
         { label: "第三方", value: 1 },
         { label: "买方", value: 2 },
-        { label: "公司内部", value: 3 },
+        { label: "公司内部", value: 3 }
       ],
       // table - 2
       tableTop2: [
@@ -1811,7 +1635,7 @@ export default {
         "分配比列",
         "分配业绩",
         "单量",
-        "领导人分配业绩",
+        "领导人分配业绩"
       ],
       // table- 2 - 类型列表
       erpMlDealProfitsProfitTypeList: [],
@@ -1821,7 +1645,7 @@ export default {
         userName: "",
         organizationId: "",
         organizationName: "", // 部门名称
-        selectType: 2, //1选人，2选组织
+        selectType: 2 //1选人，2选组织
       },
       // 选择分配人传值参数
       selectOrgParms: {
@@ -1829,27 +1653,27 @@ export default {
         userName: "",
         organizationId: "",
         organizationName: "",
-        selectType: 1, //1选人，2选组织
+        selectType: 1 //1选人，2选组织
       },
       // 关联合同弹窗
       associatedContractObj: {
         isShow: false,
-        title: "关联合同",
+        title: "关联合同"
       },
       // 关联客户弹窗
       associateCustomerObj: {
         isShow: false,
-        title: "关联客户",
+        title: "关联客户"
       },
       // 选择物业弹窗
       choosePropertyObj: {
         isShow: false,
-        title: "选择物业",
+        title: "选择物业"
       },
       // 选择片区弹窗
       selectAreaObj: {
         isShow: false,
-        title: "选择片区",
+        title: "选择片区"
       },
       // 标准佣金比例
       standardCommissionProportion: 0.5, // todo
@@ -1859,8 +1683,8 @@ export default {
       jinebili: "1",
       userId: "",
       datazidian: {
-        dicType: "",
-      },
+        dicType: ""
+      }
     };
   },
 
@@ -1883,7 +1707,7 @@ export default {
       erpMlDealSellers: [],
       erpMlDealBuyUsers: [],
       erpMlDealOuterCooperations: [],
-      erpMlDealProfits: [],
+      erpMlDealProfits: []
     };
     this.ruleForm.erpMlDealSellers.push(new erpMlDealSellersItem());
     this.ruleForm.erpMlDealBuyUsers.push(new erpMlDealBuyUsersItem());
@@ -1904,7 +1728,7 @@ export default {
     initData(reportId) {
       new SecondHandReportInfoDetail({ id: reportId })
         .send()
-        .then((res) => {
+        .then(res => {
           console.log(res, "二手房成交报告编辑初始化数据");
           this.houseRegName = res.erpMlDeal.erpMlDeal.houseRegName;
           // this.dealUserName = res.dealUserName;
@@ -1916,7 +1740,7 @@ export default {
             res.erpMlDealOuterCooperation;
           this.ruleForm.erpMlDealProfits = res.erpMlDealProfit;
         })
-        .catch((res) => {
+        .catch(res => {
           console.log(res, "err");
           new ErpCommon().toast(
             res.errMsg || "服务器开小差了,请稍后再试!",
@@ -1926,7 +1750,7 @@ export default {
     },
     // 初始化时间国家省份城市
     async initAddress() {
-      await new getProvinceAndCityList().send().then((res) => {
+      await new getProvinceAndCityList().send().then(res => {
         this.provinceList = res.provinceList;
         this.cityList = res.cityList;
         console.log(res, "地址");
@@ -1935,7 +1759,7 @@ export default {
     // 获取用途初始化数据
     houseUseList() {
       this.datazidian.dicType = "HOUSE_USEAGE";
-      new datazd(this.datazidian).send().then((res) => {
+      new datazd(this.datazidian).send().then(res => {
         this.houseUseageList = res;
         console.log(res, "用途初始化数据");
       });
@@ -1943,7 +1767,7 @@ export default {
     // 获取联系方式类型初始化数据
     phoneTypeList() {
       this.datazidian.dicType = "PHONE_TYPE";
-      new datazd(this.datazidian).send().then((res) => {
+      new datazd(this.datazidian).send().then(res => {
         this.contractTypeList = res;
         console.log(res, "联系方式类型初始化数据");
       });
@@ -1951,7 +1775,7 @@ export default {
     // 获取客户来源初始化数据
     clientSourceList() {
       this.datazidian.dicType = "CUST_SOURCE";
-      new datazd(this.datazidian).send().then((res) => {
+      new datazd(this.datazidian).send().then(res => {
         this.fromSourceList = res;
         console.log(res, "客户来源初始化数据");
       });
@@ -1964,7 +1788,7 @@ export default {
     },
     // 获取业绩分配类型列表
     async getErpMlDealProfitsProfitTypeList() {
-      await new getFunPerformanceTypeList().send().then((res) => {
+      await new getFunPerformanceTypeList().send().then(res => {
         this.erpMlDealProfitsProfitTypeList = res;
       });
       console.log(this.erpMlDealProfitsProfitTypeList, "业绩分配类型列表");
@@ -1987,7 +1811,7 @@ export default {
       let val = new ErpCommon().openPerformanceAssignee(this.selectOrgParms);
       let info = JSON.parse(val);
       let userIds = {
-        userId: "",
+        userId: ""
       };
       data.userName = info.userName || "--";
       data.userId = info.userId;
@@ -1995,7 +1819,7 @@ export default {
       this.ruleForm.erpMlDeal.dealUserId = info.userId;
       userIds.userId = info.userId;
       // 领导人分配业绩
-      new leaderAllotPerformance(userIds).send().then((res) => {
+      new leaderAllotPerformance(userIds).send().then(res => {
         data.profitLeadersName = res.mangeNames;
         data.profitLeaders = res.mangeIds;
         console.log(res);
@@ -2047,7 +1871,7 @@ export default {
       if (query.length < 4)
         return this.$erpCommon.toast("请输入4个以上的关键数字");
       // if(query.length < 4) return this.$erpCommon.toast("请输入数字");
-      new masterOdd({ dealNo: query }).send().then((res) => {
+      new masterOdd({ dealNo: query }).send().then(res => {
         console.log(res, "主单号列表查询结果");
         this.list = res.data;
         console.log(this.list);
@@ -2056,7 +1880,7 @@ export default {
         this.loading = true;
         setTimeout(() => {
           this.loading = false;
-          this.options = this.list.filter((item) => {
+          this.options = this.list.filter(item => {
             return item.dealNo.toLowerCase().indexOf(query.toLowerCase()) > -1;
           });
           console.log(this.options);
@@ -2066,7 +1890,7 @@ export default {
       }
     },
     adds(v) {
-      new masterData({ id: v.dealId }).send().then((res) => {
+      new masterData({ id: v.dealId }).send().then(res => {
         console.log(res, "主单号ID获取的信息");
         this.ruleForm.erpMlDeal = res.erpMlDeal;
         this.houseRegName = res.erpMlDeal.shardConnId;
@@ -2216,7 +2040,7 @@ export default {
     //选择关联客户回显信息
     userInfo(data) {
       console.log(data);
-      this.ruleForm.erpMlDealBuyUsers.forEach((item) => {
+      this.ruleForm.erpMlDealBuyUsers.forEach(item => {
         item.userName = data.buyCustName;
         item.userSex = data.buyCustSex;
         item.fromSource = JSON.stringify(data.custSource);
@@ -2331,7 +2155,7 @@ export default {
     isExceedProfitProportion(num, index) {
       let obj = {
         profitProportion: 0,
-        isExceed: false,
+        isExceed: false
       };
       let nowNum = 0;
       this.ruleForm.erpMlDealProfits.forEach((m, n) => {
@@ -2373,13 +2197,13 @@ export default {
       this.ruleForm.erpMlDeal.dealId = dealId;
       new createMlDealReport(this.ruleForm)
         .send()
-        .then((res) => {
+        .then(res => {
           this.tableData = res;
           if (res.errCode == 200) {
             this.$router.go(-1);
           }
         })
-        .catch((res) => {
+        .catch(res => {
           console.log(res, "err");
           new ErpCommon().toast(
             res.errMsg || "服务器开小差了,请稍后再试!",
@@ -2387,7 +2211,7 @@ export default {
           );
         });
       //表单验证
-      this.$refs.ruleForm.validate(async (valid) => {
+      this.$refs.ruleForm.validate(async valid => {
         if (valid) {
           console.log("this.ruleForm", this.ruleForm);
         }
@@ -2402,7 +2226,7 @@ export default {
       let value = val;
       value = value.replace(/\D/g, "");
       return value;
-    },
+    }
   },
   computed: {
     // 上报业绩
@@ -2456,8 +2280,8 @@ export default {
     // 地址
     getProvinceList() {
       return this.$store.state.common_store.province_list;
-    },
-  },
+    }
+  }
 };
 </script>
 
